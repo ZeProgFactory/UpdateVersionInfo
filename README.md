@@ -1,2 +1,2 @@
-# VS-TinyHelpers
-TinyHelpers - Visual Studio Extensibility
+# VS-LittleHelpers
+LittleHelpers - Visual Studio Extensibility
