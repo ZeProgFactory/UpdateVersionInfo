@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+   <Extern href="stdidcmd.h"/>
+   <Extern href="vsshlids.h"/>
+   <Include href="KnownImageIds.vsct" />
+
+   <Commands package="guidPackage">
+      <Groups>
+         <Group guid="guidLittleHelpersCmdSet" id="MyMenuGroup" priority="0x0300">
+            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
+         </Group>
+      </Groups>
+
+      <Buttons>
+
+         <Button guid="guidLittleHelpersCmdSet" id="LittleHelpersCommandId" priority="0x0100" type="Button">
+            <Parent guid="guidLittleHelpersCmdSet" id="MyMenuGroup" />
+            <Icon guid="ImageCatalogGuid" id="CompareFiles" />
+            <CommandFlag>IconIsMoniker</CommandFlag>
+            <Strings>
+               <ButtonText>Little Helpers...</ButtonText>
+            </Strings>
+         </Button>
+
+      </Buttons>
+   </Commands>
+
+   <CommandPlacements>
+      <CommandPlacement guid="guidLittleHelpersCmdSet" id="MyMenuGroup" priority="0x0200">
+         <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBITEMNODE"/>
+      </CommandPlacement>
+      <CommandPlacement guid="guidLittleHelpersCmdSet" id="MyMenuGroup" priority="0x0200">
+         <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_XPROJ_MULTIITEM"/>
+      </CommandPlacement>
+      <CommandPlacement guid="guidLittleHelpersCmdSet" id="MyMenuGroup" priority="0x0200">
+         <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
+      </CommandPlacement>
+   </CommandPlacements>
+
+   <Symbols>
+      <GuidSymbol name="guidPackage" value="{6e490dec-1b23-471e-8120-f164af6b268a}" />
+
+      <GuidSymbol name="guidLittleHelpersCmdSet" value="{5034b97c-760a-45e5-a15d-d86dcfae06f7}">
+         <IDSymbol name="MyMenuGroup" value="0x1020" />
+         <IDSymbol name="LittleHelpersCommandId" value="0x0100" />
+      </GuidSymbol>
+   </Symbols>
+</CommandTable>
