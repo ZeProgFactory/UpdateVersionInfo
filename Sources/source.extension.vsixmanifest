@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="ea5c68d6-cdae-4e79-bd46-2a39e95bb256" Version="0.1" Language="en-US" Publisher="Michael Engelmann" />
+        <Identity Id="D4766DA2-8D92-4404-8F8C-61B5BB42F967" Version="0.1" Language="en-US" Publisher="Michael Engelmann" />
         <DisplayName>Little Helpers</DisplayName>
         <Description xml:space="preserve">A context menu with littles helpers added to the solution explorer ...</Description>
         <MoreInfo>https://github.com/ZeProgFactory/VS-LittleHelpers</MoreInfo>

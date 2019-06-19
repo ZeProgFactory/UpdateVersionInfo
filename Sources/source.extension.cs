@@ -7,7 +7,7 @@ namespace LittleHelpers
 {
     internal sealed partial class Vsix
     {
-        public const string Id = "ea5c68d6-cdae-4e79-bd46-2a39e95bb256";
+        public const string Id = "D4766DA2-8D92-4404-8F8C-61B5BB42F967";
         public const string Name = "Little Helpers";
         public const string Description = @"The easiest way to diff two files directly in Solution Explorer";
         public const string Language = "en-US";

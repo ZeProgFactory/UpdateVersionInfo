@@ -21,8 +21,20 @@ namespace LittleHelpers
          _dte = dte;
 
          {
-            var commandId = new CommandID(PackageGuids.guidLittleHelpersCmdSet, PackageIds.LittleHelpersCommandId);
-            var command = new OleMenuCommand(CommandCallback, commandId);
+            var commandId = new CommandID(PackageGuids.guidLittleHelpersCmdSet, PackageIds.CmdID_DiffFiles);
+            var command = new OleMenuCommand(CommandCallback_DiffFiles, commandId);
+            commandService.AddCommand(command);
+         };
+
+         {
+            var commandId = new CommandID(PackageGuids.guidLittleHelpersCmdSet, PackageIds.CmdID_ProjectTool);
+            var command = new OleMenuCommand(CommandCallback_ProjectTool, commandId);
+            commandService.AddCommand(command);
+         };
+
+         {
+            var commandId = new CommandID(PackageGuids.guidLittleHelpersCmdSet, PackageIds.CmdID_TOF);
+            var command = new OleMenuCommand(CommandCallback_TOF, commandId);
             commandService.AddCommand(command);
          };
       }
@@ -36,7 +48,7 @@ namespace LittleHelpers
          Instance = new LittleHelpersCommand(commandService, dte);
       }
 
-      private void CommandCallback(object sender, EventArgs e)
+      private void CommandCallback_DiffFiles(object sender, EventArgs e)
       {
 
          if (CanFilesBeCompared(out string file1, out string file2))
@@ -46,6 +58,14 @@ namespace LittleHelpers
                LittleHelpersUsingDefaultTool(file1, file2);
             }
          }
+      }
+
+      private void CommandCallback_ProjectTool(object sender, EventArgs e)
+      {
+      }
+
+      private void CommandCallback_TOF(object sender, EventArgs e)
+      {
       }
 
       private void LittleHelpersUsingDefaultTool(string file1, string file2)

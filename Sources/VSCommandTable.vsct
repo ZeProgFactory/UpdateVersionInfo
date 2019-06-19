@@ -7,24 +7,70 @@
 
    <Commands package="guidPackage">
       <Groups>
-         <Group guid="guidLittleHelpersCmdSet" id="MyMenuGroup" priority="0x0300">
+         <!--<Group guid="guidLittleHelpersCmdSet" id="MyMenuGroup" priority="0x0300">
             <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
+         </Group>-->
+
+         <Group guid="guidLittleHelpersCmdSet" id="GroupID_SolExplorer" priority="0x0300">
+            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE" />
+         </Group>
+
+         <Group guid="guidLittleHelpersCmdSet" id="GroupID_MySubMenu" priority="0x0400">
+            <Parent guid="guidLittleHelpersCmdSet" id="MenuID_MySubMenu"/>
          </Group>
       </Groups>
 
+      <Menus>
+         <Menu guid="guidLittleHelpersCmdSet" id="MenuID_MySubMenu" type="Menu" priority="0x1000">
+            <Parent guid="guidLittleHelpersCmdSet" id="GroupID_SolExplorer" />
+            <CommandFlag>IconAndText</CommandFlag>
+            <Strings>
+               <ButtonText>Little Helpers...</ButtonText>
+               <CommandName>Little Helpers</CommandName>
+            </Strings>
+         </Menu>
+      </Menus>
+      
       <Buttons>
 
-         <Button guid="guidLittleHelpersCmdSet" id="LittleHelpersCommandId" priority="0x0100" type="Button">
+         <!--<Button guid="guidLittleHelpersCmdSet" id="LittleHelpersCommandId" priority="0x0100" type="Button">
             <Parent guid="guidLittleHelpersCmdSet" id="MyMenuGroup" />
-            <!--<Icon guid="ImageCatalogGuid" id="CompareFiles" />-->
-            <!--<Icon guid="ImageCatalogGuid" id="ToolBox" />
-            <CommandFlag>IconIsMoniker</CommandFlag>-->
+            --><!--<Icon guid="ImageCatalogGuid" id="CompareFiles" />--><!--
+            --><!--<Icon guid="ImageCatalogGuid" id="ToolBox" />
+            <CommandFlag>IconIsMoniker</CommandFlag>--><!--
             <Icon guid="guidImages" id="bmpPic1" />
             <Strings>
                <ButtonText>Little Helpers...</ButtonText>
             </Strings>
+         </Button>-->
+
+         <Button guid="guidLittleHelpersCmdSet" id="CmdID_DiffFiles" priority="0x1000" type="Button">
+            <Parent guid="guidLittleHelpersCmdSet" id="GroupID_MySubMenu"/>
+            <Icon guid="ImageCatalogGuid" id="CompareFiles" />
+            <CommandFlag>IconIsMoniker</CommandFlag>
+            <Strings>
+               <ButtonText>Compare Files...</ButtonText>
+            </Strings>
+         </Button>
+         
+         <Button guid="guidLittleHelpersCmdSet" id="CmdID_ProjectTool" priority="0x1010" type="Button">
+            <Parent guid="guidLittleHelpersCmdSet" id="GroupID_MySubMenu"/>
+            <CommandFlag>TextOnly</CommandFlag>
+            <Strings>
+               <ButtonText>ProjectTool</ButtonText>
+               <CommandName>sampleMenuItem1</CommandName>
+            </Strings>
          </Button>
 
+         <Button guid="guidLittleHelpersCmdSet" id="CmdID_TOF" priority="0x1020" type="Button">
+            <Parent guid="guidLittleHelpersCmdSet" id="GroupID_MySubMenu"/>
+            <CommandFlag>TextOnly</CommandFlag>
+            <Strings>
+               <ButtonText>TOF ...</ButtonText>
+               <CommandName>sampleMenuItem1</CommandName>
+            </Strings>
+         </Button>
+         
       </Buttons>
 
       <Bitmaps>
@@ -33,13 +79,13 @@
    </Commands>
 
    <CommandPlacements>
-      <CommandPlacement guid="guidLittleHelpersCmdSet" id="MyMenuGroup" priority="0x0200">
+      <CommandPlacement guid="guidLittleHelpersCmdSet" id="GroupID_SolExplorer" priority="0x0200">
          <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_WEBITEMNODE"/>
       </CommandPlacement>
-      <CommandPlacement guid="guidLittleHelpersCmdSet" id="MyMenuGroup" priority="0x0200">
+      <CommandPlacement guid="guidLittleHelpersCmdSet" id="GroupID_SolExplorer" priority="0x0200">
          <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_XPROJ_MULTIITEM"/>
       </CommandPlacement>
-      <CommandPlacement guid="guidLittleHelpersCmdSet" id="MyMenuGroup" priority="0x0200">
+      <CommandPlacement guid="guidLittleHelpersCmdSet" id="GroupID_SolExplorer" priority="0x0200">
          <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
       </CommandPlacement>
    </CommandPlacements>
@@ -48,12 +94,20 @@
       <GuidSymbol name="guidPackage" value="{6e490dec-1b23-471e-8120-f164af6b268a}" />
 
       <GuidSymbol name="guidLittleHelpersCmdSet" value="{5034b97c-760a-45e5-a15d-d86dcfae06f7}">
-         <IDSymbol name="MyMenuGroup" value="0x1020" />
-         <IDSymbol name="LittleHelpersCommandId" value="0x0100" />
+         
+         <IDSymbol name="GroupID_SolExplorer" value="0x1020"/>
+         <IDSymbol name="MenuID_MySubMenu" value="0x1021" />
+         <IDSymbol name="GroupID_MySubMenu" value="0x1022" />
+
+         <IDSymbol name="CmdID_DiffFiles" value="0x0100" />
+         <IDSymbol name="CmdID_ProjectTool" value="0x0101" />
+         <IDSymbol name="CmdID_TOF" value="0x0102" />
+
       </GuidSymbol>
 
       <GuidSymbol name="guidImages" value="{8ac8d2e1-5ef5-4ad7-8aa6-84da2268566a}" >
          <IDSymbol name="bmpPic1" value="1" />
       </GuidSymbol>
+
    </Symbols>
 </CommandTable>
