@@ -16,14 +16,20 @@
 
          <Button guid="guidLittleHelpersCmdSet" id="LittleHelpersCommandId" priority="0x0100" type="Button">
             <Parent guid="guidLittleHelpersCmdSet" id="MyMenuGroup" />
-            <Icon guid="ImageCatalogGuid" id="CompareFiles" />
-            <CommandFlag>IconIsMoniker</CommandFlag>
+            <!--<Icon guid="ImageCatalogGuid" id="CompareFiles" />-->
+            <!--<Icon guid="ImageCatalogGuid" id="ToolBox" />
+            <CommandFlag>IconIsMoniker</CommandFlag>-->
+            <Icon guid="guidImages" id="bmpPic1" />
             <Strings>
                <ButtonText>Little Helpers...</ButtonText>
             </Strings>
          </Button>
 
       </Buttons>
+
+      <Bitmaps>
+         <Bitmap guid="guidImages" href="Resources\Tools-02.png" usedList="bmpPic1"/>
+      </Bitmaps>
    </Commands>
 
    <CommandPlacements>
@@ -44,6 +50,10 @@
       <GuidSymbol name="guidLittleHelpersCmdSet" value="{5034b97c-760a-45e5-a15d-d86dcfae06f7}">
          <IDSymbol name="MyMenuGroup" value="0x1020" />
          <IDSymbol name="LittleHelpersCommandId" value="0x0100" />
+      </GuidSymbol>
+
+      <GuidSymbol name="guidImages" value="{8ac8d2e1-5ef5-4ad7-8aa6-84da2268566a}" >
+         <IDSymbol name="bmpPic1" value="1" />
       </GuidSymbol>
    </Symbols>
 </CommandTable>
