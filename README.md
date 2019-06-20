@@ -4,4 +4,4 @@ based on [madskristensen/FileDiffer](https://github.com/madskristensen/FileDiffe
 ### ... under construction ...  
 
 ## Changelog & roadmap
-(...)(https://github.com/ZeProgFactory/VS-LittleHelpers/blob/master/CHANGELOG.md)
+[...](https://github.com/ZeProgFactory/VS-LittleHelpers/blob/master/CHANGELOG.md)
