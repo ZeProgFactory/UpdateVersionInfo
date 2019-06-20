@@ -1,4 +1,4 @@
-LittleHelpers - Visual Studio Extensibility
+**LittleHelpers** - Visual Studio Extensibility   
 based on [madskristensen/FileDiffer](https://github.com/madskristensen/FileDiffer)  
      
 ### ... under construction ...  
