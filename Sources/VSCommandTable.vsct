@@ -7,10 +7,6 @@
 
    <Commands package="guidPackage">
       <Groups>
-         <!--<Group guid="guidLittleHelpersCmdSet" id="MyMenuGroup" priority="0x0300">
-            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
-         </Group>-->
-
          <Group guid="guidLittleHelpersCmdSet" id="GroupID_SolExplorer" priority="0x0300">
             <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE" />
          </Group>
@@ -33,17 +29,6 @@
       
       <Buttons>
 
-         <!--<Button guid="guidLittleHelpersCmdSet" id="LittleHelpersCommandId" priority="0x0100" type="Button">
-            <Parent guid="guidLittleHelpersCmdSet" id="MyMenuGroup" />
-            --><!--<Icon guid="ImageCatalogGuid" id="CompareFiles" />--><!--
-            --><!--<Icon guid="ImageCatalogGuid" id="ToolBox" />
-            <CommandFlag>IconIsMoniker</CommandFlag>--><!--
-            <Icon guid="guidImages" id="bmpPic1" />
-            <Strings>
-               <ButtonText>Little Helpers...</ButtonText>
-            </Strings>
-         </Button>-->
-
          <Button guid="guidLittleHelpersCmdSet" id="CmdID_DiffFiles" priority="0x1000" type="Button">
             <Parent guid="guidLittleHelpersCmdSet" id="GroupID_MySubMenu"/>
             <Icon guid="ImageCatalogGuid" id="CompareFiles" />
@@ -55,7 +40,8 @@
          
          <Button guid="guidLittleHelpersCmdSet" id="CmdID_ProjectTool" priority="0x1010" type="Button">
             <Parent guid="guidLittleHelpersCmdSet" id="GroupID_MySubMenu"/>
-            <CommandFlag>TextOnly</CommandFlag>
+            <Icon guid="ImageCatalogGuid" id="CSProjectNode" />
+            <CommandFlag>IconIsMoniker</CommandFlag>
             <Strings>
                <ButtonText>ProjectTool</ButtonText>
                <CommandName>sampleMenuItem1</CommandName>

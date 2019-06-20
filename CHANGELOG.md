@@ -11,4 +11,4 @@ on the official Visual Studio extension gallery.
 
 ## 0.1
 - [x] Initial release
-- [x] Compare two files from explorateur de solutions
+- [x] Compare two files from solution explorer

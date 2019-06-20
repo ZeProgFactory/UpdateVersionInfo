@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Tool
+namespace LittleHelpers
 {
    class ProjectTool
    {
@@ -21,13 +21,13 @@ namespace Tool
          public string New { get; set; }
       };
 
-      static void Main(string[] args)
-      {
-         string sourceProject = "XFTestPlatformes";
-         string sourcePath = @"D:\SoftWare2\MyProjects\XFTestPlatformes";
+      public static void DoIt( 
+         string sourceProject = "XFTestPlatformes", 
+         string sourcePath = @"D:\SoftWare2\MyProjects\XFTestPlatformes",
 
-         string targetProject = "MSBuildSdkExtrasTest";
-         string targetPath = @"D:\SoftWare2\MyProjects\MSBuildSdkExtrasTest";
+         string targetProject = "MSBuildSdkExtrasTest",
+         string targetPath = @"D:\SoftWare2\MyProjects\MSBuildSdkExtrasTest" )
+      {
 
          List<TFiles> files = new List<TFiles>();
 
