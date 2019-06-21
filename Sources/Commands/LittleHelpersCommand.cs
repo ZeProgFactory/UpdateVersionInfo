@@ -61,6 +61,32 @@ namespace LittleHelpers
 
       private void CommandCallback_TOF(object sender, EventArgs e)
       {
+         // https://www.visualstudiogeeks.com/extensibility/visual%20studio/options-for-displaying-modal-dialogs-in-visual-studio-extensions
+         // https://docs.microsoft.com/en-us/visualstudio/extensibility/creating-and-managing-modal-dialog-boxes?view=vs-2019
+
+         var xamlDialog = new XamlDialogInVSExtensionDemo.XamlDialog("Microsoft.VisualStudio.PlatformUI.DialogWindow");
+         xamlDialog.HasMinimizeButton = false;
+         xamlDialog.HasMaximizeButton = false;
+         // xamlDialog.ShowModal();
+
+         //IVsUIShell uiShell = (IVsUIShell)ServiceProvider.GetService(typeof(SVsUIShell));
+
+         //TestDialogWindow2 xamlDialog = new TestDialogWindow2(uiShell);
+         //get the owner of this dialog
+         //IntPtr hwnd;
+         //uiShell.GetDialogOwnerHwnd(out hwnd);
+         xamlDialog.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
+         //uiShell.EnableModeless(0);
+         try
+         {
+            //Microsoft.Internal.VisualStudio.PlatformUI.WindowHelper.ShowModal(xamlDialog, hwnd);
+            Microsoft.Internal.VisualStudio.PlatformUI.WindowHelper.ShowModal(xamlDialog);
+         }
+         finally
+         {
+            // This will take place after the window is closed.
+            //uiShell.EnableModeless(1);
+         }
       }
    }
 }

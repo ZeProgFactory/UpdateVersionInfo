@@ -110,9 +110,9 @@
          // 
          this.btnGoSol.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
          this.btnGoSol.Enabled = false;
-         this.btnGoSol.Location = new System.Drawing.Point(550, 218);
+         this.btnGoSol.Location = new System.Drawing.Point(555, 218);
          this.btnGoSol.Name = "btnGoSol";
-         this.btnGoSol.Size = new System.Drawing.Size(143, 23);
+         this.btnGoSol.Size = new System.Drawing.Size(138, 23);
          this.btnGoSol.TabIndex = 7;
          this.btnGoSol.Text = "copy and rename solution";
          this.btnGoSol.UseVisualStyleBackColor = true;
@@ -142,7 +142,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
          this.tbTargetProject.Location = new System.Drawing.Point(78, 19);
          this.tbTargetProject.Name = "tbTargetProject";
-         this.tbTargetProject.ReadOnly = true;
          this.tbTargetProject.Size = new System.Drawing.Size(597, 20);
          this.tbTargetProject.TabIndex = 11;
          this.tbTargetProject.Text = "tbTargetProject";
@@ -154,7 +153,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
          this.tbTargetFolder.Location = new System.Drawing.Point(78, 45);
          this.tbTargetFolder.Name = "tbTargetFolder";
-         this.tbTargetFolder.ReadOnly = true;
          this.tbTargetFolder.Size = new System.Drawing.Size(597, 20);
          this.tbTargetFolder.TabIndex = 12;
          this.tbTargetFolder.Text = "tbTargetFolder";
@@ -172,7 +170,7 @@
          this.groupBox1.Controls.Add(this.lbProject);
          this.groupBox1.Location = new System.Drawing.Point(12, 11);
          this.groupBox1.Name = "groupBox1";
-         this.groupBox1.Size = new System.Drawing.Size(681, 117);
+         this.groupBox1.Size = new System.Drawing.Size(681, 120);
          this.groupBox1.TabIndex = 13;
          this.groupBox1.TabStop = false;
          this.groupBox1.Text = " source ";
@@ -192,8 +190,8 @@
          // 
          // ProjectToolDlg
          // 
-         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+         this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
          this.ClientSize = new System.Drawing.Size(705, 253);
          this.Controls.Add(this.groupBox2);
          this.Controls.Add(this.groupBox1);

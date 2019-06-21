@@ -68,7 +68,7 @@ namespace LittleHelpers
       {
          btnGoSol.Enabled =
             !string.IsNullOrEmpty(tbTargetProject.Text) && tbTargetProject.Text.Trim().Length > 3
-            && string.IsNullOrEmpty(tbTargetFolder.Text) && tbTargetFolder.Text.Trim().Length > 6 && System.IO.Directory.Exists(tbTargetFolder.Text);
+            && ! string.IsNullOrEmpty(tbTargetFolder.Text) && tbTargetFolder.Text.Trim().Length > 6 && System.IO.Directory.Exists(tbTargetFolder.Text);
       }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
