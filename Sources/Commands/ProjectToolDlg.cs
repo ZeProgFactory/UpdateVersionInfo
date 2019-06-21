@@ -48,14 +48,9 @@ namespace LittleHelpers
                pName = p.Name;
                pFName = p.FileName;
             }
-
-            //if (item.Object is EnvDTE.Solution)
-            //{
-            //   var s = item.Object as Solution;
-            //   var fn = s.FileName;
-
-            //}
          };
+
+         // - - -  - - - 
 
          tbSolution.Text = sName;
          lbSolution.Text = sFName;
@@ -63,7 +58,26 @@ namespace LittleHelpers
          tbProject.Text = pName;
          lbProject.Text = pFName;
 
-         ProjectTool.DoIt();
+         tbTargetProject.Text = sName + "-Copy";
+         tbTargetFolder.Text = System.IO.Path.GetDirectoryName(sFName) + "-Copy";
       }
+
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
+
+      private void TextChanged(object sender, EventArgs e)
+      {
+         btnGoSol.Enabled =
+            !string.IsNullOrEmpty(tbTargetProject.Text) && tbTargetProject.Text.Trim().Length > 3
+            && string.IsNullOrEmpty(tbTargetFolder.Text) && tbTargetFolder.Text.Trim().Length > 6 && System.IO.Directory.Exists(tbTargetFolder.Text);
+      }
+
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
+
+      private void btnGoSol_Click(object sender, EventArgs e)
+      {
+         ProjectTool.DoIt(tbSolution.Text, System.IO.Path.GetDirectoryName(lbSolution.Text), tbTargetProject.Text.Trim(), tbTargetFolder.Text);
+      }
+
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
    }
 }

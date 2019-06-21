@@ -1,6 +1,5 @@
 ﻿using EnvDTE;
 using EnvDTE80;
-using LittleHelpers.Commands;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.Win32;
 using System;
