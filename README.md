@@ -1,5 +1,7 @@
 **LittleHelpers** - Visual Studio Extensibility   
 based on [madskristensen/FileDiffer](https://github.com/madskristensen/FileDiffer)  
+   
+for those interested some links about the tricks of this library in the [wiki](https://github.com/ZeProgFactory/MediaPlayer/wiki) section...
      
 ### ... under construction ...  
 
