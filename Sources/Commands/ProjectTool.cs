@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace LittleHelpers
 {
@@ -200,9 +201,8 @@ namespace LittleHelpers
 
          // - - -  - - - 
 
-         Console.WriteLine("Hello World!");
-
-         Console.ReadKey();
+         //ToDo: Progressbar or other feedback on progress ...
+         MessageBox.Show("Copy and rename solution terminated.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
       }
 
       /// <summary>

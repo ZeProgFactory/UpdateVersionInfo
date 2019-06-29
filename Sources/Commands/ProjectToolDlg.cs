@@ -68,14 +68,22 @@ namespace LittleHelpers
       {
          btnGoSol.Enabled =
             !string.IsNullOrEmpty(tbTargetProject.Text) && tbTargetProject.Text.Trim().Length > 3
-            && ! string.IsNullOrEmpty(tbTargetFolder.Text) && tbTargetFolder.Text.Trim().Length > 6 && System.IO.Directory.Exists(tbTargetFolder.Text);
+            && !string.IsNullOrEmpty(tbTargetFolder.Text) && tbTargetFolder.Text.Trim().Length > 6 && System.IO.Directory.Exists(tbTargetFolder.Text);
       }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
 
       private void btnGoSol_Click(object sender, EventArgs e)
       {
-         ProjectTool.DoIt(tbSolution.Text, System.IO.Path.GetDirectoryName(lbSolution.Text), tbTargetProject.Text.Trim(), tbTargetFolder.Text);
+         (sender as Button).Enabled = false;
+
+         try
+         {
+            ProjectTool.DoIt(tbSolution.Text, System.IO.Path.GetDirectoryName(lbSolution.Text), tbTargetProject.Text.Trim(), tbTargetFolder.Text);
+         }
+         catch { };
+
+         (sender as Button).Enabled = true;
       }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
