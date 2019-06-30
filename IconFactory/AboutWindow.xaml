@@ -1,0 +1,81 @@
+﻿<Window x:Class="IconFactory.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="About ..." 
+        Height="400" Width="620" 
+        WindowStartupLocation="CenterOwner" Topmost="True" ShowInTaskbar="False" 
+        Icon="/IconFactory;component/Icon.Black.png">
+
+   <Grid>
+      <Grid.Background>
+         <ImageBrush ImageSource="bright_squares.png" />
+      </Grid.Background>
+
+      <Grid.ColumnDefinitions>
+         <ColumnDefinition Width="10"/>
+         <ColumnDefinition Width="*"/>
+         <ColumnDefinition Width="300"/>
+         <ColumnDefinition Width="10"/>
+      </Grid.ColumnDefinitions>
+
+      <Grid.RowDefinitions>
+         <RowDefinition Height="10"/>
+         <RowDefinition Height="30"/>
+         <RowDefinition Height="*"/>
+         <RowDefinition Height="10"/>
+      </Grid.RowDefinitions>
+
+      <Label Grid.Column="1" Grid.Row="1" Content="whats new?" FontSize="18" />
+
+      <Grid Grid.Column="1" Grid.Row="2">
+         <ScrollViewer Margin="0,0,10,0">
+            <TextBlock Name="tbText" TextAlignment="Left" TextWrapping="Wrap" >
+                        <LineBreak />
+                        <Run Text="It's just doing what it's doing,"/>
+                        <LineBreak />
+                        <Run Text="no more, no less..."/>
+            </TextBlock>
+         </ScrollViewer>
+      </Grid>
+
+      <Label Grid.Column="2" Grid.Row="1" Content="about ..." FontSize="18" />
+
+      <Grid Grid.Column="2" Grid.Row="2">
+         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130"/>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="100"/>
+         </Grid.ColumnDefinitions>
+
+         <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="35"/>
+         </Grid.RowDefinitions>
+
+         <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="5" Source="/IconFactory;component/Icon.Black.png" />
+
+         <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Content="version"/>
+         <Label x:Name="lbVersion" Grid.Column="3" Grid.Row="0" Content="version"/>
+
+         <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Content="by"/>
+         <Label Grid.Column="3" Grid.Row="1" Content="ZPF (ME)"/>
+
+         <Label Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Content="web"/>
+         <Label Grid.Column="3" Grid.Row="2" Content="www.ZPF.fr" TouchDown="Label_Web" StylusDown="Label_Web" MouseDown="Label_Web" />
+
+         <Label Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" Content="email"/>
+         <Label Grid.Column="3" Grid.Row="3" Content="support@ZPF.fr" TouchDown="Label_Support" StylusDown="Label_Support" MouseDown="Label_Support" />
+
+         <Image Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" Source="/Assets/Logo.png" Stretch="None" TouchDown="Label_Web" StylusDown="Label_Web" MouseDown="Label_Web" />
+
+         <Button Grid.Column="3" Grid.Row="6" Content="OK" IsDefault="True" IsCancel="True" Click="Button_Click" />
+         <Button Grid.Row="6" Content="Send Trace" IsDefault="True" IsCancel="True" Click="SendTrace_Click" Margin="4,0,26,0" IsHitTestVisible="True" IsEnabled="False" Visibility="Hidden" />
+      </Grid>
+   </Grid>
+</Window>

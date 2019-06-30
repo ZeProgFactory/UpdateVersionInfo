@@ -33,6 +33,12 @@ namespace LittleHelpers
          };
 
          {
+            var commandId = new CommandID(PackageGuids.guidLittleHelpersCmdSet, PackageIds.CmdID_IconFactory);
+            var command = new OleMenuCommand(CommandCallback_IconFactory, commandId);
+            commandService.AddCommand(command);
+         };
+
+         {
             var commandId = new CommandID(PackageGuids.guidLittleHelpersCmdSet, PackageIds.CmdID_TOF);
             var command = new OleMenuCommand(CommandCallback_TOF, commandId);
             commandService.AddCommand(command);
@@ -56,6 +62,12 @@ namespace LittleHelpers
       private void CommandCallback_ProjectTool(object sender, EventArgs e)
       {
          var dialog = new ProjectToolDlg(_dte);
+         dialog.ShowDialog();
+      }
+      
+      private void CommandCallback_IconFactory(object sender, EventArgs e)
+      {
+         var dialog = new IconFactory.MainWindow();
          dialog.ShowDialog();
       }
 

@@ -26,6 +26,7 @@ namespace LittleHelpers
 
       public const int CmdID_DiffFiles = 0x0100;
       public const int CmdID_ProjectTool = 0x0101;
-      public const int CmdID_TOF = 0x0102;
+      public const int CmdID_IconFactory = 0x0102;
+      public const int CmdID_TOF = 0x0103;
    }
 }
