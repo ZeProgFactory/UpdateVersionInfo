@@ -4,11 +4,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
-namespace LittleHelpers
+namespace ZPF
 {
-   class ProjectTool
+   public class ProjectTool
    {
       class TFiles
       {
@@ -22,23 +23,42 @@ namespace LittleHelpers
          public string New { get; set; }
       };
 
-      public static void DoIt( 
-         string sourceProject = "XFTestPlatformes", 
+      static void LogLine(string Text)
+      {
+         Debug.WriteLine(Text);
+      }
+
+      private static System.Threading.EventWaitHandle waitHandle = new System.Threading.AutoResetEvent(false);
+
+      public static void DoIt(
+         string sourceProject = "XFTestPlatformes",
          string sourcePath = @"D:\SoftWare2\MyProjects\XFTestPlatformes",
 
          string targetProject = "MSBuildSdkExtrasTest",
-         string targetPath = @"D:\SoftWare2\MyProjects\MSBuildSdkExtrasTest" )
+         string targetPath = @"D:\SoftWare2\MyProjects\MSBuildSdkExtrasTest")
       {
+         Task task = Task.Run(() => DoIt_sub(sourceProject, sourcePath, targetProject, targetPath));
+         waitHandle.WaitOne();
 
+         //ToDo: Progressbar or other feedback on progress ...
+         MessageBox.Show("Copy and rename solution terminated.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+      }
+
+      static void DoIt_sub(
+         string sourceProject = "XFTestPlatformes",
+         string sourcePath = @"D:\SoftWare2\MyProjects\XFTestPlatformes",
+
+         string targetProject = "MSBuildSdkExtrasTest",
+         string targetPath = @"D:\SoftWare2\MyProjects\MSBuildSdkExtrasTest")
+      {
          List<TFiles> files = new List<TFiles>();
 
          // - - - clean target - - - 
 
-         Console.WriteLine("clean target ...");
+         LogLine("clean target ...");
 
          {
             var tmpFiles = System.IO.Directory.EnumerateFiles(targetPath, "*.*", System.IO.SearchOption.AllDirectories);
-            //var files = GetFileSystemEntries(sourcePath);
 
             foreach (var f in tmpFiles)
             {
@@ -52,7 +72,7 @@ namespace LittleHelpers
 
          // - - -  - - - 
 
-         Console.WriteLine("Analyse files ...");
+         LogLine("Analyse files ...");
 
          {
             bool IsOK(string path)
@@ -72,13 +92,12 @@ namespace LittleHelpers
             };
 
             var tmpFiles = System.IO.Directory.EnumerateFiles(sourcePath, "*", System.IO.SearchOption.AllDirectories);
-            //var files = GetFileSystemEntries(sourcePath);
 
-            Console.WriteLine($"# files {tmpFiles.Count()}");
+            LogLine($"# all files {tmpFiles.Count()}");
 
             tmpFiles = tmpFiles.Where(x => IsOK(x)).ToList();
 
-            Console.WriteLine($"# files {tmpFiles.Count()}");
+            LogLine($"# clean files {tmpFiles.Count()}");
 
             foreach (var f in tmpFiles)
             {
@@ -92,10 +111,7 @@ namespace LittleHelpers
 
          // - - -  - - - 
 
-         Console.WriteLine("Copy files ...");
-
-         TFiles solution = null;
-         TFiles deployProject = null;
+         LogLine("Copy files ...");
 
          List<TGuid> guids = new List<TGuid>();
 
@@ -130,16 +146,6 @@ namespace LittleHelpers
 
                   // - - -  update project GUIDs - - - 
 
-                  if (".sln.".Contains(System.IO.Path.GetExtension(f.targetFile).ToLower() + "."))
-                  {
-                     solution = f;
-                  };
-
-                  if (".vcproj.".Contains(System.IO.Path.GetExtension(f.targetFile).ToLower() + "."))
-                  {
-                     deployProject = f;
-                  };
-
                   if (System.IO.Path.GetExtension(f.targetFile).Length > 0 && ".csproj.".Contains(System.IO.Path.GetExtension(f.targetFile).ToLower() + "."))
                   {
                      var encoding = GetEncoding(f.targetFile);
@@ -173,36 +179,57 @@ namespace LittleHelpers
             };
          };
 
-         if (solution != null)
-         {
-            var encoding = GetEncoding(solution.targetFile);
-            var text = File.ReadAllText(solution.targetFile);
+         // - - -  update GUIDs in files - - - 
 
-            foreach (var g in guids)
+         {
+            bool IsOK(string path)
             {
-               text = text.Replace(g.Old, g.New);
+               path = path.ToLower();
+
+               if (path.EndsWith(".sln")) return true;
+               if (path.EndsWith(".csproj")) return true;
+               if (path.EndsWith(".appxmanifest")) return true;
+               if (path.EndsWith(".xml")) return true;
+               if (path.EndsWith(".vdproj")) return true;
+
+               return false;
             };
 
-            File.WriteAllText(solution.targetFile, text, encoding);
-         };
+            files = files.Where(x => IsOK(x.targetFile)).ToList();
 
-         if (deployProject != null)
-         {
-            var encoding = GetEncoding(deployProject.targetFile);
-            var text = File.ReadAllText(deployProject.targetFile);
-
-            foreach (var g in guids)
+            foreach (var f in files)
             {
-               text = text.Replace(g.Old, g.New);
-            };
+               try
+               {
+                  bool DitIt = false;
+                  var encoding = GetEncoding(f.targetFile);
+                  var text = File.ReadAllText(f.targetFile);
 
-            File.WriteAllText(deployProject.targetFile, text, encoding);
+                  foreach (var g in guids)
+                  {
+                     if (text.IndexOf(g.Old) > -1)
+                     {
+                        text = text.Replace(g.Old, g.New);
+                        DitIt = true;
+                     };
+                  };
+
+                  if (DitIt)
+                  {
+                     File.WriteAllText(f.targetFile, text, encoding);
+                     Debug.WriteLine($"UpdateWithGUIDs {f.targetFile}");
+                  };
+               }
+               catch (Exception ex)
+               {
+                  Debug.WriteLine(ex.Message);
+               }
+            };
          };
 
          // - - -  - - - 
 
-         //ToDo: Progressbar or other feedback on progress ...
-         MessageBox.Show("Copy and rename solution terminated.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+         waitHandle.Set();
       }
 
       /// <summary>
@@ -227,48 +254,6 @@ namespace LittleHelpers
          if (bom[0] == 0xfe && bom[1] == 0xff) return Encoding.BigEndianUnicode; //UTF-16BE
          if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32;
          return Encoding.ASCII;
-      }
-
-      static List<string> GetFileSystemEntries(string folder, bool subFolder = true, bool getFiles = true)
-      {
-         List<string> result = new List<string>();
-
-         try
-         {
-            if (getFiles)
-            {
-               var files = Directory.EnumerateFiles(folder);
-               foreach (var file in files)
-               {
-                  result.Add(file);
-               }
-            }
-
-            var dirs = Directory.EnumerateDirectories(folder);
-            foreach (var dir in dirs)
-            {
-               if (Path.GetFileNameWithoutExtension(dir) != "")
-               {
-                  // Documents.Add(new FileEntry() { FullFileName = dir, FolderLevel = indentLevel, EntryType = FileEntry.EntryTypes.Directory });
-
-                  if (subFolder)
-                  {
-                     result.AddRange(GetFileSystemEntries(dir, subFolder, getFiles));
-                  }
-               }
-               else
-               {
-                  // System files/folders starting with '.'
-               }
-            }
-         }
-         catch (Exception ex)
-         {
-            Debug.WriteLine(ex.Message);
-            //AddLog(ex.Message + string.Format("\n [{0}]", folder));
-         }
-
-         return result;
       }
    }
 }
