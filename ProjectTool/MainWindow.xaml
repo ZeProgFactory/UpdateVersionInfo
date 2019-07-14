@@ -70,7 +70,8 @@
             </Grid>
         </GroupBox>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10" HorizontalAlignment="Right" >
+        <StackPanel x:Name="spBtn" Grid.Row="2" Orientation="Horizontal" Margin="10" HorizontalAlignment="Right" >
+            <Button x:Name="btnClean" Content="clean projects" Click="btnClean_Click" Padding="10" Margin="10,0,10,0"/>
             <Button x:Name="btnGoSol" Content="copy and rename solution" Click="Button_Click" Padding="10"/>
         </StackPanel>
     </Grid>

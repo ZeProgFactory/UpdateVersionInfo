@@ -26,6 +26,8 @@ namespace ProjectTool
       public MainWindow()
       {
          InitializeComponent();
+
+         spBtn.IsEnabled = false;
       }
 
       private static DTE2 _dte;
@@ -81,6 +83,8 @@ namespace ProjectTool
 
          tbTargetProject.Text = sName + "-Copy";
          tbTargetFolder.Text = System.IO.Path.GetDirectoryName(sFName) + "-Copy";
+
+         spBtn.IsEnabled = false;
       }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
@@ -94,7 +98,7 @@ namespace ProjectTool
 
       private void Button_Click(object sender, RoutedEventArgs e)
       {
-         (sender as Button).IsEnabled = false;
+         spBtn.IsEnabled = false;
 
          tbTargetProject.Text = tbTargetProject.Text.Trim();
          tbTargetFolder.Text = tbTargetFolder.Text.Trim();
@@ -116,7 +120,7 @@ namespace ProjectTool
          }
          catch { };
 
-         (sender as Button).IsEnabled = true;
+         spBtn.IsEnabled = true;
       }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
@@ -149,7 +153,31 @@ namespace ProjectTool
 
             tbTargetProject.Text = sName + "-Copy";
             tbTargetFolder.Text = System.IO.Path.GetDirectoryName(sFName) + "-Copy";
+
+            spBtn.IsEnabled = true;
          };
+      }
+
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
+
+      private void btnClean_Click(object sender, RoutedEventArgs e)
+      {
+         spBtn.IsEnabled = false;
+
+         string[] filePaths = Directory.GetFiles(System.IO.Path.GetDirectoryName((string)(lbSolution.Content)), "*.csproj", SearchOption.AllDirectories);
+
+         foreach( var p in filePaths)
+         {
+            var encoding = ZPF.ProjectTool.GetEncoding(p);
+            var text = File.ReadAllText(p);
+
+
+            text = text.Replace(sourceProject, targetProject);
+
+            File.WriteAllText(p, text, encoding);
+         };
+
+         spBtn.IsEnabled = true;
       }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
