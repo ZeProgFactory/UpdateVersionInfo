@@ -172,7 +172,7 @@ namespace ProjectTool
             var text = File.ReadAllText(p);
 
 
-            text = text.Replace(sourceProject, targetProject);
+          //  text = text.Replace(sourceProject, targetProject);
 
             File.WriteAllText(p, text, encoding);
          };

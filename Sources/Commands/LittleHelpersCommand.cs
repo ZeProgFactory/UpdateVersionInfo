@@ -61,8 +61,8 @@ namespace LittleHelpers
 
       private void CommandCallback_ProjectTool(object sender, EventArgs e)
       {
-         var dialog = new ProjectToolDlg(_dte);
-         dialog.ShowDialog();
+       //  var dialog = new ProjectToolDlg(_dte);
+       //  dialog.ShowDialog();
       }
       
       private void CommandCallback_IconFactory(object sender, EventArgs e)
