@@ -85,8 +85,6 @@ namespace ProjectTool
 
          tbTargetProject.Text = sName + "-Copy";
          tbTargetFolder.Text = System.IO.Path.GetDirectoryName(sFName) + "-Copy";
-
-         spBtn.IsEnabled = false;
       }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 

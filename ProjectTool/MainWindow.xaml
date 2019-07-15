@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:ProjectTool"
     mc:Ignorable="d"
-    Title="Little Helpers - Project tool" Height="358" Width="700" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    Title="Little Helpers - Project tool" Height="370" Width="700" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     
     <Grid Margin="10">
         <Grid.RowDefinitions>
