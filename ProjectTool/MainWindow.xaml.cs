@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using EnvDTE;
 using EnvDTE80;
+using ZPF;
 
 namespace ProjectTool
 {
@@ -105,7 +107,7 @@ namespace ProjectTool
 
          try
          {
-            if ( ! System.IO.Directory.Exists(tbTargetFolder.Text))
+            if (!System.IO.Directory.Exists(tbTargetFolder.Text))
             {
                System.IO.Directory.CreateDirectory(tbTargetFolder.Text);
             };
@@ -139,7 +141,7 @@ namespace ProjectTool
             string sName = System.IO.Path.GetFileNameWithoutExtension(fileDialog.FileName);
             string sFName = fileDialog.FileName;
 
-            string[] filePaths = Directory.GetFiles( System.IO.Path.GetDirectoryName(sFName), "*.csproj", SearchOption.AllDirectories);
+            string[] filePaths = Directory.GetFiles(System.IO.Path.GetDirectoryName(sFName), "*.csproj", SearchOption.AllDirectories);
             var p = filePaths.Where(x => x.Contains("\\" + sName + ".")).FirstOrDefault();
 
             string pName = (p != null ? sName : "");
@@ -165,19 +167,81 @@ namespace ProjectTool
          spBtn.IsEnabled = false;
 
          string[] filePaths = Directory.GetFiles(System.IO.Path.GetDirectoryName((string)(lbSolution.Content)), "*.csproj", SearchOption.AllDirectories);
+         bool DidIt = false;
 
-         foreach( var p in filePaths)
+         foreach (var p in filePaths)
          {
             var encoding = ZPF.ProjectTool.GetEncoding(p);
-            var text = File.ReadAllText(p);
+            DidIt = false;
 
+            TStrings text = new TStrings();
+            text.Text = File.ReadAllText(p);
 
-          //  text = text.Replace(sourceProject, targetProject);
+            for (int i = 0; i < text.Count; i++)
+            {
+               var st = text[i].ToLower();
+               var ind = st.IndexOf(@"\packages\");
 
-            File.WriteAllText(p, text, encoding);
+               if (ind > 2)
+               {
+                  if (st[ind - 1] == '.' && st[ind - 2] == '.')
+                  {
+
+                  }
+                  else
+                  {
+                     // KO
+                     Debug.WriteLine(">>> " + text[i]);
+
+                     int b = FindBegin(text[i], ind, "'>");
+
+                     if (b > -1)
+                     {
+                        var searchPattern = text[i].Substring(b + 1, (ind - b) + (@"\packages\").Length - 1);
+                        Debug.WriteLine("    " + searchPattern);
+
+                        text[i] = text[i].Replace(searchPattern, @"..\packages\");
+                        DidIt = true;
+                     };
+                  };
+               };
+            };
+
+            if (DidIt) File.WriteAllText(p, text.Text, encoding);
          };
 
+         //ToDo: Progressbar or other feedback on progress ...
+
+         //if (DidIt)
+         //{
+         MessageBox.Show("Clean projects terminated.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+         //}
+         //else
+         //{
+         //   MessageBox.Show("Nothing to do ...", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+         //};
+
          spBtn.IsEnabled = true;
+      }
+
+      private int FindBegin(string line, int ind, string seperators)
+      {
+         for (int i = ind; i > -1; i--)
+         {
+            try
+            {
+               if (seperators.Contains(line[i]))
+               {
+                  return i;
+               };
+            }
+            catch
+            {
+               return -1;
+            };
+         }
+
+         return -1;
       }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - - 
