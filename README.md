@@ -6,9 +6,10 @@ for those interested some links about the tricks of this library in the [wiki](h
 ### ... under construction ...  
 
 ## Features
- * Compare
- * Copy & rename solution / projects
- * Generate Assets (icons, splashcreen, ...)
+ * Compare files
+ * ProjectTool - Copy & rename solution / projects
+ * ProjectTool - Clean projects (path to packages)
+ * IconFactory - Generate Assets (icons, splashcreen, ...)
 
 ## Changelog & roadmap
 [Changelog & roadmap ...](https://github.com/ZeProgFactory/VS-LittleHelpers/blob/master/CHANGELOG.md)
