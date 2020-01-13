@@ -23,6 +23,11 @@ namespace UpdateVersionInfo
 
       static CommandLineArguments commandLine = null;
 
+      /// <summary>
+      /// Holds the master version for all platforms based on the UWP version.
+      /// </summary>
+      public static string sAutoVersion { get; private set; }
+
       static void Main(string[] args)
       {
          commandLine = new CommandLineArguments(args);
@@ -71,7 +76,6 @@ namespace UpdateVersionInfo
 
          if (commandLine.AutoVersion)
          {
-
             //string b = doc.Root.Attribute(versionCodeAttributeName).Value;
             //string a = doc.Root.Attribute(versionNameAttributeName).Value;
 
@@ -87,6 +91,7 @@ namespace UpdateVersionInfo
             var v = st.Split(new char[] { '.' });
 
             string v2 = v[0] + "." + v[1] + "." + v[2] + "." + (int.Parse(v[3]) + 1).ToString();
+            sAutoVersion = v2;
 
             contents = assemblyVersionRegEx.Replace(contents, "[assembly: System.Reflection.AssemblyVersion(\"" + v2 + "\")]");
 
@@ -125,7 +130,16 @@ namespace UpdateVersionInfo
 
             var v = a.Split(new char[] { '.' });
 
-            string v2 = v[0] + "." + v[1] + "." + v[2] + "." + (int.Parse(v[3]) + 1).ToString();
+            string v2 = "";
+
+            if (string.IsNullOrEmpty(sAutoVersion))
+            {
+               v2 = v[0] + "." + v[1] + "." + (v.Count() < 3 ? "0" : v[2]) + "." + (int.Parse((v.Count() < 4 ? "0" : v[3])) + 1).ToString();
+            }
+            else
+            {
+               v2 = sAutoVersion;
+            };
 
             doc.Root.SetAttributeValue(versionCodeAttributeName, b);
             doc.Root.SetAttributeValue(versionNameAttributeName, v2);
