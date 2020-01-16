@@ -5,13 +5,19 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Navigation;
 
-namespace ProjectTool
+namespace ProjectTool.WPF
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
-    {
-    }
+   /// <summary>
+   /// Interaction logic for App.xaml
+   /// </summary>
+   public partial class App : Application
+   {
+      private void Application_Startup(object sender, StartupEventArgs e)
+      {
+         var dialog = new ProjectTool.MainWindow();
+         dialog.ShowDialog();
+      }
+   }
 }
