@@ -70,8 +70,8 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="ZPF_Basics, Version=1.1.5.111, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ZPF_Basics.1.1.5.111\lib\netstandard2.0\ZPF_Basics.dll</HintPath>
+    <Reference Include="ZPF_Basics, Version=1.1.11.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ZPF_Basics.1.1.11.9\lib\netstandard2.0\ZPF_Basics.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

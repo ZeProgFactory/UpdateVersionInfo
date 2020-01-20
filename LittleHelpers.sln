@@ -12,13 +12,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectTool.Core", "ProjectTool.Core\ProjectTool.Core.csproj", "{44F8D6D3-E362-47D3-911A-3234A3D55645}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectTool.Core", "ProjectTool\ProjectTool.Core\ProjectTool.Core.csproj", "{44F8D6D3-E362-47D3-911A-3234A3D55645}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectTool", "ProjectTool\ProjectTool.csproj", "{9F92BD5F-3DDC-4063-8D65-84BF6A030FC1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectTool", "ProjectTool\ProjectTool\ProjectTool.csproj", "{9F92BD5F-3DDC-4063-8D65-84BF6A030FC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IconFactory.Core", "IconFactory.Core\IconFactory.Core.csproj", "{1A5B217C-A0ED-4823-A498-1B3DB276F70A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IconFactory.Core", "IconFactory\IconFactory.Core\IconFactory.Core.csproj", "{1A5B217C-A0ED-4823-A498-1B3DB276F70A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IconFactory", "IconFactory\IconFactory.csproj", "{FEEEE4FD-59AB-4928-AB8F-B69A3867CBA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IconFactory", "IconFactory\IconFactory\IconFactory.csproj", "{FEEEE4FD-59AB-4928-AB8F-B69A3867CBA9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateVersionInfo", "UpdateVersionInfo\UpdateVersionInfo\UpdateVersionInfo.csproj", "{4AD77D5A-D9B8-4659-B8DF-3F66A698DAD1}"
 EndProject

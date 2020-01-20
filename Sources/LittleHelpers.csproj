@@ -170,7 +170,7 @@
       <HintPath>..\packages\Nerdbank.Streams.2.2.26\lib\net46\Nerdbank.Streams.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -256,8 +256,8 @@
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
-    <Reference Include="ZPF_Basics, Version=1.1.5.111, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ZPF_Basics.1.1.5.111\lib\netstandard2.0\ZPF_Basics.dll</HintPath>
+    <Reference Include="ZPF_Basics, Version=1.1.11.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZPF_Basics.1.1.11.9\lib\netstandard2.0\ZPF_Basics.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -284,7 +284,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ProjectTool.Core\ProjectTool.Core.csproj">
+    <ProjectReference Include="..\ProjectTool\ProjectTool.Core\ProjectTool.Core.csproj">
       <Project>{44f8d6d3-e362-47d3-911a-3234a3d55645}</Project>
       <Name>ProjectTool.Core</Name>
     </ProjectReference>
