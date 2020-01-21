@@ -24,30 +24,92 @@ namespace UpdateVersionInfo
 
          if (ValidateCommandLine(commandLine))
          {
-            try
+            if (!MainViewModel.Current.Silent)
             {
-               Version version = new Version(
-                   MainViewModel.Current.Major,
-                   MainViewModel.Current.Minor,
-                   MainViewModel.Current.Build.Value,
-                   MainViewModel.Current.Revision.HasValue ? MainViewModel.Current.Revision.Value : 0);
+               Console.WriteLine("");
+               Console.WriteLine($"UpdateVersionInfo - V{MainViewModel.Current.UpdateVersionInfoVersion}");
+               Console.WriteLine("");
+            };
 
-               UWPHelper.Update(MainViewModel.Current.VersionCsPath, version);
+            if (MainViewModel.Current.Info)
+            {
+               if (!String.IsNullOrEmpty(MainViewModel.Current.VersionCsPath))
+               {
+                  UWPHelper.GetVersion(MainViewModel.Current.VersionCsPath);
+
+                  if (!MainViewModel.Current.Silent)
+                  {
+                     Console.WriteLine($"UWP   {UWPHelper.LastMessage}");
+                  };
+               }
 
                if (!String.IsNullOrEmpty(MainViewModel.Current.AndroidManifestPath))
                {
-                  DroidHelper.Update(MainViewModel.Current.AndroidManifestPath, version);
+                  DroidHelper.GetVersion(MainViewModel.Current.AndroidManifestPath);
+
+                  if (!MainViewModel.Current.Silent)
+                  {
+                     Console.WriteLine($"Droid {DroidHelper.LastMessage}");
+                  };
                }
 
                if (!String.IsNullOrEmpty(MainViewModel.Current.TouchPListPath))
                {
-                  iOSHelper.Update(MainViewModel.Current.TouchPListPath, version);
+                  iOSHelper.GetVersion(MainViewModel.Current.TouchPListPath );
+
+                  if (!MainViewModel.Current.Silent)
+                  {
+                     Console.WriteLine($"iOS   {iOSHelper.LastMessage}");
+                  };
                }
             }
-            catch (Exception e)
+            else
             {
-               WriteHelp(commandLine, "An unexpected error was encountered:" + e.Message);
-            }
+               try
+               {
+                  Version version = new Version(
+                      MainViewModel.Current.Major,
+                      MainViewModel.Current.Minor,
+                      MainViewModel.Current.Build.Value,
+                      MainViewModel.Current.Revision.HasValue ? MainViewModel.Current.Revision.Value : 0);
+
+                  UWPHelper.Update(MainViewModel.Current.VersionCsPath, version);
+                  if (!MainViewModel.Current.Silent)
+                  {
+                     Console.WriteLine($"UWP   {UWPHelper.LastMessage}");
+                  };
+
+                  if (MainViewModel.Current.AutoVersion)
+                  {
+                     version = new Version(MainViewModel.Current.sAutoVersionV2);
+                  };
+
+                  if (!String.IsNullOrEmpty(MainViewModel.Current.AndroidManifestPath))
+                  {
+                     DroidHelper.Update(MainViewModel.Current.AndroidManifestPath, version);
+
+                     if (!MainViewModel.Current.Silent)
+                     {
+                        Console.WriteLine($"Droid {DroidHelper.LastMessage}");
+                     };
+                  }
+
+                  if (!String.IsNullOrEmpty(MainViewModel.Current.TouchPListPath))
+                  {
+                     iOSHelper.Update(MainViewModel.Current.TouchPListPath, version);
+
+                     if (!MainViewModel.Current.Silent)
+                     {
+                        Console.WriteLine($"iOS   {iOSHelper.LastMessage}");
+                     };
+                  }
+               }
+               catch (Exception e)
+               {
+                  WriteHelp(commandLine, "An unexpected error was encountered:" + e.Message);
+               }
+            };
+
          };
 
          if (Debugger.IsAttached)
@@ -75,12 +137,12 @@ namespace UpdateVersionInfo
             errors.AppendLine("You must supply a positive minor version number.");
          }
 
-         if (!MainViewModel.Current.Build.HasValue)
+         if (!MainViewModel.Current.Build.HasValue && !MainViewModel.Current.Info)
          {
             errors.AppendLine("You must supply a numeric build number.");
          }
 
-         if (String.IsNullOrEmpty(MainViewModel.Current.VersionCsPath) || ! UWPHelper.IsValid(MainViewModel.Current.VersionCsPath))
+         if (String.IsNullOrEmpty(MainViewModel.Current.VersionCsPath) || !UWPHelper.IsValid(MainViewModel.Current.VersionCsPath))
          {
             errors.AppendLine("You must supply valid path to a writable C# file containing assembly version information.");
          }
@@ -105,6 +167,11 @@ namespace UpdateVersionInfo
 
       private static void WriteHelp(CommandLineArguments commandLine, String message = null)
       {
+         Console.WriteLine("");
+         Console.WriteLine($"UpdateVersionInfo - V{MainViewModel.Current.UpdateVersionInfoVersion}");
+         Console.WriteLine("");
+
+
          if (!String.IsNullOrEmpty(message))
          {
             Console.WriteLine(message);

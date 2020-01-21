@@ -23,6 +23,14 @@ namespace UpdateVersionInfo.Core
 
       // - - -  - - - 
 
+      public String UpdateVersionInfoVersion { get; } = "1.0.0";
+
+      // - - -  - - - 
+
+      public bool Silent { get; set; } = false;
+
+      // - - -  - - - 
+
       public bool ShowHelp { get; set; }
       public int Major { get; set; }
       public int Minor { get; set; }
@@ -38,7 +46,17 @@ namespace UpdateVersionInfo.Core
       /// <summary>
       /// Holds the master version for all platforms based on the UWP version.
       /// </summary>
-      public string sAutoVersion { get; set; }
+      public string sAutoVersionV2 { get; set; }
+
+      /// <summary>
+      /// Scan files & folder and sets paths automaticaly.
+      /// </summary>
+      public bool ScanFiles { get; set; } = false;
+
+      /// <summary>
+      /// Displays current version info.
+      /// </summary>
+      public bool Info { get; set; } = false;
 
       // - - -  - - - 
    }

@@ -6,6 +6,8 @@ namespace UpdateVersionInfo.Core
 {
    public class UWPHelper
    {
+      public static String LastMessage = "";
+
       static String AssemblyFileVersionExpression = @"^\s*\[assembly:\s*(?<attribute>(?:System\.)?(?:Reflection\.)?AssemblyFileVersion(?:Attribute)?\s*\(\s*""(?<version>[^""]+)""\s*\)\s*)\s*\]\s*$";
       static String AssemblyVersionExpression = @"^\s*\[assembly:\s*(?<attribute>(?:System\.)?(?:Reflection\.)?AssemblyVersion(?:Attribute)?\s*\(\s*""(?<version>[^""]+)""\s*\)\s*)\s*\]\s*$";
       static readonly Regex assemblyVersionRegEx = new Regex(AssemblyVersionExpression, RegexOptions.Multiline | RegexOptions.Compiled);
@@ -18,6 +20,8 @@ namespace UpdateVersionInfo.Core
       /// <returns></returns>
       public static bool IsValid(String path)
       {
+         LastMessage = "";
+
          if (!File.Exists(path)) return false;
          if ((new FileInfo(path).Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly) return false;
 
@@ -42,6 +46,15 @@ namespace UpdateVersionInfo.Core
          return false;
       }
 
+      public static Version GetVersion(string path)
+      {
+         LastMessage = "";
+
+         String contents = System.IO.File.ReadAllText(path);
+         LastMessage = assemblyVersionRegEx.Matches(contents)[0].Value.Replace("[assembly: System.Reflection.AssemblyVersion(\"", "").Replace("\")]", "");
+
+         return new Version(LastMessage);
+      }
 
       /// <summary>
       /// UpdateCSVersionInfo
@@ -50,11 +63,9 @@ namespace UpdateVersionInfo.Core
       /// <param name="version"></param>
       public static void Update(string path, Version version)
       {
-         String contents;
-         using (var reader = new StreamReader(path))
-         {
-            contents = reader.ReadToEnd();
-         }
+         LastMessage = "";
+
+         String contents = System.IO.File.ReadAllText(path);
 
          if (MainViewModel.Current.AutoVersion)
          {
@@ -68,18 +79,20 @@ namespace UpdateVersionInfo.Core
             //doc.Root.SetAttributeValue(versionCodeAttributeName, b);
             //doc.Root.SetAttributeValue(versionNameAttributeName, v2);
 
-            string st = assemblyVersionRegEx.Matches(contents)[0].Value.Replace("[assembly: System.Reflection.AssemblyVersion(\"", "").Replace("\")]", "");
+            string v1 = assemblyVersionRegEx.Matches(contents)[0].Value.Replace("[assembly: System.Reflection.AssemblyVersion(\"", "").Replace("\")]", "");
 
-            var v = st.Split(new char[] { '.' });
+            var v = v1.Split(new char[] { '.' });
 
             string v2 = v[0] + "." + v[1] + "." + v[2] + "." + (int.Parse(v[3]) + 1).ToString();
-            MainViewModel.Current.sAutoVersion = v2;
+            MainViewModel.Current.sAutoVersionV2 = v2;
 
             contents = assemblyVersionRegEx.Replace(contents, "[assembly: System.Reflection.AssemblyVersion(\"" + v2 + "\")]");
 
             if (assemblyFileVersionRegEx.IsMatch(contents))
             {
                contents = assemblyFileVersionRegEx.Replace(contents, "[assembly: System.Reflection.AssemblyFileVersion(\"" + v2 + "\")]");
+
+               LastMessage = $"{v1} --> {v2}";
             }
          }
          else
@@ -89,6 +102,9 @@ namespace UpdateVersionInfo.Core
             if (assemblyFileVersionRegEx.IsMatch(contents))
             {
                contents = assemblyFileVersionRegEx.Replace(contents, "[assembly: System.Reflection.AssemblyFileVersion(\"" + version.ToString() + "\")]");
+
+               //LastMessage = $"{st} --> {version.ToString()}";
+               LastMessage = $"--> {version.ToString()}";
             }
          };
 

@@ -7,6 +7,8 @@ namespace UpdateVersionInfo.Core
 {
    public class DroidHelper
    {
+      public static String LastMessage = "";
+
       /// <summary>
       /// IsValidAndroidManifest
       /// </summary>
@@ -14,6 +16,8 @@ namespace UpdateVersionInfo.Core
       /// <returns></returns>
       public static bool IsValid(String path)
       {
+         LastMessage = "";
+
          if (!File.Exists(path)) return false;
          if ((new FileInfo(path).Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly) return false;
 
@@ -32,6 +36,21 @@ namespace UpdateVersionInfo.Core
          return false;
       }
 
+
+      public static Version GetVersion(string path)
+      {
+         LastMessage = "";
+
+         const string androidNS = "http://schemas.android.com/apk/res/android";
+         XName versionCodeAttributeName = XName.Get("versionCode", androidNS);
+         XName versionNameAttributeName = XName.Get("versionName", androidNS);
+         XDocument doc = XDocument.Load(path);
+
+         LastMessage = doc.Root.Attribute(versionNameAttributeName).Value;
+
+         return new Version(LastMessage);
+      }
+
       /// <summary>
       /// UpdateAndroidVersionInfo
       /// </summary>
@@ -39,6 +58,8 @@ namespace UpdateVersionInfo.Core
       /// <param name="version"></param>
       public static void Update(string path, Version version)
       {
+         LastMessage = "";
+
          const string androidNS = "http://schemas.android.com/apk/res/android";
          XName versionCodeAttributeName = XName.Get("versionCode", androidNS);
          XName versionNameAttributeName = XName.Get("versionName", androidNS);
@@ -47,31 +68,36 @@ namespace UpdateVersionInfo.Core
          if (MainViewModel.Current.AutoVersion)
          {
             string b = doc.Root.Attribute(versionCodeAttributeName).Value;
-            string a = doc.Root.Attribute(versionNameAttributeName).Value;
+            string v1 = doc.Root.Attribute(versionNameAttributeName).Value;
 
-            var v = a.Split(new char[] { '.' });
+            var v = v1.Split(new char[] { '.' });
 
             string v2 = "";
 
-            if (string.IsNullOrEmpty(MainViewModel.Current.sAutoVersion))
+            if (string.IsNullOrEmpty(MainViewModel.Current.sAutoVersionV2))
             {
                v2 = v[0] + "." + v[1] + "." + (v.Count() < 3 ? "0" : v[2]) + "." + (int.Parse((v.Count() < 4 ? "0" : v[3])) + 1).ToString();
             }
             else
             {
-               v2 = MainViewModel.Current.sAutoVersion;
+               v2 = MainViewModel.Current.sAutoVersionV2;
             };
 
             doc.Root.SetAttributeValue(versionCodeAttributeName, b);
             doc.Root.SetAttributeValue(versionNameAttributeName, v2);
+
+            LastMessage = $"{v1} --> {v2}";
          }
          else
          {
             doc.Root.SetAttributeValue(versionCodeAttributeName, version.Build);
             doc.Root.SetAttributeValue(versionNameAttributeName, version);
+
+            LastMessage = $"--> {version.ToString()}";
          };
 
          doc.Save(path);
       }
+
    }
 }
