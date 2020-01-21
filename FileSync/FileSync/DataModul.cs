@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Windows.Forms;
 using System.Text;
@@ -86,7 +86,7 @@ public class DataModul
 
       // Sets database file name.
       //
-      this.SchemaFile = Basics.ChangeFileExt( DatabaseFile, "xsd");
+      this.SchemaFile = System.IO.Path.ChangeExtension( DatabaseFile, ".xsd");
 
       // Construct the connecting strings.
       //

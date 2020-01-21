@@ -78,19 +78,13 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="ZPF_Basics, Version=1.1.5.111, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\ZPF_Basics.1.1.5.111\lib\netstandard2.0\ZPF_Basics.dll</HintPath>
+    <Reference Include="ZPF_Basics, Version=1.1.11.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ZPF_Basics.1.1.11.9\lib\netstandard2.0\ZPF_Basics.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\_Units_\CS\Basics.PC.cs">
-      <Link>Basics.PC.cs</Link>
-    </Compile>
     <Compile Include="CompareFiles.cs" />
     <Compile Include="DataModul.cs" />
-    <Compile Include="..\..\..\_Units_\CS\PrintToPrinterHelper.cs">
-      <Link>PrintToPrinterHelper.cs</Link>
-    </Compile>
     <Compile Include="FindDlg.cs">
       <SubType>Form</SubType>
     </Compile>

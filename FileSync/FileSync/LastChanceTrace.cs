@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,7 +15,7 @@ namespace ZPF
    /// 
    /// 13/10/06 - ME  - Created
    /// 
-   /// <para>© 2006 ZePocketForge.com.</para>
+   /// <para>Â© 2006 ZePocketForge.com.</para>
    /// <example>
    ///static void Main()
    ///{
@@ -92,7 +92,7 @@ namespace ZPF
 
          string osVersion = os.VersionString;
          string spText = os.ServicePack;
-         // parameterweise zurück ..
+         // parameterweise zurÃ¼ck ..
 
          return string.Format( "{0} , {1}", osText, spText );
       }
@@ -243,9 +243,9 @@ namespace ZPF
          dlg.textBoxStack.Text   = e.Exception.StackTrace;
          if( e.Exception.InnerException != null )
          {
-            dlg.textBoxStack.Text   += Basics.CRLF;
-            dlg.textBoxStack.Text   += new String( '-', 80 ) + Basics.CRLF;
-            dlg.textBoxStack.Text   += Basics.CRLF;
+            dlg.textBoxStack.Text   += Environment.NewLine;
+            dlg.textBoxStack.Text   += new String( '-', 80 ) + Environment.NewLine;
+            dlg.textBoxStack.Text   += Environment.NewLine;
             dlg.textBoxStack.Text   += e.Exception.InnerException.StackTrace;
          };
 

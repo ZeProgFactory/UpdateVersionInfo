@@ -43,7 +43,7 @@ namespace FileSync
          DataModul.GetInstance().InitDataModul("FileSync");
          DataModul.GetInstance().LoadConfig();
 
-         Basics.ReadFormPos(DataModul.GetInstance().IniFileName, this);
+         //ToDo: Basics.ReadFormPos(DataModul.GetInstance().IniFileName, this);
 
          lineNumbersToolStripMenuItem.SelectedIndex = DataModul.GetInstance().LineNumbers;
          blackWhiteToolStripMenuItem.Checked = DataModul.GetInstance().BlackWhite;
@@ -345,7 +345,7 @@ namespace FileSync
 
          DataModul.GetInstance().SaveConfig();
 
-         Basics.WriteFormPos(DataModul.GetInstance().IniFileName, this);
+         //ToDo: Basics.WriteFormPos(DataModul.GetInstance().IniFileName, this);
       }
 
       private void lineNumbersToolStripMenuItem_SelectedIndexChanged(object sender, EventArgs e)
