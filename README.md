@@ -6,7 +6,7 @@ for those interested some links about the tricks of this library in the [wiki](h
 ### ... under construction ...  
 
 ## Features
- * FileSync - Compare files
+ * FileSync - [Compare/sync text file contents](https://github.com/ZeProgFactory/VS-LittleHelpers/tree/master/FileSync)
  * IconFactory - Generate Assets (icons, splashcreen, ...)
  * ProjectTool - Copy & rename solution / projects
  * ProjectTool - Clean projects (path to packages)
