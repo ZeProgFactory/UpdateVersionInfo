@@ -62,6 +62,16 @@ namespace UpdateVersionInfo
                      Console.WriteLine($"iOS   {iOSHelper.LastMessage}");
                   };
                }
+
+               if (!String.IsNullOrEmpty(MainViewModel.Current.nuspecPath))
+               {
+                  NugetHelper.GetVersion(MainViewModel.Current.nuspecPath);
+
+                  if (!MainViewModel.Current.Silent)
+                  {
+                     Console.WriteLine($"Nuget {NugetHelper.LastMessage}");
+                  };
+               }
             }
             else
             {
@@ -101,6 +111,16 @@ namespace UpdateVersionInfo
                      if (!MainViewModel.Current.Silent)
                      {
                         Console.WriteLine($"iOS   {iOSHelper.LastMessage}");
+                     };
+                  }
+
+                  if (!String.IsNullOrEmpty(MainViewModel.Current.nuspecPath))
+                  {
+                     NugetHelper.Update(MainViewModel.Current.nuspecPath, version);
+
+                     if (!MainViewModel.Current.Silent)
+                     {
+                        Console.WriteLine($"Nuget {NugetHelper.LastMessage}");
                      };
                   }
                }

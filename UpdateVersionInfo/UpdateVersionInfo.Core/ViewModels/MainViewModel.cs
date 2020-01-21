@@ -36,9 +36,11 @@ namespace UpdateVersionInfo.Core
       public int Minor { get; set; }
       public int? Build { get; set; }
       public int? Revision { get; set; }
+
       public String VersionCsPath { get; set; }
       public String AndroidManifestPath { get; set; }
       public String TouchPListPath { get; set; }
+      public String nuspecPath { get; set; }
 
       // - - -  - - - 
 

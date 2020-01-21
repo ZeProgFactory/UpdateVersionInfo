@@ -28,7 +28,7 @@ namespace UpdateVersionInfo
                     "i", "Displays current version info", i => MainViewModel.Current.Info = true
                 },
                 {
-                    "v|major=", "A numeric major version number greater than zero.", (int v) => MainViewModel.Current.Major = v
+                    "v|major=", "auto | A numeric major version number greater than zero.", (int v) => MainViewModel.Current.Major = v
                 },
                 {
                     "m|minor=", "A numeric minor number greater than zero.", (int v) => MainViewModel.Current.Minor = v
@@ -40,13 +40,16 @@ namespace UpdateVersionInfo
                     "r|revision=", "A numeric revision number greater than zero.", (int v) => MainViewModel.Current.Revision = v
                 },
                 {
-                    "p|path=", "The path to a C# file to update with version information.", p => MainViewModel.Current.VersionCsPath = p
+                    "p|path=", "scan | The path to a C# file to update with version information.", p => MainViewModel.Current.VersionCsPath = p
                 },
                 {
                     "a|androidManifest=", "The path to an android manifest file to update with version information.", p => MainViewModel.Current.AndroidManifestPath = p
                 },
                 {
                     "t|touchPlist=", "The path to an iOS plist file to update with version information.", p => MainViewModel.Current.TouchPListPath = p
+                },
+                {
+                    "n|nuspec=", "The path to an nuspec file to update with version information.", n => MainViewModel.Current.nuspecPath = n
                 }
             };
 
@@ -97,7 +100,11 @@ namespace UpdateVersionInfo
 
                var allFiles = System.IO.Directory.EnumerateFiles(System.IO.Directory.GetCurrentDirectory(), "*.*", System.IO.SearchOption.AllDirectories);
 
-               var files = allFiles.Where(x => x.ToLower().Contains(@"\properties\") || x.ToLower().EndsWith(@"\info.plist")).ToList();
+               var files = allFiles.Where(
+                  x => x.ToLower().Contains(@"\properties\")
+                  || x.ToLower().EndsWith(@"\info.plist")
+                  || x.ToLower().EndsWith(@".nuspec")
+                  ).ToList();
 
                foreach (var f in files)
                {
@@ -141,6 +148,11 @@ namespace UpdateVersionInfo
                   //      MainViewModel.Current.MacPListPath = f;
                   //   };
                   //};
+
+                  if (NugetHelper.IsValid(f))
+                  {
+                     MainViewModel.Current.nuspecPath = f;
+                  };
                };
             };
          };

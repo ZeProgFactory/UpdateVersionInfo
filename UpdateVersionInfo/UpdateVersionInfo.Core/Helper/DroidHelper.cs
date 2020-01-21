@@ -42,7 +42,7 @@ namespace UpdateVersionInfo.Core
          LastMessage = "";
 
          const string androidNS = "http://schemas.android.com/apk/res/android";
-         XName versionCodeAttributeName = XName.Get("versionCode", androidNS);
+         XName versionCodeAttributeName = XName.Get("version", androidNS);
          XName versionNameAttributeName = XName.Get("versionName", androidNS);
          XDocument doc = XDocument.Load(path);
 

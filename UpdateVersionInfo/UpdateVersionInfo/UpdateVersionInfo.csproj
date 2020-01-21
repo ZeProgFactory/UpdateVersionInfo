@@ -52,6 +52,9 @@
     <Compile Include="..\UpdateVersionInfo.Core\Helper\iOSHelper.cs">
       <Link>Core\iOSHelper.cs</Link>
     </Compile>
+    <Compile Include="..\UpdateVersionInfo.Core\Helper\NugetHelper.cs">
+      <Link>Core\NugetHelper.cs</Link>
+    </Compile>
     <Compile Include="..\UpdateVersionInfo.Core\Helper\UWPHelper.cs">
       <Link>Core\UWPHelper.cs</Link>
     </Compile>

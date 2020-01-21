@@ -3,25 +3,30 @@
 Based on https://github.com/soltechinc/soltechxf/   
 // http://stackoverflow.com/questions/27058172/xamarin-mobile-app-version-number-scheme-across-3-platforms
 
+## commandline switches
 ```
 UpdateVersionInfo - V1.0.0
 
   -?                         Shows help/usage information.
   -s                         silent/verbus
   -i                         Displays current version info
-  -v, --major=VALUE          A numeric major version number greater than zero.
+  -v, --major=VALUE          auto | A numeric major version number greater
+                               than zero.
   -m, --minor=VALUE          A numeric minor number greater than zero.
   -b, --build=VALUE          A numeric build number greater than zero.
   -r, --revision=VALUE       A numeric revision number greater than zero.
-  -p, --path=VALUE           The path to a C# file to update with version
-                               information.
+  -p, --path=VALUE           scan | The path to a C# file to update with
+                               version information.
   -a, --androidManifest=VALUE
                              The path to an android manifest file to update
                                with version information.
   -t, --touchPlist=VALUE     The path to an iOS plist file to update with
                                version information.
+  -n, --nuspec=VALUE         The path to an nuspec file to update with
+                               version information.
 ```
 
+## version info
 ```
 UpdateVersionInfo.exe -i -p=scan
 ```
@@ -34,6 +39,7 @@ Droid 1.0.0.11
 iOS   1.0
 ```
 
+## version update
 
 ```
 UpdateVersionInfo.exe -v=auto -p=scan
