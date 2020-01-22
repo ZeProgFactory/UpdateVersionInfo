@@ -5,7 +5,9 @@ for those interested some links about the tricks of this library in the [wiki](h
      
 ### ... under construction ...  
 
-## Features
+## Modules
+Each module may be uses (and tested) independently from Visual Studio.
+
  * FileSync - [Compare/sync text file contents](https://github.com/ZeProgFactory/VS-LittleHelpers/tree/master/FileSync)
  * IconFactory - Generate Assets (icons, splashcreen, ...)
  * ProjectTool - Copy & rename solution / projects
