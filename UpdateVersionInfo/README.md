@@ -3,6 +3,9 @@
 Based on https://github.com/soltechinc/soltechxf/   
 // http://stackoverflow.com/questions/27058172/xamarin-mobile-app-version-number-scheme-across-3-platforms
 
+UpdateVersionInfo is basically a command line tool, that increments the revision number of a version.  
+It was created to update synchronously all the versions of the different projects in a Xamarin.Forms solution, but since there UpdateVersionInfo evolved pretty much. We added more project types. Now (nearly) all the platforms covered by Xamarin.Forms are covered (UWP, Android, iOS, WPF, Mac). Yes, me missed Tizen. We don’t use it, so we hadn’t any use for it. Remember, UpdateVersionInfo is open source, so feel free to make a pull request for the Tizen implementation ore anything else.    
+  
 ## commandline switches
 ```
 UpdateVersionInfo - V1.0.0
