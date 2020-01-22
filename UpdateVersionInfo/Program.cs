@@ -33,7 +33,7 @@ namespace UpdateVersionInfo
 
             if (MainViewModel.Current.Info)
             {
-               if (!String.IsNullOrEmpty(MainViewModel.Current.VersionCsPath))
+               if (!String.IsNullOrEmpty(MainViewModel.Current.VersionCsPath) && MainViewModel.Current.VersionCsPath.ToLower() != "scan")
                {
                   UWPHelper.GetVersion(MainViewModel.Current.VersionCsPath);
 
@@ -55,7 +55,7 @@ namespace UpdateVersionInfo
 
                if (!String.IsNullOrEmpty(MainViewModel.Current.TouchPListPath))
                {
-                  iOSHelper.GetVersion(MainViewModel.Current.TouchPListPath );
+                  iOSHelper.GetVersion(MainViewModel.Current.TouchPListPath);
 
                   if (!MainViewModel.Current.Silent)
                   {
@@ -83,15 +83,25 @@ namespace UpdateVersionInfo
                       MainViewModel.Current.Build.Value,
                       MainViewModel.Current.Revision.HasValue ? MainViewModel.Current.Revision.Value : 0);
 
-                  UWPHelper.Update(MainViewModel.Current.VersionCsPath, version);
-                  if (!MainViewModel.Current.Silent)
+                  if (MainViewModel.Current.VersionCsPath.ToLower() != "scan")
                   {
-                     Console.WriteLine($"UWP   {UWPHelper.LastMessage}");
-                  };
+                     UWPHelper.Update(MainViewModel.Current.VersionCsPath, version);
+                     if (!MainViewModel.Current.Silent)
+                     {
+                        Console.WriteLine($"UWP   {UWPHelper.LastMessage}");
+                     };
 
-                  if (MainViewModel.Current.AutoVersion)
+                     if (MainViewModel.Current.AutoVersion)
+                     {
+                        version = new Version(MainViewModel.Current.sAutoVersionV2);
+                     };
+                  }
+                  else
                   {
-                     version = new Version(MainViewModel.Current.sAutoVersionV2);
+                     if (MainViewModel.Current.AutoVersion)
+                     {
+                        version = null;
+                     };
                   };
 
                   if (!String.IsNullOrEmpty(MainViewModel.Current.AndroidManifestPath))
@@ -164,7 +174,10 @@ namespace UpdateVersionInfo
 
          if (String.IsNullOrEmpty(MainViewModel.Current.VersionCsPath) || !UWPHelper.IsValid(MainViewModel.Current.VersionCsPath))
          {
-            errors.AppendLine("You must supply valid path to a writable C# file containing assembly version information.");
+            if (!MainViewModel.Current.Info && !MainViewModel.Current.ScanFiles)
+            {
+               errors.AppendLine("You must supply valid path to a writable C# file containing assembly version information.");
+            };
          }
 
          if (!String.IsNullOrEmpty(MainViewModel.Current.AndroidManifestPath) && !DroidHelper.IsValid(MainViewModel.Current.AndroidManifestPath))

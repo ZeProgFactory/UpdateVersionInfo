@@ -58,10 +58,20 @@ namespace UpdateVersionInfo.Core
 
          XDocument doc = XDocument.Load(path);
          var versionElement = doc.XPathSelectElement("package/metadata/version");
+
          string v1 = versionElement.Value.ToString();
 
-         versionElement.Value = version.ToString();
-         LastMessage = $"{v1} --> {version.ToString()}";
+         if (version == null)
+         {
+            string v2 = MainViewModel.Current.IncVersion(v1);
+            versionElement.Value = v2;
+            LastMessage = $"{v1} --> {v2}";
+         }
+         else
+         {
+            versionElement.Value = version.ToString();
+            LastMessage = $"{v1} --> {version.ToString()}";
+         };
 
          doc.Save(path);
       }

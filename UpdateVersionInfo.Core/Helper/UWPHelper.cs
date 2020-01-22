@@ -80,10 +80,7 @@ namespace UpdateVersionInfo.Core
             //doc.Root.SetAttributeValue(versionNameAttributeName, v2);
 
             string v1 = assemblyVersionRegEx.Matches(contents)[0].Value.Replace("[assembly: System.Reflection.AssemblyVersion(\"", "").Replace("\")]", "");
-
-            var v = v1.Split(new char[] { '.' });
-
-            string v2 = v[0] + "." + v[1] + "." + v[2] + "." + (int.Parse(v[3]) + 1).ToString();
+            string v2 = MainViewModel.Current.IncVersion(v1);
             MainViewModel.Current.sAutoVersionV2 = v2;
 
             contents = assemblyVersionRegEx.Replace(contents, "[assembly: System.Reflection.AssemblyVersion(\"" + v2 + "\")]");

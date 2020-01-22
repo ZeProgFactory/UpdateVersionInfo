@@ -23,7 +23,7 @@ namespace UpdateVersionInfo.Core
 
       // - - -  - - - 
 
-      public String UpdateVersionInfoVersion { get; } = "1.0.0";
+      public String UpdateVersionInfoVersion { get; } = "1.0.1";
 
       // - - -  - - - 
 
@@ -59,6 +59,14 @@ namespace UpdateVersionInfo.Core
       /// Displays current version info.
       /// </summary>
       public bool Info { get; set; } = false;
+
+      // - - -  - - - 
+
+      public string IncVersion(string v1)
+      {
+         var v = v1.Split(new char[] { '.' });
+         return v[0] + "." + v[1] + "." + v[2] + "." + (int.Parse(v[3]) + 1).ToString();
+      }
 
       // - - -  - - - 
    }
