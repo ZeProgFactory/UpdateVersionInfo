@@ -22,15 +22,15 @@ namespace UpdateVersionInfo
       {
          commandLine = new CommandLineArguments(args);
 
+         if (!MainViewModel.Current.Silent)
+         {
+            Console.WriteLine("");
+            Console.WriteLine($"UpdateVersionInfo - V{MainViewModel.Current.UpdateVersionInfoVersion}");
+            Console.WriteLine("");
+         };
+
          if (ValidateCommandLine(commandLine))
          {
-            if (!MainViewModel.Current.Silent)
-            {
-               Console.WriteLine("");
-               Console.WriteLine($"UpdateVersionInfo - V{MainViewModel.Current.UpdateVersionInfoVersion}");
-               Console.WriteLine("");
-            };
-
             if (MainViewModel.Current.Info)
             {
                string formatStr = (MainViewModel.Current.Verbose
@@ -87,7 +87,7 @@ namespace UpdateVersionInfo
                       MainViewModel.Current.Build.Value,
                       MainViewModel.Current.Revision.HasValue ? MainViewModel.Current.Revision.Value : 0);
 
-                  if (MainViewModel.Current.VersionCsPath.ToLower() != "scan")
+                  if (!string.IsNullOrEmpty(MainViewModel.Current.VersionCsPath) && MainViewModel.Current.VersionCsPath.ToLower() != "scan")
                   {
                      UWPHelper.Update(MainViewModel.Current.VersionCsPath, version);
                      if (!MainViewModel.Current.Silent)
@@ -176,23 +176,23 @@ namespace UpdateVersionInfo
             errors.AppendLine("You must supply a numeric build number.");
          }
 
-         if (String.IsNullOrEmpty(MainViewModel.Current.VersionCsPath) || !UWPHelper.IsValid(MainViewModel.Current.VersionCsPath))
+         if (!MainViewModel.Current.ScanFiles)
          {
-            if (!MainViewModel.Current.Info && !MainViewModel.Current.ScanFiles)
+            if (!String.IsNullOrEmpty(MainViewModel.Current.VersionCsPath) && !UWPHelper.IsValid(MainViewModel.Current.VersionCsPath))
             {
                errors.AppendLine("You must supply valid path to a writable C# file containing assembly version information.");
             };
-         }
 
-         if (!String.IsNullOrEmpty(MainViewModel.Current.AndroidManifestPath) && !DroidHelper.IsValid(MainViewModel.Current.AndroidManifestPath))
-         {
-            errors.AppendLine("You must supply valid path to a writable android manifest file.");
-         }
+            if (!String.IsNullOrEmpty(MainViewModel.Current.AndroidManifestPath) && !DroidHelper.IsValid(MainViewModel.Current.AndroidManifestPath))
+            {
+               errors.AppendLine("You must supply valid path to a writable android manifest file.");
+            };
 
-         if (!String.IsNullOrEmpty(MainViewModel.Current.TouchPListPath) && !iOSHelper.IsValid(MainViewModel.Current.TouchPListPath))
-         {
-            errors.AppendLine("You must supply valid path to a writable plist file containing version information.");
-         }
+            if (!String.IsNullOrEmpty(MainViewModel.Current.TouchPListPath) && !iOSHelper.IsValid(MainViewModel.Current.TouchPListPath))
+            {
+               errors.AppendLine("You must supply valid path to a writable plist file containing version information.");
+            };
+         };
 
          if (errors.Length > 0)
          {

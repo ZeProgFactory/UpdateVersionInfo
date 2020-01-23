@@ -98,6 +98,7 @@ namespace UpdateVersionInfo
             if (st.ToLower().StartsWith("-p") && (st.ToLower().Contains("scan") || st.ToLower().Contains("auto")))
             {
                MainViewModel.Current.ScanFiles = true;
+               MainViewModel.Current.Files.Clear();
 
                var allFiles = System.IO.Directory.EnumerateFiles(System.IO.Directory.GetCurrentDirectory(), "*.*", System.IO.SearchOption.AllDirectories);
 
@@ -120,6 +121,8 @@ namespace UpdateVersionInfo
                      {
                         MainViewModel.Current.VersionCsPath = f;
                         _args2[_args2.IndexOf(st)] = $"-p={f}";
+
+                        MainViewModel.Current.Files.Add(f);
                      };
                   };
 
@@ -128,6 +131,7 @@ namespace UpdateVersionInfo
                      if (System.IO.Directory.EnumerateFiles(System.IO.Path.GetDirectoryName(f), "AndroidManifest.xml", System.IO.SearchOption.TopDirectoryOnly).Count() == 1)
                      {
                         MainViewModel.Current.AndroidManifestPath = f;
+                        MainViewModel.Current.Files.Add(f);
                      };
                   };
 
@@ -136,6 +140,7 @@ namespace UpdateVersionInfo
                   //if (System.IO.Directory.EnumerateFiles(System.IO.Path.GetDirectoryName(f), "Settings.settings", System.IO.SearchOption.TopDirectoryOnly).Count() == 1)
                   //{
                   //   MainViewModel.Current.WPFAssemblyInfoPath = f;
+                  //MainViewModel.Current.Files.Add(f);
                   //};
                   //};
 
@@ -144,6 +149,7 @@ namespace UpdateVersionInfo
                      if (System.IO.File.ReadAllText(f).ToLower().Contains("minimumosversion"))
                      {
                         MainViewModel.Current.TouchPListPath = f;
+                        MainViewModel.Current.Files.Add(f);
                      };
                   };
 
@@ -152,12 +158,14 @@ namespace UpdateVersionInfo
                   //   if (System.IO.File.ReadAllText(f).ToLower().Contains("lsminimumsystemversion"))
                   //   {
                   //      MainViewModel.Current.MacPListPath = f;
+                  //MainViewModel.Current.Files.Add(f);
                   //   };
                   //};
 
                   if (NugetHelper.IsValid(f))
                   {
                      MainViewModel.Current.nuspecPath = f;
+                     MainViewModel.Current.Files.Add(f);
                   };
                };
             };
