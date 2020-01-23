@@ -60,6 +60,11 @@ namespace UpdateVersionInfo.Core
       /// </summary>
       public bool Info { get; set; } = false;
 
+      /// <summary>
+      /// Displays more detailed info
+      /// </summary>
+      public bool Verbose { get; set; } = true;
+
       // - - -  - - - 
 
       public string IncVersion(string v1)

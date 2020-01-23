@@ -33,13 +33,17 @@ namespace UpdateVersionInfo
 
             if (MainViewModel.Current.Info)
             {
+               string formatStr = (MainViewModel.Current.Verbose
+                  ? "{0,6} {1,-10} - {2}"
+                  : "{0,6} {1,-10}");
+
                if (!String.IsNullOrEmpty(MainViewModel.Current.VersionCsPath) && MainViewModel.Current.VersionCsPath.ToLower() != "scan")
                {
                   UWPHelper.GetVersion(MainViewModel.Current.VersionCsPath);
 
                   if (!MainViewModel.Current.Silent)
                   {
-                     Console.WriteLine($"UWP   {UWPHelper.LastMessage}");
+                     Console.WriteLine(formatStr, "UWP", UWPHelper.LastMessage, MainViewModel.Current.VersionCsPath);
                   };
                }
 
@@ -49,7 +53,7 @@ namespace UpdateVersionInfo
 
                   if (!MainViewModel.Current.Silent)
                   {
-                     Console.WriteLine($"Droid {DroidHelper.LastMessage}");
+                     Console.WriteLine(formatStr, "Droid", DroidHelper.LastMessage, MainViewModel.Current.AndroidManifestPath);
                   };
                }
 
@@ -59,7 +63,7 @@ namespace UpdateVersionInfo
 
                   if (!MainViewModel.Current.Silent)
                   {
-                     Console.WriteLine($"iOS   {iOSHelper.LastMessage}");
+                     Console.WriteLine(formatStr, "iOS", iOSHelper.LastMessage, MainViewModel.Current.TouchPListPath);
                   };
                }
 
@@ -69,7 +73,7 @@ namespace UpdateVersionInfo
 
                   if (!MainViewModel.Current.Silent)
                   {
-                     Console.WriteLine($"Nuget {NugetHelper.LastMessage}");
+                     Console.WriteLine(formatStr, "Nuget", NugetHelper.LastMessage, MainViewModel.Current.nuspecPath);
                   };
                }
             }

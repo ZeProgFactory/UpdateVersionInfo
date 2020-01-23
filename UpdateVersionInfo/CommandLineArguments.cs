@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -108,6 +109,11 @@ namespace UpdateVersionInfo
 
                foreach (var f in files)
                {
+                  if (f.StartsWith(@"D:\GitWare\_Nugets_\ZPF_Basics_XF\ZPF_Basics_XF_Sample\ZPF_Basics_XF_Sample.UWP\Properties"))
+                  {
+                     Debugger.Break();
+                  };
+
                   if (UWPHelper.IsValid(f))
                   {
                      if (System.IO.Directory.EnumerateFiles(System.IO.Path.GetDirectoryName(f), "Default.rd.xml", System.IO.SearchOption.TopDirectoryOnly).Count() == 1)

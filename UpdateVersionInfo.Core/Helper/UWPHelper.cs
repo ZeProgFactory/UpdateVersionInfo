@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
+using CSharpVerbalExpressions;
 
 namespace UpdateVersionInfo.Core
 {
@@ -8,10 +10,9 @@ namespace UpdateVersionInfo.Core
    {
       public static String LastMessage = "";
 
-      static String AssemblyFileVersionExpression = @"^\s*\[assembly:\s*(?<attribute>(?:System\.)?(?:Reflection\.)?AssemblyFileVersion(?:Attribute)?\s*\(\s*""(?<version>[^""]+)""\s*\)\s*)\s*\]\s*$";
-      static String AssemblyVersionExpression = @"^\s*\[assembly:\s*(?<attribute>(?:System\.)?(?:Reflection\.)?AssemblyVersion(?:Attribute)?\s*\(\s*""(?<version>[^""]+)""\s*\)\s*)\s*\]\s*$";
-      static readonly Regex assemblyVersionRegEx = new Regex(AssemblyVersionExpression, RegexOptions.Multiline | RegexOptions.Compiled);
-      static readonly Regex assemblyFileVersionRegEx = new Regex(AssemblyFileVersionExpression, RegexOptions.Multiline | RegexOptions.Compiled);
+      // VerbalExpressions-netstandard16
+      // https://github.com/VerbalExpressions/CSharpVerbalExpressions
+      // https://www.nuget.org/packages/VerbalExpressions-official/
 
       /// <summary>
       /// IsValidCSharpVersionFile
@@ -27,16 +28,23 @@ namespace UpdateVersionInfo.Core
 
          try
          {
-            String contents;
-            using (var reader = new StreamReader(path))
-            {
-               contents = reader.ReadToEnd();
-            }
+            String contents = System.IO.File.ReadAllText(path);
 
-            if (assemblyVersionRegEx.IsMatch(contents))
+            var verbEx = new VerbalExpressions()
+                     .Anything()
+                     .StartOfLine()
+                     .Then("[assembly:")
+                     .Anything()
+                     .Then("AssemblyVersion(\"")
+                     .Anything()
+                     .Then("\")]")
+                     .EndOfLine()
+                     .Anything();
+
+            if (verbEx.IsMatch(contents))
             {
                return true;
-            }
+            };
          }
          catch (Exception e)
          {
@@ -51,7 +59,52 @@ namespace UpdateVersionInfo.Core
          LastMessage = "";
 
          String contents = System.IO.File.ReadAllText(path);
-         LastMessage = assemblyVersionRegEx.Matches(contents)[0].Value.Replace("[assembly: System.Reflection.AssemblyVersion(\"", "").Replace("\")]", "");
+
+         //var verbEx = new VerbalExpressions()
+         //      .Anything()
+         //      .StartOfLine(true)
+         //      .Then("[assembly:")
+         //      .Anything()
+         //      .Then("AssemblyVersion(\"")
+         //      .Anything()
+         //      .Then("\")]")
+         //      .EndOfLine()
+         //      .Anything()
+         //      ;
+
+         // ^(.*)(\[assembly:)(.*)(AssemblyVersion\(")(.*)("\)])(.*)$
+         //  (.*)  --> false
+
+         //var verbEx = new VerbalExpressions()
+         //      .StartOfLine(true)
+         //      .Then("[assembly:")
+         //      .Anything()
+         //      .Then("AssemblyVersion(\"")
+         //      .Anything()
+         //      .Then("\")]")
+         //      .EndOfLine()
+         //      ;
+         // OK but not on csharp
+
+         var verbEx = new VerbalExpressions()
+               .Then("\n")
+               //.AnythingBut("\\")
+               .Then("[assembly:")
+               .Anything()
+               .Then("AssemblyVersion(\"")
+               .AnythingBut("\"")
+               .Then("\")]")
+               ;
+
+         var x = verbEx.IsMatch(contents);
+         Debug.WriteLine(x.ToString());
+
+         var regex = verbEx.ToRegex();
+         var m = regex.Match(contents);
+
+         Debug.WriteLine(m.ToString());
+         LastMessage = regex.Matches(contents)[0].Value;
+         LastMessage = LastMessage.Replace("\n[assembly: AssemblyVersion(\"", "").Replace("\")]", "");
 
          return new Version(LastMessage);
       }
@@ -67,42 +120,35 @@ namespace UpdateVersionInfo.Core
 
          String contents = System.IO.File.ReadAllText(path);
 
+         var verbEx = new VerbalExpressions()
+               .Then("\n")
+               //.AnythingBut("\\")
+               .Then("[assembly:")
+               .Anything()
+               .Then("AssemblyVersion(\"")
+               .AnythingBut("\"")
+               .Then("\")]")
+               ;
+
+         var regex = verbEx.ToRegex();
+
+         string v1 = regex.Matches(contents)[0].Value.Replace("\n[assembly: AssemblyVersion(\"", "").Replace("\")]", "");
+
          if (MainViewModel.Current.AutoVersion)
          {
-            //string b = doc.Root.Attribute(versionCodeAttributeName).Value;
-            //string a = doc.Root.Attribute(versionNameAttributeName).Value;
-
-            //var v = a.Split(new char[] { '.' });
-
-            //string v2 = v[0] + "." + v[1] + "." + v[2] + "." + (int.Parse(v[3]) + 1).ToString();
-
-            //doc.Root.SetAttributeValue(versionCodeAttributeName, b);
-            //doc.Root.SetAttributeValue(versionNameAttributeName, v2);
-
-            string v1 = assemblyVersionRegEx.Matches(contents)[0].Value.Replace("[assembly: System.Reflection.AssemblyVersion(\"", "").Replace("\")]", "");
             string v2 = MainViewModel.Current.IncVersion(v1);
             MainViewModel.Current.sAutoVersionV2 = v2;
 
-            contents = assemblyVersionRegEx.Replace(contents, "[assembly: System.Reflection.AssemblyVersion(\"" + v2 + "\")]");
-
-            if (assemblyFileVersionRegEx.IsMatch(contents))
-            {
-               contents = assemblyFileVersionRegEx.Replace(contents, "[assembly: System.Reflection.AssemblyFileVersion(\"" + v2 + "\")]");
-
-               LastMessage = $"{v1} --> {v2}";
-            }
+            //contents = assemblyVersionRegEx.Replace(contents, "[assembly: System.Reflection.AssemblyVersion(\"" + v2 + "\")]");
+            contents = contents.Replace(v1, v2);
+            LastMessage = $"{v1} --> {v2}";
          }
          else
          {
-            contents = assemblyVersionRegEx.Replace(contents, "[assembly: System.Reflection.AssemblyVersion(\"" + version.ToString() + "\")]");
+            string v2 = version.ToString();
 
-            if (assemblyFileVersionRegEx.IsMatch(contents))
-            {
-               contents = assemblyFileVersionRegEx.Replace(contents, "[assembly: System.Reflection.AssemblyFileVersion(\"" + version.ToString() + "\")]");
-
-               //LastMessage = $"{st} --> {version.ToString()}";
-               LastMessage = $"--> {version.ToString()}";
-            }
+            contents = contents.Replace(v1, v2);
+            LastMessage = $"{v1} --> {v2}";
          };
 
          using (StreamWriter writer = new StreamWriter(path, false))
