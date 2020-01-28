@@ -1,9 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <UserSecretsId>c6b4c9f1-d8eb-49f4-afec-6b05de9ab0dd</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Template\VersionInfo.cs.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Template\VersionInfo.cs.txt" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ZPF_Basics" Version="1.1.11.10" />

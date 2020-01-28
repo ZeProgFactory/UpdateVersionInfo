@@ -58,6 +58,9 @@
     <Compile Include="..\UpdateVersionInfo.Core\Helper\UWPHelper.cs">
       <Link>Core\UWPHelper.cs</Link>
     </Compile>
+    <Compile Include="..\UpdateVersionInfo.Core\Helper\_VI_Helper.cs">
+      <Link>Core\_VI_Helper.cs</Link>
+    </Compile>
     <Compile Include="..\UpdateVersionInfo.Core\ViewModels\MainViewModel.cs">
       <Link>Core\MainViewModel.cs</Link>
     </Compile>

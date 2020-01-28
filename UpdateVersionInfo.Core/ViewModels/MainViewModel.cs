@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ZPF;
 
 namespace UpdateVersionInfo.Core
 {
@@ -55,7 +56,7 @@ namespace UpdateVersionInfo.Core
       /// Scan files & folder and sets paths automaticaly.
       /// </summary>
       public bool ScanFiles { get; set; } = false;
-      public List<string> Files { get; set; } = new List<string>();
+      public List<NameValue> Files { get; set; } = new List<NameValue>();
 
       /// <summary>
       /// Displays current version info.

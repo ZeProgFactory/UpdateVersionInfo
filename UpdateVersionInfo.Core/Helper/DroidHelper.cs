@@ -5,6 +5,15 @@ using System.Xml.Linq;
 
 namespace UpdateVersionInfo.Core
 {
+   // AndroidManifest.xml
+   //
+   //
+   //
+   // https://developer.android.com/studio/publish/versioning.html
+   //
+   // major.minor.build[.revision]
+
+
    public class DroidHelper
    {
       public static String LastMessage = "";
