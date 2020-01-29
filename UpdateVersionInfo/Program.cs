@@ -29,35 +29,36 @@ namespace UpdateVersionInfo
                string formatStr = (MainViewModel.Current.Verbose
                   ? "{0,6} {1,-10} - {2}"
                   : "{0,6} {1,-10}");
-
+               
+               
                foreach (var f in MainViewModel.Current.Files)
                {
                   switch (f.Name)
                   {
                      case "vi":
-                        _VI_Helper.GetVersion(f.Value);
+                        _VI_Helper.GetVersion(f.Target);
 
                         if (!MainViewModel.Current.Silent)
                         {
-                           Console.WriteLine(formatStr, "", _VI_Helper.LastMessage, f.Value);
+                           Console.WriteLine(formatStr, "", _VI_Helper.LastMessage, f.Target);
                         };
                         break;
 
                      case "UWP":
-                        UWPHelper.GetVersion(f.Value);
+                        UWPHelper.GetVersion(f.Target);
 
                         if (!MainViewModel.Current.Silent)
                         {
-                           Console.WriteLine(formatStr, "UWP", UWPHelper.LastMessage, f.Value);
+                           Console.WriteLine(formatStr, "UWP", UWPHelper.LastMessage, f.Target);
                         };
                         break;
 
                      case "Droid":
-                        DroidHelper.GetVersion(f.Value);
+                        DroidHelper.GetVersion(f.Target);
 
                         if (!MainViewModel.Current.Silent)
                         {
-                           Console.WriteLine(formatStr, "Droid", DroidHelper.LastMessage, f.Value);
+                           Console.WriteLine(formatStr, "Droid", DroidHelper.LastMessage, f.Target);
                         };
                         break;
 
@@ -65,11 +66,11 @@ namespace UpdateVersionInfo
                         break;
 
                      case "iOS":
-                        iOSHelper.GetVersion(f.Value);
+                        iOSHelper.GetVersion(f.Target);
 
                         if (!MainViewModel.Current.Silent)
                         {
-                           Console.WriteLine(formatStr, "iOS", iOSHelper.LastMessage, f.Value);
+                           Console.WriteLine(formatStr, "iOS", iOSHelper.LastMessage, f.Target);
                         };
                         break;
 
@@ -77,11 +78,11 @@ namespace UpdateVersionInfo
                         break;
 
                      case "Nuget":
-                        NugetHelper.GetVersion(f.Value);
+                        NugetHelper.GetVersion(f.Target);
 
                         if (!MainViewModel.Current.Silent)
                         {
-                           Console.WriteLine(formatStr, "Nuget", NugetHelper.LastMessage, f.Value);
+                           Console.WriteLine(formatStr, "Nuget", NugetHelper.LastMessage, f.Target);
                         };
                         break;
                   };
@@ -89,6 +90,11 @@ namespace UpdateVersionInfo
             }
             else
             {
+               string formatStr = (MainViewModel.Current.Verbose
+                  ? "{0,6} {1,-24} - {2}"
+                  : "{0,6} {1,-24}");
+
+
                try
                {
                   Version version = new Version(
@@ -102,27 +108,32 @@ namespace UpdateVersionInfo
                      switch (f.Name)
                      {
                         case "vi":
+                           version = _VI_Helper.Update(f.Target);
+                           if (!MainViewModel.Current.Silent)
+                           {
+                              Console.WriteLine(formatStr, "", _VI_Helper.LastMessage, f.Target);
+                           };
                            break;
 
                         case "UWP":
-                           UWPHelper.Update(f.Value, version);
+                           UWPHelper.Update(f.Target, version);
                            if (!MainViewModel.Current.Silent)
                            {
-                              Console.WriteLine($"UWP   {UWPHelper.LastMessage}");
+                              Console.WriteLine(formatStr, "UWP", UWPHelper.LastMessage, f.Target);
                            };
 
-                           if (MainViewModel.Current.AutoVersion)
-                           {
-                              version = new Version(MainViewModel.Current.sAutoVersionV2);
-                           };
+                           //if (MainViewModel.Current.AutoVersion)
+                           //{
+                           //   version = new Version(MainViewModel.Current.sAutoVersionV2);
+                           //};
                            break;
 
                         case "Droid":
-                           DroidHelper.Update(f.Value, version);
+                           DroidHelper.Update(f.Target, version);
 
                            if (!MainViewModel.Current.Silent)
                            {
-                              Console.WriteLine($"Droid {DroidHelper.LastMessage}");
+                              Console.WriteLine(formatStr, "Droid", DroidHelper.LastMessage, f.Target);
                            };
                            break;
 
@@ -130,11 +141,11 @@ namespace UpdateVersionInfo
                            break;
 
                         case "iOS":
-                           iOSHelper.Update(f.Value, version);
+                           iOSHelper.Update(f.Target, version);
 
                            if (!MainViewModel.Current.Silent)
                            {
-                              Console.WriteLine($"iOS   {iOSHelper.LastMessage}");
+                              Console.WriteLine(formatStr, "iOS", iOSHelper.LastMessage, f.Target);
                            };
                            break;
 
@@ -142,11 +153,11 @@ namespace UpdateVersionInfo
                            break;
 
                         case "Nuget":
-                           NugetHelper.Update(f.Value, version);
+                           NugetHelper.Update(f.Target, version);
 
                            if (!MainViewModel.Current.Silent)
                            {
-                              Console.WriteLine($"Nuget {NugetHelper.LastMessage}");
+                              Console.WriteLine(formatStr, "Nuget", NugetHelper.LastMessage, f.Target);
                            };
                            break;
                      };

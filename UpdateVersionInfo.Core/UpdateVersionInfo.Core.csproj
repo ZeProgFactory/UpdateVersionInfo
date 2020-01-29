@@ -6,14 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Template\VersionInfo.cs.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Template\VersionInfo.cs.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="ZPF_Basics" Version="1.1.11.10" />
   </ItemGroup>
 

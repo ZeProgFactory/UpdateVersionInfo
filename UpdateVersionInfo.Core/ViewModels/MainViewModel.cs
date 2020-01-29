@@ -25,7 +25,7 @@ namespace UpdateVersionInfo.Core
 
       // - - -  - - - 
 
-      public String UpdateVersionInfoVersion { get; } = "1.0.1";
+      public String UpdateVersionInfoVersion { get; } = "1.0.2";
 
       // - - -  - - - 
 
@@ -56,7 +56,7 @@ namespace UpdateVersionInfo.Core
       /// Scan files & folder and sets paths automaticaly.
       /// </summary>
       public bool ScanFiles { get; set; } = false;
-      public List<NameValue> Files { get; set; } = new List<NameValue>();
+      public List<FileAndType> Files { get; set; } = new List<FileAndType>();
 
       /// <summary>
       /// Displays current version info.

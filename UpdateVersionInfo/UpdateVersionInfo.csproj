@@ -61,6 +61,12 @@
     <Compile Include="..\UpdateVersionInfo.Core\Helper\_VI_Helper.cs">
       <Link>Core\_VI_Helper.cs</Link>
     </Compile>
+    <Compile Include="..\UpdateVersionInfo.Core\Models\FileAndType.cs">
+      <Link>Models\FileAndType.cs</Link>
+    </Compile>
+    <Compile Include="..\UpdateVersionInfo.Core\Template\Template.cs">
+      <Link>Template\Template.cs</Link>
+    </Compile>
     <Compile Include="..\UpdateVersionInfo.Core\ViewModels\MainViewModel.cs">
       <Link>Core\MainViewModel.cs</Link>
     </Compile>
@@ -71,11 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="ZPF_Basics">
-      <Version>1.1.11.10</Version>
-    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
