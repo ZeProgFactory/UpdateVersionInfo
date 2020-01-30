@@ -15,6 +15,7 @@ namespace UpdateVersionInfo.Core
          LastMessage = "0.1.0.0";
 
          string text = System.IO.File.ReadAllText(path);
+         text = text.Trim(new char[] { '\r', '\n' });
          var lines = text.Split(new char[] { '\n' });
 
          if (lines.Length > 3 && lines[0].Contains("UpdateVersionInfo"))
@@ -30,6 +31,7 @@ namespace UpdateVersionInfo.Core
          LastMessage = "0.1.0.0";
 
          string text = System.IO.File.ReadAllText(path);
+         text = text.Trim(new char[] { '\r', '\n' });
          var lines = text.Split(new char[] { '\n' });
 
          if (lines.Length > 3 && lines[0].Contains("UpdateVersionInfo"))
