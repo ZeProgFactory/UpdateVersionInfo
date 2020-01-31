@@ -46,6 +46,9 @@
     <Compile Include="..\UpdateVersionInfo.Core\Helper\AppleHelper.cs">
       <Link>Core\AppleHelper.cs</Link>
     </Compile>
+    <Compile Include="..\UpdateVersionInfo.Core\Helper\DeployProjectHelper.cs">
+      <Link>Core\DeployProjectHelper.cs</Link>
+    </Compile>
     <Compile Include="..\UpdateVersionInfo.Core\Helper\DroidHelper.cs">
       <Link>Core\DroidHelper.cs</Link>
     </Compile>

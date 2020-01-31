@@ -29,62 +29,76 @@ namespace UpdateVersionInfo
                string formatStr = (MainViewModel.Current.Verbose
                   ? "{0,6} {1,-10} - {2}"
                   : "{0,6} {1,-10}");
-               
-               
+
+
                foreach (var f in MainViewModel.Current.Files)
                {
-                  switch (f.Name)
+                  if (System.IO.File.Exists(f.Target))
                   {
-                     case "vi":
-                        _VI_Helper.GetVersion(f.Target);
 
-                        if (!MainViewModel.Current.Silent)
-                        {
-                           Console.WriteLine(formatStr, "", _VI_Helper.LastMessage, f.Target);
-                        };
-                        break;
+                     switch (f.Name)
+                     {
+                        case "vi":
+                           _VI_Helper.GetVersion(f.Target);
 
-                     case "UWP":
-                        UWPHelper.GetVersion(f.Target);
+                           if (!MainViewModel.Current.Silent)
+                           {
+                              Console.WriteLine(formatStr, "", _VI_Helper.LastMessage, f.Target);
+                           };
+                           break;
 
-                        if (!MainViewModel.Current.Silent)
-                        {
-                           Console.WriteLine(formatStr, "UWP", UWPHelper.LastMessage, f.Target);
-                        };
-                        break;
+                        case "UWP":
+                           UWPHelper.GetVersion(f.Target);
 
-                     case "Droid":
-                        DroidHelper.GetVersion(f.Target);
+                           if (!MainViewModel.Current.Silent)
+                           {
+                              Console.WriteLine(formatStr, "UWP", UWPHelper.LastMessage, f.Target);
+                           };
+                           break;
 
-                        if (!MainViewModel.Current.Silent)
-                        {
-                           Console.WriteLine(formatStr, "Droid", DroidHelper.LastMessage, f.Target);
-                        };
-                        break;
+                        case "Droid":
+                           DroidHelper.GetVersion(f.Target);
 
-                     case "WPF":
-                        break;
+                           if (!MainViewModel.Current.Silent)
+                           {
+                              Console.WriteLine(formatStr, "Droid", DroidHelper.LastMessage, f.Target);
+                           };
+                           break;
 
-                     case "iOS":
-                        iOSHelper.GetVersion(f.Target);
+                        case "WPF":
+                           break;
 
-                        if (!MainViewModel.Current.Silent)
-                        {
-                           Console.WriteLine(formatStr, "iOS", iOSHelper.LastMessage, f.Target);
-                        };
-                        break;
+                        case "iOS":
+                           iOSHelper.GetVersion(f.Target);
 
-                     case "MacOS":
-                        break;
+                           if (!MainViewModel.Current.Silent)
+                           {
+                              Console.WriteLine(formatStr, "iOS", iOSHelper.LastMessage, f.Target);
+                           };
+                           break;
 
-                     case "Nuget":
-                        NugetHelper.GetVersion(f.Target);
+                        case "MacOS":
+                           break;
 
-                        if (!MainViewModel.Current.Silent)
-                        {
-                           Console.WriteLine(formatStr, "Nuget", NugetHelper.LastMessage, f.Target);
-                        };
-                        break;
+                        case "Nuget":
+                           NugetHelper.GetVersion(f.Target);
+
+                           if (!MainViewModel.Current.Silent)
+                           {
+                              Console.WriteLine(formatStr, "Nuget", NugetHelper.LastMessage, f.Target);
+                           };
+                           break;
+
+                        case "Setup":
+                           DeployProjectHelper.GetVersion(f.Target);
+
+                           if (!MainViewModel.Current.Silent)
+                           {
+                              Console.WriteLine(formatStr, "Setup", DeployProjectHelper.LastMessage, f.Target);
+                           };
+                           break;
+                     };
+
                   };
                };
             }
@@ -105,61 +119,70 @@ namespace UpdateVersionInfo
 
                   foreach (var f in MainViewModel.Current.Files)
                   {
-                     switch (f.Name)
+                     if (System.IO.File.Exists(f.Target))
                      {
-                        case "vi":
-                           version = _VI_Helper.Update(f.Target);
-                           if (!MainViewModel.Current.Silent)
-                           {
-                              Console.WriteLine(formatStr, "", _VI_Helper.LastMessage, f.Target);
-                           };
-                           break;
 
-                        case "UWP":
-                           UWPHelper.Update(f.Target, version);
-                           if (!MainViewModel.Current.Silent)
-                           {
-                              Console.WriteLine(formatStr, "UWP", UWPHelper.LastMessage, f.Target);
-                           };
+                        switch (f.Name)
+                        {
+                           case "vi":
+                              version = _VI_Helper.Update(f.Target);
+                              if (!MainViewModel.Current.Silent)
+                              {
+                                 Console.WriteLine(formatStr, "", _VI_Helper.LastMessage, f.Target);
+                              };
+                              break;
 
-                           //if (MainViewModel.Current.AutoVersion)
-                           //{
-                           //   version = new Version(MainViewModel.Current.sAutoVersionV2);
-                           //};
-                           break;
+                           case "UWP":
+                              UWPHelper.Update(f.Target, version);
+                              if (!MainViewModel.Current.Silent)
+                              {
+                                 Console.WriteLine(formatStr, "UWP", UWPHelper.LastMessage, f.Target);
+                              };
+                              break;
 
-                        case "Droid":
-                           DroidHelper.Update(f.Target, version);
+                           case "Droid":
+                              DroidHelper.Update(f.Target, version);
 
-                           if (!MainViewModel.Current.Silent)
-                           {
-                              Console.WriteLine(formatStr, "Droid", DroidHelper.LastMessage, f.Target);
-                           };
-                           break;
+                              if (!MainViewModel.Current.Silent)
+                              {
+                                 Console.WriteLine(formatStr, "Droid", DroidHelper.LastMessage, f.Target);
+                              };
+                              break;
 
-                        case "WPF":
-                           break;
+                           case "WPF":
+                              break;
 
-                        case "iOS":
-                           iOSHelper.Update(f.Target, version);
+                           case "iOS":
+                              iOSHelper.Update(f.Target, version);
 
-                           if (!MainViewModel.Current.Silent)
-                           {
-                              Console.WriteLine(formatStr, "iOS", iOSHelper.LastMessage, f.Target);
-                           };
-                           break;
+                              if (!MainViewModel.Current.Silent)
+                              {
+                                 Console.WriteLine(formatStr, "iOS", iOSHelper.LastMessage, f.Target);
+                              };
+                              break;
 
-                        case "MacOS":
-                           break;
+                           case "MacOS":
+                              break;
 
-                        case "Nuget":
-                           NugetHelper.Update(f.Target, version);
+                           case "Nuget":
+                              NugetHelper.Update(f.Target, version);
 
-                           if (!MainViewModel.Current.Silent)
-                           {
-                              Console.WriteLine(formatStr, "Nuget", NugetHelper.LastMessage, f.Target);
-                           };
-                           break;
+                              if (!MainViewModel.Current.Silent)
+                              {
+                                 Console.WriteLine(formatStr, "Nuget", NugetHelper.LastMessage, f.Target);
+                              };
+                              break;
+
+                           case "Setup":
+                              DeployProjectHelper.Update(f.Target, version);
+
+                              if (!MainViewModel.Current.Silent)
+                              {
+                                 Console.WriteLine(formatStr, "Setup", DeployProjectHelper.LastMessage, f.Target);
+                              };
+                              break;
+                        };
+
                      };
                   };
 

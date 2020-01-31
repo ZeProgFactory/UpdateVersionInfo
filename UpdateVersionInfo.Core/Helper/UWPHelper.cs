@@ -81,6 +81,8 @@ namespace UpdateVersionInfo.Core
       {
          LastMessage = "";
 
+         if (!File.Exists(path)) return null;
+
          if (path.ToLower().EndsWith(@"\assemblyinfo.cs"))
          {
             //String contents = System.IO.File.ReadAllText(path);

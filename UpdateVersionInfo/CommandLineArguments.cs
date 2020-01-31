@@ -112,6 +112,7 @@ namespace UpdateVersionInfo
                   || x.ToLower().EndsWith(@"\info.plist")
                   || x.ToLower().EndsWith(@"\package.appxmanifest")
                   || x.ToLower().EndsWith(@"\versioninfo.cs")
+                  || x.ToLower().EndsWith(@".vdproj")
                   || x.ToLower().EndsWith(@".nuspec")
                   ).ToList();
 
@@ -149,11 +150,11 @@ namespace UpdateVersionInfo
                         MainViewModel.Current.Files.Add(new FileAndType { Name = "UWP", Target = f });
                         //MainViewModel.Current.VersionCsPath = f;
 
-                        try
-                        {
-                           _args2[_args2.IndexOf(st)] = $"-p={f}";
-                        }
-                        catch { };
+                        //try
+                        //{
+                        //   _args2[_args2.IndexOf(st)] = $"-p={f}";
+                        //}
+                        //catch { };
                      };
                   };
 
@@ -197,6 +198,11 @@ namespace UpdateVersionInfo
                   {
                      //MainViewModel.Current.nuspecPath = f;
                      MainViewModel.Current.Files.Add(new FileAndType { Name = "Nuget", Target = f });
+                  }; 
+                  
+                  if ( DeployProjectHelper.IsValid(f))
+                  {
+                     MainViewModel.Current.Files.Add(new FileAndType { Name = "Setup", Target = f });
                   };
                };
             };

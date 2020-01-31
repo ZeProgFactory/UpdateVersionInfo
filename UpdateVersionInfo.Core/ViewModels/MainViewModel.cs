@@ -25,7 +25,7 @@ namespace UpdateVersionInfo.Core
 
       // - - -  - - - 
 
-      public String UpdateVersionInfoVersion { get; } = "1.0.4";
+      public String UpdateVersionInfoVersion { get; } = "1.0.5";
 
       // - - -  - - - 
 
@@ -72,8 +72,18 @@ namespace UpdateVersionInfo.Core
 
       public string IncVersion(string v1)
       {
-         var v = v1.Split(new char[] { '.' });
-         return v[0] + "." + v[1] + "." + v[2] + "." + (int.Parse(v[3]) + 1).ToString();
+         var vl = v1.Split(new char[] { '.' });
+
+         if (vl.Length == 3)
+         {
+            var v = new Version(v1+".0");
+            return $"{v.Major}.{v.Minor}.{v.Build}";
+         }
+         else
+         {
+            var v = new Version(v1);
+            return $"{v.Major}.{v.Minor}.{v.Build}.{v.Revision + 1}";
+         };
       }
 
       // - - -  - - - 
