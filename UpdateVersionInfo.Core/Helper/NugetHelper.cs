@@ -61,7 +61,7 @@ namespace UpdateVersionInfo.Core
 
          string v1 = versionElement.Value.ToString();
 
-         if (version == null)
+         if (MainViewModel.Current.AutoVersion)
          {
             string v2 = MainViewModel.Current.IncVersion(v1);
             versionElement.Value = v2;
