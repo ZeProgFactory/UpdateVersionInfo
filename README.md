@@ -1,21 +1,21 @@
 # UpdateVersionInfo
 
-Based on https://github.com/soltechinc/soltechxf/   
+Based on an idea of https://github.com/soltechinc/soltechxf/   
 // http://stackoverflow.com/questions/27058172/xamarin-mobile-app-version-number-scheme-across-3-platforms
 
 UpdateVersionInfo is basically a command line tool, that increments the revision number of a version.  
 
-It was created to update synchronously all the versions of the different projects in a Xamarin.Forms solution, but since there UpdateVersionInfo evolved pretty much. We added more project types. Now (nearly) all the platforms covered by Xamarin.Forms are covered (UWP, Android, iOS, WPF, Mac). Yes, me missed Tizen. We don’t use it, so we hadn’t any use for it. Remember, UpdateVersionInfo is open source, so feel free to make a pull request for the Tizen implementation or anything else.
+It was created to update synchronously all the versions of the different projects in a Xamarin.Forms solution, but since there UpdateVersionInfo evolved pretty much. We added more project types. Now (nearly) all the platforms covered by Xamarin.Forms are covered (UWP, Android, iOS, WPF, Mac, Nuggets). Yes, me missed Tizen. We don’t use it, so we hadn’t any use for it. Remember, UpdateVersionInfo is open source, so feel free to make a pull request for the Tizen implementation or anything else.
 
 
 
 ## project structure
 
-You could ask the question, why the hell there are two projects for although one would have been fine. At the beginning, when we ([ChM40](https://github.com/ChM40) and me) took UpdateVersionInfo out  of the box where it was sleeping for several years now, the idea was to integrate it to [VS-LittleHelpers](https://github.com/ZeProgFactory/VS-LittleHelpers). But finally nobody had the time to progress on this subject. So as the versioning question was more and more urgent we splitted the repository so that UpdateVersionInfo could live its own live.
+You could ask the question, why the hell there are two projects for although one would have been fine. At the beginning, when we ([ChM40](https://github.com/ChM40) and me) took UpdateVersionInfo out of the box where it was sleeping for several years now, the idea was to integrate it to [VS-LittleHelpers](https://github.com/ZeProgFactory/VS-LittleHelpers). But finally nobody had the time to progress on this subject. So as the versioning question was more and more urgent we splitted the repository so that UpdateVersionInfo could live its own live.
 
-But we still have in mind to reunite the two. So UpdateVersionInfo  contains basically the command-line UI whereas UpdateVersionInfo.Core is the operational part.
+But we still have in mind to reunite the two. So UpdateVersionInfo  contains basically the command-line UI whereas UpdateVersionInfo.Core is the operational part we'll try to integrate it to VisualStudio on Windows and Mac in the future ...
 
-
+There are some administrational tools that scan the command line and global prepare the work. The real stuff is done in the "modules". There is one for every platform and they have all the same three functions:  ??? verify, getversion, update ??? ...
 
 ## modules
 
