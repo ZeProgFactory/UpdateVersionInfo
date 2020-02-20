@@ -41,8 +41,17 @@ namespace UpdateVersionInfo.Core
          LastMessage = "";
 
          XDocument doc = XDocument.Load(path);
-         var versionElement = doc.XPathSelectElement("package/metadata/version");
-         LastMessage = versionElement.Value.ToString();
+
+         if( path.ToLower().EndsWith(".csproj"))
+         {
+            var versionElement = doc.XPathSelectElement("Project/PropertyGroup/Version");
+            LastMessage = versionElement.Value.ToString();
+         }
+         else
+         {
+            var versionElement = doc.XPathSelectElement("package/metadata/version");
+            LastMessage = versionElement.Value.ToString();
+         };
 
          return new Version(LastMessage);
       }
@@ -57,7 +66,16 @@ namespace UpdateVersionInfo.Core
          LastMessage = "";
 
          XDocument doc = XDocument.Load(path);
-         var versionElement = doc.XPathSelectElement("package/metadata/version");
+         XElement versionElement;
+
+         if (path.ToLower().EndsWith(".csproj"))
+         {
+            versionElement = doc.XPathSelectElement("Project/PropertyGroup/Version");
+         }
+         else
+         {
+            versionElement = doc.XPathSelectElement("package/metadata/version");
+         };
 
          string v1 = versionElement.Value.ToString();
 

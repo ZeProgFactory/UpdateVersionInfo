@@ -113,6 +113,7 @@ namespace UpdateVersionInfo
                   || x.ToLower().EndsWith(@"\package.appxmanifest")
                   || x.ToLower().EndsWith(@"\versioninfo.cs")
                   || x.ToLower().EndsWith(@".vdproj")
+                  || x.ToLower().EndsWith(@".csproj")
                   || x.ToLower().EndsWith(@".nuspec")
                   ).ToList();
 
