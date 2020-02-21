@@ -26,7 +26,7 @@ There are some administrational tools that scan the command line and global prep
 | OK | DeployProjectHelper | WPF, ... | .vdproj |  |
 | ?   | DroidHelper     | Andoid | | |
 | ?      | iOSHelper       | iOS | Info.plist |  |
-| 50 % | NugetHelper     | Nugets | .Nuspec | missing .csproj |
+| OK | NugetHelper     | Nugets | .Nuspec<br />.csproj |  |
 | 50 %   | UWPHelper       | UWP | Package.AppxManifest |  |
 
 
@@ -79,7 +79,7 @@ UpdateVersionInfo - V1.0.0
                                with version information.
   -t, --touchPlist=VALUE     The path to an iOS plist file to update with
                                version information.
-  -n, --nuspec=VALUE         The path to an nuspec file to update with
+  -n, --nuspec=VALUE         The path to an Nuget definition file to update with
                                version information.
 ```
 
