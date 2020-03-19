@@ -23,10 +23,19 @@ namespace UpdateVersionInfo.Core
 
          try
          {
-            // <package ...
             XDocument doc = XDocument.Load(path);
-            var rootElement = doc.Root as XElement;
-            if (rootElement != null && rootElement.Name == "package") return true;
+
+            if (path.ToLower().EndsWith(".csproj"))
+            {
+               var versionElement = doc.XPathSelectElement("Project/PropertyGroup/Version");
+               if (versionElement != null) return true;
+            }
+            else
+            {
+               // <package ...
+               var rootElement = doc.Root as XElement;
+               if (rootElement != null && rootElement.Name == "package") return true;
+            };
          }
          catch (Exception e)
          {
@@ -42,7 +51,7 @@ namespace UpdateVersionInfo.Core
 
          XDocument doc = XDocument.Load(path);
 
-         if( path.ToLower().EndsWith(".csproj"))
+         if (path.ToLower().EndsWith(".csproj"))
          {
             var versionElement = doc.XPathSelectElement("Project/PropertyGroup/Version");
             LastMessage = versionElement.Value.ToString();

@@ -83,6 +83,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetPath) D:\GitWare\Apps\UpdateVersionInfo\XFTestPlatformes\$(TargetFileName) /y</PostBuildEvent>
+    <PostBuildEvent>rem copy $(TargetPath) D:\GitWare\Apps\UpdateVersionInfo\XFTestPlatformes\$(TargetFileName) /y</PostBuildEvent>
   </PropertyGroup>
 </Project>

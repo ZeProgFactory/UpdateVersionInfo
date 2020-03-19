@@ -25,7 +25,7 @@ namespace UpdateVersionInfo.Core
          {
             //<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
             XDocument doc = XDocument.Load(path);
-            if (doc.DocumentType.Name == "plist")
+            if (doc.DocumentType != null && doc.DocumentType.Name == "plist")
             {
                var shortVersionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleShortVersionString']");
                if (shortVersionElement != null)
