@@ -76,8 +76,8 @@ namespace UpdateVersionInfo.Core
 
          if (vl.Length == 3)
          {
-            var v = new Version(v1+".0");
-            return $"{v.Major}.{v.Minor}.{v.Build}";
+            var v = new Version(v1 + ".0");
+            return $"{v.Major}.{v.Minor}.{v.Build + 1}";
          }
          else
          {
