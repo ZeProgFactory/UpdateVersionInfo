@@ -22,12 +22,12 @@ There are some administrational tools that scan the command line and global prep
 | state | module name     | platforme | file / ext | remarques |
 |:--------------: | :-------: | :--------: | :--------: | ---------- |
 |  OK   |  _VI_Helper     | "params" | VersionInfo.cs |  |
-| --   | AppleHelper     | MacOS | Info.plist | TBD |
-| OK | DeployProjectHelper | WPF, ... | .vdproj |  |
-| ?   | DroidHelper     | Andoid | | |
-| ?      | iOSHelper       | iOS | Info.plist |  |
-| OK | NugetHelper     | Nugets | .Nuspec<br />.csproj |  |
-| 50 %   | UWPHelper       | UWP | Package.AppxManifest |  |
+|  --   | AppleHelper     | MacOS | Info.plist | TBD |
+|  OK   | DeployProjectHelper | WPF, ... | .vdproj |  |
+|  ?    | DroidHelper     | Andoid | | |
+|  ?    | iOSHelper       | iOS | Info.plist |  |
+|  OK   | NugetHelper     | Nugets | .Nuspec<br />.csproj |  |
+|  OK   | UWPHelper       | UWP | Package.AppxManifest |  |
 
 
 
@@ -62,25 +62,28 @@ You should not touch anything else than the version in the second line.  Everyth
 ## command line switches
 
 ```
-UpdateVersionInfo - V1.0.0
+UpdateVersionInfo - V1.0.9
 
   -?                         Shows help/usage information.
   -s                         silent/verbus
   -i                         Displays current version info
   -v, --major=VALUE          auto | A numeric major version number greater
-                               than zero.
+                             than zero.
   -m, --minor=VALUE          A numeric minor number greater than zero.
   -b, --build=VALUE          A numeric build number greater than zero.
   -r, --revision=VALUE       A numeric revision number greater than zero.
+      --vi=VALUE             The path to a 'VersionInfo.cs' file to update
+                             with version information.
   -p, --path=VALUE           scan | The path to a C# file to update with
-                               version information.
+                             version information.
   -a, --androidManifest=VALUE
                              The path to an android manifest file to update
-                               with version information.
+                             with version information.
   -t, --touchPlist=VALUE     The path to an iOS plist file to update with
-                               version information.
-  -n, --nuspec=VALUE         The path to an Nuget definition file to update with
-                               version information.
+                             version information.
+  -n, --nuspec=VALUE         The path to an nuspec file to update with
+                             version information.
+
 ```
 
 

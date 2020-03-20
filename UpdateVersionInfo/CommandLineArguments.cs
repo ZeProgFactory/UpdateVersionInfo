@@ -42,7 +42,11 @@ namespace UpdateVersionInfo
                     "r|revision=", "A numeric revision number greater than zero.", (int v) => MainViewModel.Current.Revision = v
                 },
                 {
-                    "p|path=", "scan | The path to a C# file to update with version information.", 
+                    "vi=", "The path to a 'VersionInfo.cs' file to update with version information.",
+                                 vi => MainViewModel.Current.Files.Add(new FileAndType { Name = "vi", Target = vi })
+                },
+                {
+                    "p|path=", "scan | The path to a C# file to update with version information.",
                                  p => MainViewModel.Current.Files.Add(new FileAndType { Name = "UWP", Target = p })
                 },
                 {

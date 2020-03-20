@@ -588,7 +588,9 @@ namespace NDesk.Options
         {
             if (option == null)
                 throw new ArgumentNullException("option");
+
             List<string> added = new List<string>(option.Names.Length);
+
             try
             {
                 // KeyedCollection.InsertItem/SetItem handle the 0th name.
