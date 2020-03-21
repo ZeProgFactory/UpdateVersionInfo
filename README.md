@@ -120,8 +120,15 @@ Droid 1.0.0.15 --> 1.0.0.16
 iOS   1.0.0.15 --> 1.0.0.16
 ```
 
+# AppCenter.ms
+If you wish to integrate “UpdateVersionInfo” directly in your Visual Studio workflow and you use also [AppCenter.ms](https://appcenter.ms/) you had to edit manually your project files (.csproj) and add `Condition="'$(Configuration)'=='Debug'"` to the build event:  
+```
+  <Target Name="PreBuild" Condition="'$(Configuration)'=='Debug'" BeforeTargets="PreBuildEvent">
+    <Exec Command="..\..\UpdateVersionInfo -v=auto -vi=$(ProjectDir)VersionInfo.cs" />
+  </Target>
+```  
   
-
+     
 ## "under construction" ...
 
 N:\UpdateVersionInfo -v=auto 
