@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Text;
 
 namespace UpdateVersionInfo.Core
 {
@@ -12,6 +8,7 @@ namespace UpdateVersionInfo.Core
 
       public static Version GetVersion(string path)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"_VI_Helper.GetVersion( {path} )");
          LastMessage = "0.1.0.0";
 
          string text = System.IO.File.ReadAllText(path);
@@ -28,6 +25,7 @@ namespace UpdateVersionInfo.Core
 
       public static Version Update(string path)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"_VI_Helper.Update( {path} )");
          LastMessage = "0.1.0.0";
 
          string text = System.IO.File.ReadAllText(path);

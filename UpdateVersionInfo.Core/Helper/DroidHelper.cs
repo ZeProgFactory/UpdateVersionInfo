@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -25,6 +26,7 @@ namespace UpdateVersionInfo.Core
       /// <returns></returns>
       public static bool IsValid(String path)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"DroidHelper.IsValid( {path} )");
          LastMessage = "";
 
          if (!File.Exists(path)) return false;
@@ -37,10 +39,10 @@ namespace UpdateVersionInfo.Core
             var rootElement = doc.Root as XElement;
             if (rootElement != null && rootElement.Name == "manifest") return true;
          }
-         catch (Exception e)
+         catch (Exception ex)
          {
-            System.Diagnostics.Trace.TraceError(e.Message);
-         }
+            Console.WriteLine($"DroidHelper.IsValid {path} {ex.Message}");
+         };
 
          return false;
       }
@@ -48,14 +50,25 @@ namespace UpdateVersionInfo.Core
 
       public static Version GetVersion(string path)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"DroidHelper.GetVersion( {path} )");
          LastMessage = "";
 
-         const string androidNS = "http://schemas.android.com/apk/res/android";
-         XName versionCodeAttributeName = XName.Get("version", androidNS);
-         XName versionNameAttributeName = XName.Get("versionName", androidNS);
-         XDocument doc = XDocument.Load(path);
+         try
+         {
+            const string androidNS = "http://schemas.android.com/apk/res/android";
+            XName versionCodeAttributeName = XName.Get("version", androidNS);
+            XName versionNameAttributeName = XName.Get("versionName", androidNS);
+            XDocument doc = XDocument.Load(path);
 
-         LastMessage = doc.Root.Attribute(versionNameAttributeName).Value;
+            LastMessage = doc.Root.Attribute(versionNameAttributeName).Value;
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"DroidHelper.GetVersion {path} {ex.Message}");
+
+            LastMessage = ex.Message;
+            return new Version(-1, -1);
+         };
 
          return new Version(LastMessage);
       }
@@ -67,45 +80,53 @@ namespace UpdateVersionInfo.Core
       /// <param name="version"></param>
       public static void Update(string path, Version version)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"DroidHelper.Update( {path} )");
          LastMessage = "";
 
-         const string androidNS = "http://schemas.android.com/apk/res/android";
-         XName versionCodeAttributeName = XName.Get("versionCode", androidNS);
-         XName versionNameAttributeName = XName.Get("versionName", androidNS);
-         XDocument doc = XDocument.Load(path);
-
-         if (MainViewModel.Current.AutoVersion)
+         try
          {
-            string b = doc.Root.Attribute(versionCodeAttributeName).Value;
-            string v1 = doc.Root.Attribute(versionNameAttributeName).Value;
+            const string androidNS = "http://schemas.android.com/apk/res/android";
+            XName versionCodeAttributeName = XName.Get("versionCode", androidNS);
+            XName versionNameAttributeName = XName.Get("versionName", androidNS);
+            XDocument doc = XDocument.Load(path);
 
-            var v = v1.Split(new char[] { '.' });
-
-            string v2 = "";
-
-            if (string.IsNullOrEmpty(MainViewModel.Current.sAutoVersionV2))
+            if (MainViewModel.Current.AutoVersion)
             {
-               v2 = v[0] + "." + v[1] + "." + (v.Count() < 3 ? "0" : v[2]) + "." + (int.Parse((v.Count() < 4 ? "0" : v[3])) + 1).ToString();
+               string b = doc.Root.Attribute(versionCodeAttributeName).Value;
+               string v1 = doc.Root.Attribute(versionNameAttributeName).Value;
+
+               var v = v1.Split(new char[] { '.' });
+
+               string v2 = "";
+
+               if (string.IsNullOrEmpty(MainViewModel.Current.sAutoVersionV2))
+               {
+                  v2 = v[0] + "." + v[1] + "." + (v.Count() < 3 ? "0" : v[2]) + "." + (int.Parse((v.Count() < 4 ? "0" : v[3])) + 1).ToString();
+               }
+               else
+               {
+                  v2 = MainViewModel.Current.sAutoVersionV2;
+               };
+
+               doc.Root.SetAttributeValue(versionCodeAttributeName, b);
+               doc.Root.SetAttributeValue(versionNameAttributeName, v2);
+
+               LastMessage = $"{v1} --> {v2}";
             }
             else
             {
-               v2 = MainViewModel.Current.sAutoVersionV2;
+               doc.Root.SetAttributeValue(versionCodeAttributeName, version.Build);
+               doc.Root.SetAttributeValue(versionNameAttributeName, version);
+
+               LastMessage = $"--> {version.ToString()}";
             };
 
-            doc.Root.SetAttributeValue(versionCodeAttributeName, b);
-            doc.Root.SetAttributeValue(versionNameAttributeName, v2);
-
-            LastMessage = $"{v1} --> {v2}";
+            doc.Save(path);
          }
-         else
+         catch (Exception ex)
          {
-            doc.Root.SetAttributeValue(versionCodeAttributeName, version.Build);
-            doc.Root.SetAttributeValue(versionNameAttributeName, version);
-
-            LastMessage = $"--> {version.ToString()}";
+            LastMessage = $"{path} {ex.Message}";
          };
-
-         doc.Save(path);
       }
 
    }

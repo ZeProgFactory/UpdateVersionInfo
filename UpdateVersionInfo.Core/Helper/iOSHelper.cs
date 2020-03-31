@@ -16,6 +16,7 @@ namespace UpdateVersionInfo.Core
       /// <returns></returns>
       public static bool IsValid(String path)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"iOSHelper.IsValid( {path} )");
          LastMessage = "";
 
          if (!File.Exists(path)) return false;
@@ -52,6 +53,7 @@ namespace UpdateVersionInfo.Core
 
       public static Version GetVersion(string path)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"iOSHelper.GetVersion( {path} )");
          LastMessage = "";
 
          XDocument doc = XDocument.Load(path);
@@ -82,33 +84,41 @@ namespace UpdateVersionInfo.Core
       /// <param name="version"></param>
       public static void Update(string path, Version version)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"iOSHelper.Update( {path} )");
          LastMessage = "";
 
-         XDocument doc = XDocument.Load(path);
-         if (doc.DocumentType.Name == "plist")
+         try
          {
-            var shortVersionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleShortVersionString']");
-            if (shortVersionElement != null)
+            XDocument doc = XDocument.Load(path);
+            if (doc.DocumentType.Name == "plist")
             {
-               var valueElement = shortVersionElement.NextNode as XElement;
+               var shortVersionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleShortVersionString']");
+               if (shortVersionElement != null)
+               {
+                  var valueElement = shortVersionElement.NextNode as XElement;
 
-               string v1 = valueElement.Value.ToString();
-               valueElement.Value = version.ToString();
-               LastMessage = $"{v1} --> {version.ToString()}";
+                  string v1 = valueElement.Value.ToString();
+                  valueElement.Value = version.ToString();
+                  LastMessage = $"{v1} --> {version.ToString()}";
+               }
+
+               var versionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleVersion']");
+               if (versionElement != null)
+               {
+                  var valueElement = versionElement.NextNode as XElement;
+
+                  string v1 = valueElement.Value.ToString();
+                  valueElement.Value = version.ToString();
+                  LastMessage = $"{v1} --> {version.ToString()}";
+               }
             }
 
-            var versionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleVersion']");
-            if (versionElement != null)
-            {
-               var valueElement = versionElement.NextNode as XElement;
-
-               string v1 = valueElement.Value.ToString();
-               valueElement.Value = version.ToString();
-               LastMessage = $"{v1} --> {version.ToString()}";
-            }
+            doc.Save(path);
          }
-
-         doc.Save(path);
+         catch (Exception ex)
+         {
+            LastMessage = $"{path} {ex.Message}";
+         };
       }
 
    }

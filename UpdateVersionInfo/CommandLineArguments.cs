@@ -24,6 +24,9 @@ namespace UpdateVersionInfo
                     "?", "Shows help/usage information.", h => MainViewModel.Current.ShowHelp = true
                 },
                 {
+                    "debug", "Shows debug information.", debug => MainViewModel.Current.Debug = true
+                },
+                {
                     "s", "silent/verbus", s => MainViewModel.Current.Silent = true
                 },
                 {
@@ -50,15 +53,15 @@ namespace UpdateVersionInfo
                                  p => MainViewModel.Current.Files.Add(new FileAndType { Name = "UWP", Target = p })
                 },
                 {
-                    "a|androidManifest=", "The path to an android manifest file to update with version information.", 
+                    "a|androidManifest=", "The path to an android manifest file to update with version information.",
                                  a => MainViewModel.Current.Files.Add(new FileAndType { Name = "Droid", Target = a })
                 },
                 {
-                    "t|touchPlist=", "The path to an iOS plist file to update with version information.", 
+                    "t|touchPlist=", "The path to an iOS plist file to update with version information.",
                                  t => MainViewModel.Current.Files.Add(new FileAndType { Name = "iOS", Target = t })
                 },
                 {
-                    "n|nuspec=", "The path to an nuspec file to update with version information.", 
+                    "n|nuspec=", "The path to an nuspec file to update with version information.",
                                  n => MainViewModel.Current.Files.Add(new FileAndType { Name = "Nuget", Target = n })
                 }
             };
@@ -109,7 +112,10 @@ namespace UpdateVersionInfo
                MainViewModel.Current.ScanFiles = true;
                MainViewModel.Current.Files.Clear();
 
-               var allFiles = System.IO.Directory.EnumerateFiles(System.IO.Directory.GetCurrentDirectory(), "*.*", System.IO.SearchOption.AllDirectories);
+               if (MainViewModel.Current.Debug) Console.WriteLine($"WorkDir {MainViewModel.Current.WorkDir}");
+               var allFiles = System.IO.Directory.EnumerateFiles(MainViewModel.Current.WorkDir, "*.*", System.IO.SearchOption.AllDirectories);
+
+               if (MainViewModel.Current.Debug) Console.WriteLine($"allFiles {MainViewModel.Current.WorkDir} {allFiles.Count()}");
 
                var files = allFiles.Where(
                   x => x.ToLower().Contains(@"\properties\")
@@ -121,16 +127,13 @@ namespace UpdateVersionInfo
                   || x.ToLower().EndsWith(@".nuspec")
                   ).ToList();
 
+               if (MainViewModel.Current.Debug) Console.WriteLine($"files (3) {files.Count()}");
+
                foreach (var f in files)
                {
                   if (f.ToLower().EndsWith(@"\versioninfo.cs"))
                   {
                      MainViewModel.Current.Files.Insert(0, new FileAndType { Name = "vi", Target = f });
-                  };
-
-                  if (f.StartsWith(@"D:\GitWare\_Nugets_\ZPF_Basics_XF\ZPF_Basics_XF_Sample\ZPF_Basics_XF_Sample.UWP\Properties"))
-                  {
-                     Debugger.Break();
                   };
 
                   if (UWPHelper.IsValid(f))
@@ -140,7 +143,6 @@ namespace UpdateVersionInfo
                         if (System.IO.Directory.EnumerateFiles(System.IO.Path.GetDirectoryName(f), "Default.rd.xml", System.IO.SearchOption.TopDirectoryOnly).Count() == 1)
                         {
                            MainViewModel.Current.Files.Add(new FileAndType { Name = "UWP", Target = f });
-                           //MainViewModel.Current.VersionCsPath = f;
 
                            try
                            {
@@ -153,22 +155,15 @@ namespace UpdateVersionInfo
                      if (f.ToLower().EndsWith(@"\package.appxmanifest"))
                      {
                         MainViewModel.Current.Files.Add(new FileAndType { Name = "UWP", Target = f });
-                        //MainViewModel.Current.VersionCsPath = f;
 
-                        //try
-                        //{
-                        //   _args2[_args2.IndexOf(st)] = $"-p={f}";
-                        //}
-                        //catch { };
                      };
                   };
 
-                  if (DroidHelper.IsValid(f))
+                  if (System.IO.Directory.EnumerateFiles(System.IO.Path.GetDirectoryName(f), "AndroidManifest.xml", System.IO.SearchOption.TopDirectoryOnly).Count() == 1)
                   {
-                     if (System.IO.Directory.EnumerateFiles(System.IO.Path.GetDirectoryName(f), "AndroidManifest.xml", System.IO.SearchOption.TopDirectoryOnly).Count() == 1)
+                     if (DroidHelper.IsValid(f))
                      {
                         MainViewModel.Current.Files.Add(new FileAndType { Name = "Droid", Target = f });
-                        //MainViewModel.Current.AndroidManifestPath = f;
                      };
                   };
 
@@ -203,9 +198,9 @@ namespace UpdateVersionInfo
                   {
                      //MainViewModel.Current.nuspecPath = f;
                      MainViewModel.Current.Files.Add(new FileAndType { Name = "Nuget", Target = f });
-                  }; 
-                  
-                  if ( DeployProjectHelper.IsValid(f))
+                  };
+
+                  if (DeployProjectHelper.IsValid(f))
                   {
                      MainViewModel.Current.Files.Add(new FileAndType { Name = "Setup", Target = f });
                   };

@@ -25,7 +25,7 @@ namespace UpdateVersionInfo.Core
 
       // - - -  - - - 
 
-      public String UpdateVersionInfoVersion { get; } = "1.0.9";
+      public String UpdateVersionInfoVersion { get; } = "1.0.14";
 
       // - - -  - - - 
 
@@ -67,6 +67,8 @@ namespace UpdateVersionInfo.Core
       /// Displays more detailed info
       /// </summary>
       public bool Verbose { get; set; } = true;
+      public bool Debug { get; internal set; } = false;
+      public string WorkDir { get; internal set; } = System.IO.Directory.GetCurrentDirectory();
 
       // - - -  - - - 
 

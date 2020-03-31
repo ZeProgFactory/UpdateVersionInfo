@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Xml.Linq;
 
 namespace UpdateVersionInfo.Core
 {
@@ -26,6 +23,7 @@ namespace UpdateVersionInfo.Core
       /// <returns></returns>
       public static bool IsValid(String path)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"DeployProjectHelper.IsValid( {path} )");
          LastMessage = "";
 
          if (!File.Exists(path)) return false;
@@ -48,6 +46,7 @@ namespace UpdateVersionInfo.Core
 
       public static Version GetVersion(string path)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"DeployProjectHelper.GetVersion( {path} )");
          LastMessage = "";
 
          try
@@ -86,6 +85,7 @@ namespace UpdateVersionInfo.Core
       /// <param name="version"></param>
       public static void Update(string path, Version version)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"DeployProjectHelper.Update( {path} )");
          LastMessage = "";
 
          try

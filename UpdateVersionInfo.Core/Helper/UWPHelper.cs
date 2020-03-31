@@ -34,6 +34,7 @@ namespace UpdateVersionInfo.Core
       /// <returns></returns>
       public static bool IsValid(String path)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"UWPHelper.IsValid( {path} )");
          LastMessage = "";
 
          if (!File.Exists(path)) return false;
@@ -79,6 +80,7 @@ namespace UpdateVersionInfo.Core
 
       public static Version GetVersion(string path)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"UWPHelper.GetVersion( {path} )");
          LastMessage = "";
 
          if (!File.Exists(path)) return null;
@@ -154,88 +156,96 @@ namespace UpdateVersionInfo.Core
       /// <param name="version"></param>
       public static void Update(string path, Version version)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"UWPHelper.Update( {path} )");
          LastMessage = "";
 
-         if (path.ToLower().EndsWith(@"\assemblyinfo.cs"))
+         try
          {
-            //String contents = System.IO.File.ReadAllText(path);
-
-            //var verbEx = new VerbalExpressions()
-            //      .Then("\n")
-            //      //.AnythingBut("\\")
-            //      .Then("[assembly:")
-            //      .Anything()
-            //      .Then("AssemblyVersion(\"")
-            //      .AnythingBut("\"")
-            //      .Then("\")]")
-            //      ;
-
-            //var regex = verbEx.ToRegex();
-
-            //string v1 = regex.Matches(contents)[0].Value.Replace("\n[assembly: System.Reflection.AssemblyVersion(\"", "").Replace("\n[assembly: AssemblyVersion(\"", "").Replace("\")]", "");
-
-            //if (MainViewModel.Current.AutoVersion)
-            //{
-            //   string v2 = MainViewModel.Current.IncVersion(v1);
-
-            //   if (!string.IsNullOrEmpty(MainViewModel.Current.sAutoVersionV2))
-            //   {
-            //      v2 = MainViewModel.Current.sAutoVersionV2;
-            //   };
-
-            //   //contents = assemblyVersionRegEx.Replace(contents, "[assembly: System.Reflection.AssemblyVersion(\"" + v2 + "\")]");
-            //   contents = contents.Replace(v1, v2);
-            //   LastMessage = $"{v1} --> {v2}";
-            //}
-            //else
-            //{
-            //   string v2 = version.ToString();
-
-            //   contents = contents.Replace(v1, v2);
-            //   LastMessage = $"{v1} --> {v2}";
-            //};
-
-            //using (StreamWriter writer = new StreamWriter(path, false))
-            //{
-            //   writer.Write(contents);
-            //}
-         }
-
-         if (path.ToLower().EndsWith(@"\package.appxmanifest"))
-         {
-            XDocument doc = XDocument.Load(path);
-            var rootElement = doc.Root as XElement;
-            if (rootElement != null && rootElement.Name.LocalName == "Package")
+            if (path.ToLower().EndsWith(@"\assemblyinfo.cs"))
             {
-               string v1 = (rootElement.FirstNode as XElement).Attribute("Version").Value.ToString();
+               //String contents = System.IO.File.ReadAllText(path);
 
-               if (MainViewModel.Current.AutoVersion)
+               //var verbEx = new VerbalExpressions()
+               //      .Then("\n")
+               //      //.AnythingBut("\\")
+               //      .Then("[assembly:")
+               //      .Anything()
+               //      .Then("AssemblyVersion(\"")
+               //      .AnythingBut("\"")
+               //      .Then("\")]")
+               //      ;
+
+               //var regex = verbEx.ToRegex();
+
+               //string v1 = regex.Matches(contents)[0].Value.Replace("\n[assembly: System.Reflection.AssemblyVersion(\"", "").Replace("\n[assembly: AssemblyVersion(\"", "").Replace("\")]", "");
+
+               //if (MainViewModel.Current.AutoVersion)
+               //{
+               //   string v2 = MainViewModel.Current.IncVersion(v1);
+
+               //   if (!string.IsNullOrEmpty(MainViewModel.Current.sAutoVersionV2))
+               //   {
+               //      v2 = MainViewModel.Current.sAutoVersionV2;
+               //   };
+
+               //   //contents = assemblyVersionRegEx.Replace(contents, "[assembly: System.Reflection.AssemblyVersion(\"" + v2 + "\")]");
+               //   contents = contents.Replace(v1, v2);
+               //   LastMessage = $"{v1} --> {v2}";
+               //}
+               //else
+               //{
+               //   string v2 = version.ToString();
+
+               //   contents = contents.Replace(v1, v2);
+               //   LastMessage = $"{v1} --> {v2}";
+               //};
+
+               //using (StreamWriter writer = new StreamWriter(path, false))
+               //{
+               //   writer.Write(contents);
+               //}
+            }
+
+            if (path.ToLower().EndsWith(@"\package.appxmanifest"))
+            {
+               XDocument doc = XDocument.Load(path);
+               var rootElement = doc.Root as XElement;
+               if (rootElement != null && rootElement.Name.LocalName == "Package")
                {
-                  string v2 = MainViewModel.Current.IncVersion(v1);
+                  string v1 = (rootElement.FirstNode as XElement).Attribute("Version").Value.ToString();
 
-                  if (!string.IsNullOrEmpty(MainViewModel.Current.sAutoVersionV2))
+                  if (MainViewModel.Current.AutoVersion)
                   {
-                     v2 = MainViewModel.Current.sAutoVersionV2;
+                     string v2 = MainViewModel.Current.IncVersion(v1);
+
+                     if (!string.IsNullOrEmpty(MainViewModel.Current.sAutoVersionV2))
+                     {
+                        v2 = MainViewModel.Current.sAutoVersionV2;
+                     };
+
+                     var v = new Version(v2);
+                     v2 = $"{v.Major}.{v.Minor}.{v.Build}.0";
+
+                     (rootElement.FirstNode as XElement).Attribute("Version").Value = v2;
+                     doc.Save(path);
+
+                     LastMessage = $"{v1} --> {v2}";
+                  }
+                  else
+                  {
+                     string v2 = $"{version.Major}.{version.Minor}.{version.Build}.0";
+
+                     (rootElement.FirstNode as XElement).Attribute("Version").Value = v2;
+                     doc.Save(path);
+
+                     LastMessage = $"{v1} --> {v2}";
                   };
-
-                  var v = new Version(v2);
-                  v2 = $"{v.Major}.{v.Minor}.{v.Build}.0";
-
-                  (rootElement.FirstNode as XElement).Attribute("Version").Value = v2;
-                  doc.Save(path);
-
-                  LastMessage = $"{v1} --> {v2}";
-               }
-               else
-               {
-                  string v2 = $"{version.Major}.{version.Minor}.{version.Build}.0";
-
-                  (rootElement.FirstNode as XElement).Attribute("Version").Value = v2;
-                  doc.Save(path);
-
-                  LastMessage = $"{v1} --> {v2}";
                };
             };
+         }
+         catch (Exception ex)
+         {
+            LastMessage = $"{path} {ex.Message}";
          };
       }
    }

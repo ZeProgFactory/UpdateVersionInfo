@@ -16,6 +16,7 @@ namespace UpdateVersionInfo.Core
       /// <returns></returns>
       public static bool IsValid(String path)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"NugetHelper.IsValid( {path} )");
          LastMessage = "";
 
          if (!File.Exists(path)) return false;
@@ -47,6 +48,7 @@ namespace UpdateVersionInfo.Core
 
       public static Version GetVersion(string path)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"NugetHelper.GetVersion( {path} )");
          LastMessage = "";
 
          XDocument doc = XDocument.Load(path);
@@ -72,6 +74,7 @@ namespace UpdateVersionInfo.Core
       /// <param name="version"></param>
       public static void Update(string path, Version version)
       {
+         if (MainViewModel.Current.Debug) Console.WriteLine($"NugetHelper.Update( {path} )");
          LastMessage = "";
 
          XDocument doc = XDocument.Load(path);

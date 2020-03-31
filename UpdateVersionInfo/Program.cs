@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using UpdateVersionInfo.Core;
 
 namespace UpdateVersionInfo
@@ -13,12 +14,38 @@ namespace UpdateVersionInfo
 
       static void Main(string[] args)
       {
+         MainViewModel.Current.Debug = args.Where(x => x.Trim().ToLower() == "-debug").Count() == 1;
+
+         if (Debugger.IsAttached)
+         {
+            MainViewModel.Current.WorkDir = System.IO.Directory.GetCurrentDirectory();
+         }
+         else
+         {
+            MainViewModel.Current.WorkDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+         };
+
+         // - - -  - - - 
+
          commandLine = new CommandLineArguments(args);
 
-         if (!MainViewModel.Current.Silent)
+         if (!MainViewModel.Current.Silent || MainViewModel.Current.ShowHelp || MainViewModel.Current.Debug)
          {
             Console.WriteLine("");
             Console.WriteLine($"UpdateVersionInfo - V{MainViewModel.Current.UpdateVersionInfoVersion}");
+            Console.WriteLine("");
+         };
+
+         if (MainViewModel.Current.Debug)
+         {
+            string cmd = $"{MainViewModel.Current.WorkDir} ";
+
+            foreach (var c in args)
+            {
+               cmd += $"[{c}] ";
+            };
+
+            Console.WriteLine(cmd);
             Console.WriteLine("");
          };
 
@@ -30,11 +57,11 @@ namespace UpdateVersionInfo
                   ? "{0,6} {1,-10} - {2}"
                   : "{0,6} {1,-10}");
 
-
                foreach (var f in MainViewModel.Current.Files)
                {
                   if (System.IO.File.Exists(f.Target))
                   {
+                     if (MainViewModel.Current.Debug) Console.WriteLine($"File (2) #{MainViewModel.Current.Files.Count} [{f.Target}]");
 
                      switch (f.Name)
                      {
@@ -121,6 +148,7 @@ namespace UpdateVersionInfo
                   {
                      if (System.IO.File.Exists(f.Target))
                      {
+                        if (MainViewModel.Current.Debug) Console.WriteLine($"File (1) #{MainViewModel.Current.Files.Count} [{f.Target}]");
 
                         switch (f.Name)
                         {
@@ -253,11 +281,6 @@ namespace UpdateVersionInfo
 
       private static void WriteHelp(CommandLineArguments commandLine, String message = null)
       {
-         Console.WriteLine("");
-         Console.WriteLine($"UpdateVersionInfo - V{MainViewModel.Current.UpdateVersionInfoVersion}");
-         Console.WriteLine("");
-
-
          if (!String.IsNullOrEmpty(message))
          {
             Console.WriteLine(message);
