@@ -39,6 +39,9 @@ namespace UpdateVersionInfo.Core
             var rootElement = doc.Root as XElement;
             if (rootElement != null && rootElement.Name == "manifest") return true;
          }
+         catch (System.Xml.XmlException)
+         {
+         }
          catch (Exception ex)
          {
             Console.WriteLine($"DroidHelper.IsValid {path} {ex.Message}");
