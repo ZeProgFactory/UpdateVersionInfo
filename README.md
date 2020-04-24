@@ -121,11 +121,21 @@ iOS   1.0.0.15 --> 1.0.0.16
 ```
 
 # AppCenter.ms
-If you wish to integrate “UpdateVersionInfo” directly in your Visual Studio workflow and you use also [AppCenter.ms](https://appcenter.ms/) you had to edit manually your project files (.csproj) and add `Condition="'$(Configuration)'=='Debug'"` to the build event:  
+If you wish to use “UpdateVersionInfo” in your Visual Studio workflow and also [AppCenter.ms](https://appcenter.ms/) you had to edit manually your project files (.csproj) and add `Condition="'$(Configuration)'=='Debug'"` to the build event:  
 ```
   <Target Name="PreBuild" Condition="'$(Configuration)'=='Debug'" BeforeTargets="PreBuildEvent">
     <Exec Command="..\..\UpdateVersionInfo -v=auto -vi=$(ProjectDir)VersionInfo.cs" />
   </Target>
+```  
+“UpdateVersionInfo” doesn't work on [AppCenter.ms](https://appcenter.ms/).
+  
+  
+# Visual Studio for Mac
+“UpdateVersionInfo” is for the moment a Windows exe, so it doesn't work on OSX.
+```
+   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+      <Exec Condition=" '$(OS)' == 'Windows_NT' " Command="$(SolutionDir)UpdateVersionInfo -v=auto -p=scan" />
+   </Target>
 ```  
   
      
