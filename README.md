@@ -133,8 +133,8 @@ If you wish to use “UpdateVersionInfo” in your Visual Studio workflow and al
 # Visual Studio for Mac
 “UpdateVersionInfo” is for the moment a Windows exe, so it doesn't work on OSX.
 ```
-   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-      <Exec Condition=" '$(OS)' == 'Windows_NT' " Command="$(SolutionDir)UpdateVersionInfo -v=auto -p=scan" />
+   <Target Name="PreBuild" Condition="'$(Configuration)'=='Debug' AND '$(DevEnvDir.Substring(0,1))' == 'C' " BeforeTargets="PreBuildEvent">
+      <Exec Command="$(SolutionDir)UpdateVersionInfo -v=auto -p=scan" />
    </Target>
 ```  
   
