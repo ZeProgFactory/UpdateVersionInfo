@@ -50,7 +50,17 @@ namespace UpdateVersionInfo
                 },
                 {
                     "p|path=", "scan | The path to a C# file to update with version information.",
-                                 p => MainViewModel.Current.Files.Add(new FileAndType { Name = "UWP", Target = p })
+                                 p =>
+                                 {
+                                    if( p.ToLower().EndsWith("versioninfo.cs"))
+                                    {
+                                       MainViewModel.Current.Files.Add(new FileAndType { Name = "vi", Target = p });
+                                    }
+                                    else
+                                    {
+                                       MainViewModel.Current.Files.Add(new FileAndType { Name = "UWP", Target = p });
+                                    };
+                                 }
                 },
                 {
                     "a|androidManifest=", "The path to an android manifest file to update with version information.",
