@@ -63,14 +63,24 @@ namespace UpdateVersionInfo.Core
             XName versionNameAttributeName = XName.Get("versionName", androidNS);
             XDocument doc = XDocument.Load(path);
 
-            LastMessage = doc.Root.Attribute(versionNameAttributeName).Value;
+            var x = doc.Root.Attribute(versionNameAttributeName);
+
+            if (x == null)
+            {
+               LastMessage = "versionName AttributeName not found";
+               return new Version(0, 0);
+            }
+            else
+            {
+               LastMessage = (x == null ? "versionName AttributeName not found" : x.Value);
+            };
          }
          catch (Exception ex)
          {
             Console.WriteLine($"DroidHelper.GetVersion {path} {ex.Message}");
 
             LastMessage = ex.Message;
-            return new Version(-1, -1);
+            return new Version(0, 0);
          };
 
          return new Version(LastMessage);
