@@ -135,6 +135,7 @@ namespace UpdateVersionInfo
                   || x.ToLower().EndsWith(@".vdproj")
                   || x.ToLower().EndsWith(@".csproj")
                   || x.ToLower().EndsWith(@".nuspec")
+                  || x.ToLower().EndsWith(@"\platforms\android\androidmanifest.xml")
                   ).ToList();
 
                if (MainViewModel.Current.Debug) Console.WriteLine($"files (3) {files.Count()}");

@@ -25,7 +25,7 @@ namespace UpdateVersionInfo.Core
 
       // - - -  - - - 
 
-      public String UpdateVersionInfoVersion { get; } = "1.0.15";
+      public String UpdateVersionInfoVersion { get; } = "1.0.16";
 
       // - - -  - - - 
 
