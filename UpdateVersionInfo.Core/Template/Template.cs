@@ -10,7 +10,7 @@ using System;
 
 namespace ZPF
 {{
-   public class VersionInfo
+   public class VersionInfo : IVersionInfo
    {{
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
 
