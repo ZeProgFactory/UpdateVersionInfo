@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace UpdateVersionInfo.Core
 {
@@ -28,19 +30,39 @@ namespace UpdateVersionInfo.Core
             XDocument doc = XDocument.Load(path);
             if (doc.DocumentType != null && doc.DocumentType.Name == "plist")
             {
-               var shortVersionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleShortVersionString']");
-               if (shortVersionElement != null)
+               if (doc.ToString().Contains("<string>FMWK</string>"))
                {
-                  var valueElement = shortVersionElement.NextNode as XElement;
-                  if (valueElement != null && valueElement.Name == "string") return true;
+                  return false;
                }
+               else if (doc.ToString().Contains("<key>CFBundleVersion</key>")
+                  || doc.ToString().Contains("<key>CFBundleShortVersionString</key>")
+                  )
+               {
+                  /*
+                  <key>CFBundleVersion</key>
+                  <string>1.0.1.1</string>
+                  <key>CFBundleShortVersionString</key>
+                  <string>1.0.1</string>
+                   */
 
-               var versionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleVersion']");
-               if (versionElement != null)
-               {
-                  var valueElement = versionElement.NextNode as XElement;
-                  if (valueElement != null && valueElement.Name == "string") return true;
+                  return true;
                }
+               else
+               {
+                  var shortVersionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleShortVersionString']");
+                  if (shortVersionElement != null)
+                  {
+                     var valueElement = shortVersionElement.NextNode as XElement;
+                     if (valueElement != null && valueElement.Name == "string") return true;
+                  }
+
+                  var versionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleVersion']");
+                  if (versionElement != null)
+                  {
+                     var valueElement = versionElement.NextNode as XElement;
+                     if (valueElement != null && valueElement.Name == "string") return true;
+                  }
+               };
             }
          }
          catch (Exception e)
@@ -59,18 +81,51 @@ namespace UpdateVersionInfo.Core
          XDocument doc = XDocument.Load(path);
          if (doc.DocumentType.Name == "plist")
          {
-            var shortVersionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleShortVersionString']");
-            if (shortVersionElement != null)
+            if (doc.ToString().Contains("<string>FMWK</string>"))
             {
-               var valueElement = shortVersionElement.NextNode as XElement;
-               LastMessage = valueElement.Value.ToString();
+               // Do nothing it's a lib
             }
-
-            var versionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleVersion']");
-            if (versionElement != null)
+            else if (doc.ToString().Contains("<key>CFBundleVersion</key>")
+               || doc.ToString().Contains("<key>CFBundleShortVersionString</key>")
+               )
             {
-               var valueElement = versionElement.NextNode as XElement;
-               LastMessage = valueElement.Value.ToString();
+               /*
+               <key>CFBundleVersion</key>
+               <string>1.0.1.1</string>
+               <key>CFBundleShortVersionString</key>
+               <string>1.0.1</string>
+                */
+
+               if (doc.ToString().Contains("<key>CFBundleVersion</key>"))
+               {
+                  var lines = doc.ToString().Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                  var l = lines.Where( x=> x.Contains("<key>CFBundleVersion</key>") ).FirstOrDefault();
+                  var ind = lines.IndexOf(l);
+                  var version = lines[ind + 1].Replace(" ", "").Replace("/", "").Replace("<string>", "");
+
+                  LastMessage = version;
+                  return new Version(version);
+               }
+               else
+               {
+
+               };
+            }
+            else
+            {
+               var shortVersionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleShortVersionString']");
+               if (shortVersionElement != null)
+               {
+                  var valueElement = shortVersionElement.NextNode as XElement;
+                  LastMessage = valueElement.Value.ToString();
+               }
+
+               var versionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleVersion']");
+               if (versionElement != null)
+               {
+                  var valueElement = versionElement.NextNode as XElement;
+                  LastMessage = valueElement.Value.ToString();
+               }
             }
          }
 
@@ -92,24 +147,46 @@ namespace UpdateVersionInfo.Core
             XDocument doc = XDocument.Load(path);
             if (doc.DocumentType.Name == "plist")
             {
-               var shortVersionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleShortVersionString']");
-               if (shortVersionElement != null)
+               if (doc.ToString().Contains("<string>FMWK</string>"))
                {
-                  var valueElement = shortVersionElement.NextNode as XElement;
-
-                  string v1 = valueElement.Value.ToString();
-                  valueElement.Value = version.ToString();
-                  LastMessage = $"{v1} --> {version.ToString()}";
+                  // Do nothing it's a lib
                }
-
-               var versionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleVersion']");
-               if (versionElement != null)
+               else if (doc.ToString().Contains("<key>CFBundleVersion</key>")
+                  || doc.ToString().Contains("<key>CFBundleShortVersionString</key>")
+                  )
                {
-                  var valueElement = versionElement.NextNode as XElement;
+                  /*
+                  <key>CFBundleVersion</key>
+                  <string>1.0.1.1</string>
+                  <key>CFBundleShortVersionString</key>
+                  <string>1.0.1</string>
+                   */
 
-                  string v1 = valueElement.Value.ToString();
-                  valueElement.Value = version.ToString();
-                  LastMessage = $"{v1} --> {version.ToString()}";
+                  var OldVersion = GetVersion(path);
+                  var text = doc.ToString();
+                  text = text.Replace($"<string>{OldVersion}</string>", $"<string>{version.ToString()}</string>"); 
+               }
+               else
+               {
+                  var shortVersionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleShortVersionString']");
+                  if (shortVersionElement != null)
+                  {
+                     var valueElement = shortVersionElement.NextNode as XElement;
+
+                     string v1 = valueElement.Value.ToString();
+                     valueElement.Value = version.ToString();
+                     LastMessage = $"{v1} --> {version.ToString()}";
+                  }
+
+                  var versionElement = doc.XPathSelectElement("plist/dict/key[string()='CFBundleVersion']");
+                  if (versionElement != null)
+                  {
+                     var valueElement = versionElement.NextNode as XElement;
+
+                     string v1 = valueElement.Value.ToString();
+                     valueElement.Value = version.ToString();
+                     LastMessage = $"{v1} --> {version.ToString()}";
+                  }
                }
             }
 

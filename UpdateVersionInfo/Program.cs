@@ -105,6 +105,12 @@ namespace UpdateVersionInfo
                            break;
 
                         case "MacOS":
+                           iOSHelper.GetVersion(f.Target);
+
+                           if (!MainViewModel.Current.Silent)
+                           {
+                              Console.WriteLine(formatStr, "MacOS", iOSHelper.LastMessage, f.Target);
+                           };
                            break;
 
                         case "Nuget":
@@ -190,6 +196,12 @@ namespace UpdateVersionInfo
                               break;
 
                            case "MacOS":
+                              iOSHelper.Update(f.Target, version);
+
+                              if (!MainViewModel.Current.Silent)
+                              {
+                                 Console.WriteLine(formatStr, "MacOS", iOSHelper.LastMessage, f.Target);
+                              };
                               break;
 
                            case "Nuget":

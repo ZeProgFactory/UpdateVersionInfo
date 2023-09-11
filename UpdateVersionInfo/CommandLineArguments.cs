@@ -193,6 +193,11 @@ namespace UpdateVersionInfo
                      {
                         MainViewModel.Current.Files.Add(new FileAndType { Name = "iOS", Target = f });
                         //MainViewModel.Current.TouchPListPath = f;
+                     }
+                     else
+                     {
+                        MainViewModel.Current.Files.Add(new FileAndType { Name = "MacOS", Target = f });
+                        //MainViewModel.Current.TouchPListPath = f;
                      };
                   };
 
