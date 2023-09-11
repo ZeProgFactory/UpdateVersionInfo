@@ -99,7 +99,7 @@ namespace UpdateVersionInfo.Core
                if (doc.ToString().Contains("<key>CFBundleVersion</key>"))
                {
                   var lines = doc.ToString().Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                  var l = lines.Where( x=> x.Contains("<key>CFBundleVersion</key>") ).FirstOrDefault();
+                  var l = lines.Where(x => x.Contains("<key>CFBundleVersion</key>")).FirstOrDefault();
                   var ind = lines.IndexOf(l);
                   var version = lines[ind + 1].Replace(" ", "").Replace("/", "").Replace("<string>", "");
 
@@ -164,7 +164,14 @@ namespace UpdateVersionInfo.Core
 
                   var OldVersion = GetVersion(path);
                   var text = doc.ToString();
-                  text = text.Replace($"<string>{OldVersion}</string>", $"<string>{version.ToString()}</string>"); 
+
+                  text = text.Replace($"<string>{OldVersion}</string>", $"<string>{version.ToString()}</string>");
+                  text = text.Replace($"<string>{OldVersion.Major}.{OldVersion.Minor}.{OldVersion.MinorRevision}</string>", $"<string>{version.Major}.{version.Minor}.{version.MinorRevision}</string>");
+
+                  LastMessage = $"{OldVersion} --> {version.ToString()}";
+
+                  System.IO.File.WriteAllText(path, text);
+                  return;
                }
                else
                {
