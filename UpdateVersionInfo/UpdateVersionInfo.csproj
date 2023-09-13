@@ -82,7 +82,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
+  <PropertyGroup Condition=" '1' == '2' ">
     <PostBuildEvent>rem copy $(TargetPath) D:\GitWare\Apps\UpdateVersionInfo\XFTestPlatformes\$(TargetFileName) /y</PostBuildEvent>
   </PropertyGroup>
 </Project>
