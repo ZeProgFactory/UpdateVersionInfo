@@ -166,7 +166,7 @@ namespace UpdateVersionInfo.Core
                   var text = doc.ToString();
 
                   text = text.Replace($"<string>{OldVersion}</string>", $"<string>{version.ToString()}</string>");
-                  text = text.Replace($"<string>{OldVersion.Major}.{OldVersion.Minor}.{OldVersion.MinorRevision}</string>", $"<string>{version.Major}.{version.Minor}.{version.MinorRevision}</string>");
+                  text = text.Replace($"<string>{OldVersion.Major}.{OldVersion.Minor}.{OldVersion.Revision}</string>", $"<string>{version.Major}.{version.Minor}.{version.Revision}</string>");
 
                   LastMessage = $"{OldVersion} --> {version.ToString()}";
 
