@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -43,43 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\UpdateVersionInfo.Core\Helper\AppleHelper.cs">
-      <Link>Core\AppleHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\UpdateVersionInfo.Core\Helper\DeployProjectHelper.cs">
-      <Link>Core\DeployProjectHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\UpdateVersionInfo.Core\Helper\DroidHelper.cs">
-      <Link>Core\DroidHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\UpdateVersionInfo.Core\Helper\iOSHelper.cs">
-      <Link>Core\iOSHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\UpdateVersionInfo.Core\Helper\NugetHelper.cs">
-      <Link>Core\NugetHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\UpdateVersionInfo.Core\Helper\UWPHelper.cs">
-      <Link>Core\UWPHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\UpdateVersionInfo.Core\Helper\_VI_Helper.cs">
-      <Link>Core\_VI_Helper.cs</Link>
-    </Compile>
-    <Compile Include="..\UpdateVersionInfo.Core\Models\FileAndType.cs">
-      <Link>Models\FileAndType.cs</Link>
-    </Compile>
-    <Compile Include="..\UpdateVersionInfo.Core\Template\Template.cs">
-      <Link>Template\Template.cs</Link>
-    </Compile>
-    <Compile Include="..\UpdateVersionInfo.Core\ViewModels\MainViewModel.cs">
-      <Link>Core\MainViewModel.cs</Link>
-    </Compile>
     <Compile Include="CommandLineArguments.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\UpdateVersionInfo.Core\Template\Template.cs">
+      <Link>Template\Template.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
+    <Folder Include="Models\" />
+    <Folder Include="Template\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '1' == '2' ">

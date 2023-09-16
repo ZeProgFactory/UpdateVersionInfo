@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Core\" />
+    <None Remove="Models\" />
+    <None Remove="Template\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
+    <Folder Include="Models\" />
+    <Folder Include="Template\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\UpdateVersionInfo.Core\Helper\_VI_Helper.cs">
+      <Link>Core\_VI_Helper.cs</Link>
+    </Compile>
+    <Compile Include="..\UpdateVersionInfo.Core\Helper\AppleHelper.cs">
+      <Link>Core\AppleHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\UpdateVersionInfo.Core\Helper\DeployProjectHelper.cs">
+      <Link>Core\DeployProjectHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\UpdateVersionInfo.Core\Helper\DroidHelper.cs">
+      <Link>Core\DroidHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\UpdateVersionInfo.Core\Helper\iOSHelper.cs">
+      <Link>Core\iOSHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\UpdateVersionInfo.Core\ViewModels\MainViewModel.cs">
+      <Link>Core\MainViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\UpdateVersionInfo.Core\Helper\NugetHelper.cs">
+      <Link>Core\NugetHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\UpdateVersionInfo.Core\Helper\UWPHelper.cs">
+      <Link>Core\UWPHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\UpdateVersionInfo.Core\Models\FileAndType.cs">
+      <Link>Models\FileAndType.cs</Link>
+    </Compile>
+    <Compile Include="..\UpdateVersionInfo.Core\Template\Template.cs">
+      <Link>Template\Template.cs</Link>
+    </Compile>
+  </ItemGroup>
+</Project>
