@@ -129,27 +129,32 @@ namespace UpdateVersionInfo
 
                var files = allFiles.Where(
                   x => x.ToLower().Contains(@"\properties\")
+                  || x.ToLower().Contains(@"/properties/")
                   || x.ToLower().EndsWith(@"\info.plist")
+                  || x.ToLower().EndsWith(@"/info.plist")
                   || x.ToLower().EndsWith(@"\package.appxmanifest")
+                  || x.ToLower().EndsWith(@"/package.appxmanifest")
                   || x.ToLower().EndsWith(@"\versioninfo.cs")
+                  || x.ToLower().EndsWith(@"/versioninfo.cs")
                   || x.ToLower().EndsWith(@".vdproj")
                   || x.ToLower().EndsWith(@".csproj")
                   || x.ToLower().EndsWith(@".nuspec")
                   || x.ToLower().EndsWith(@"\platforms\android\androidmanifest.xml")
+                  || x.ToLower().EndsWith(@"/platforms/android/androidmanifest.xml")
                   ).ToList();
 
                if (MainViewModel.Current.Debug) Console.WriteLine($"files (3) {files.Count()}");
 
                foreach (var f in files)
                {
-                  if (f.ToLower().EndsWith(@"\versioninfo.cs"))
+                  if ( f.ToLower().EndsWith(@"\versioninfo.cs") || f.ToLower().EndsWith(@"/versioninfo.cs") )
                   {
                      MainViewModel.Current.Files.Insert(0, new FileAndType { Name = "vi", Target = f });
                   };
 
                   if (UWPHelper.IsValid(f))
                   {
-                     if (f.ToLower().EndsWith(@"\assemblyinfo.cs"))
+                     if (f.ToLower().EndsWith(@"\assemblyinfo.cs") || f.ToLower().EndsWith(@"/assemblyinfo.cs"))
                      {
                         if (System.IO.Directory.EnumerateFiles(System.IO.Path.GetDirectoryName(f), "Default.rd.xml", System.IO.SearchOption.TopDirectoryOnly).Count() == 1)
                         {
@@ -163,7 +168,7 @@ namespace UpdateVersionInfo
                         };
                      };
 
-                     if (f.ToLower().EndsWith(@"\package.appxmanifest"))
+                     if (f.ToLower().EndsWith(@"\package.appxmanifest") || f.ToLower().EndsWith(@"/package.appxmanifest"))
                      {
                         MainViewModel.Current.Files.Add(new FileAndType { Name = "UWP", Target = f });
 
