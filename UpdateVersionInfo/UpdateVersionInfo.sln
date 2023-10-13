@@ -5,12 +5,13 @@ VisualStudioVersion = 17.8.34112.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DFD22A10-9599-4275-8F5D-0FB7E1D6A78C}"
 	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
+		..\README.md = ..\README.md
+		x2.bat = x2.bat
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdateVersionInfo.Core", "UpdateVersionInfo.Core\UpdateVersionInfo.Core.csproj", "{69C88B13-C803-4C2F-9640-8C736F5425E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdateVersionInfo.Core", "..\UpdateVersionInfo.Core\UpdateVersionInfo.Core.csproj", "{69C88B13-C803-4C2F-9640-8C736F5425E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdateVersionInfo", "UpdateVersionInfo2\UpdateVersionInfo.csproj", "{FAEF6577-8C76-4A05-8B58-03122D5D2566}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdateVersionInfo", "..\UpdateVersionInfo2\UpdateVersionInfo.csproj", "{FAEF6577-8C76-4A05-8B58-03122D5D2566}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
