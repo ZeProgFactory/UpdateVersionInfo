@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DFD22A10-9599-4275-8F5D-0FB7E1D6A78C}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		UpdateVersionInfo2\x2.bat = UpdateVersionInfo2\x2.bat
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdateVersionInfo.Core", "UpdateVersionInfo.Core\UpdateVersionInfo.Core.csproj", "{69C88B13-C803-4C2F-9640-8C736F5425E2}"
