@@ -14,11 +14,6 @@
     <None Remove="Template\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core\" />
-    <Folder Include="Models\" />
-    <Folder Include="Template\" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="..\UpdateVersionInfo.Core\Helper\_VI_Helper.cs">
       <Link>Core\_VI_Helper.cs</Link>
     </Compile>
@@ -49,5 +44,8 @@
     <Compile Include="..\UpdateVersionInfo.Core\Template\Template.cs">
       <Link>Template\Template.cs</Link>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 </Project>

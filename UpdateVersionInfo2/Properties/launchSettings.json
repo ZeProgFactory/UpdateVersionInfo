@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "UpdateVersionInfo": {
+      "commandName": "Project",
+      "commandLineArgs": "-v=auto -p=scan",
+      "workingDirectory": "D:\\GitWare\\Apps\\YAMP"
+    }
+  }
+}
