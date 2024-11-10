@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdateVersionInfo.Core", "U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdateVersionInfo", "UpdateVersionInfo2\UpdateVersionInfo.csproj", "{FAEF6577-8C76-4A05-8B58-03122D5D2566}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateVersionInfoMaui", "UpdateVersionInfoNew\UpdateVersionInfoMaui.csproj", "{AD2E698F-8281-489B-A257-7E754FEB2130}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{FAEF6577-8C76-4A05-8B58-03122D5D2566}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAEF6577-8C76-4A05-8B58-03122D5D2566}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAEF6577-8C76-4A05-8B58-03122D5D2566}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD2E698F-8281-489B-A257-7E754FEB2130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD2E698F-8281-489B-A257-7E754FEB2130}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD2E698F-8281-489B-A257-7E754FEB2130}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD2E698F-8281-489B-A257-7E754FEB2130}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
