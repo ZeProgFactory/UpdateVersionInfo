@@ -37,7 +37,14 @@ public class Params
    //"-debug", "Shows debug information."
    public bool Debug { get; set; } = false;
 
-   public bool SubFolders { get; set; } = true;
 
    public bool Simulation { get; set; } = false;
+
+
+   //"-i", "Displays current version info"
+   public bool ScanAndDisplay { get; set; } = false;
+
+   //"-s", "Scan subfolders"
+   public bool SubFolders { get; set; } = true;
+
 }

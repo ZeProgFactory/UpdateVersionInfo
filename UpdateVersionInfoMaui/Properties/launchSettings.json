@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "UpdateVersionInfoMaui": {
+      "commandName": "Project",
+      "commandLineArgs": "-i -s"
+    }
+  }
+}

@@ -9,11 +9,15 @@ internal class Program
    {
       MainViewModel.Current.Config.Debug = args.Where(x => x.Trim().ToLower() == "-debug").Count() == 1;
       MainViewModel.Current.Config.ShowHelp = args.Where(x => x.Trim().ToLower() == "-?").Count() == 1;
+      MainViewModel.Current.Config.ScanAndDisplay = args.Where(x => x.Trim().ToLower() == "-i").Count() == 1;
+      MainViewModel.Current.Config.SubFolders = args.Where(x => x.Trim().ToLower() == "-s").Count() == 1;
 
       if (args.Length == 0 || MainViewModel.Current.Config.ShowHelp)
       {
          ShowHeader();
          ShowHelp();
+
+         return;
       };
 
       // - - -  - - - 
@@ -21,13 +25,14 @@ internal class Program
       if (Debugger.IsAttached)
       {
          MainViewModel.Current.WorkDir = System.IO.Directory.GetCurrentDirectory();
+
+         //MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ZeScanner\ZeScanner.Maui9";
+         MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ECO-SI.iZiBio\izimobile\Izibio.Maui9";
       }
       else
       {
          MainViewModel.Current.WorkDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
       };
-
-      MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ZeScanner\ZeScanner.Maui9";
 
       // - - - scan folder(s) - - - 
 
@@ -47,7 +52,21 @@ internal class Program
       {
          // oups ...
 
-         Console.WriteLine("Error: Found more than 1 'VersionInfo.cs'.");
+         if (MainViewModel.Current.Files.Where(x => x.FileProcessor.GetType() == typeof(FileProcessor_VersionInfo)).Count() > 1)
+         {
+            ShowHeader();
+            Console.WriteLine("Error: Found more than 1 'VersionInfo.cs'.");
+
+            Environment.Exit(0);
+         };
+      };
+
+      // - - -  - - - 
+
+      if (MainViewModel.Current.Files.Count() == 0)
+      {
+         ShowHeader();
+         Console.WriteLine("No files found to update.");
 
          Environment.Exit(0);
       };
