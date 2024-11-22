@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
+using System.Reflection.Metadata;
 
 namespace UpdateVersionInfo;
 
@@ -42,7 +43,9 @@ internal class Program
 
       // - - - read VersionInfo.cs - - - 
 
-      if (MainViewModel.Current.Files.Where(x => x.FileProcessor.GetType() == typeof(FileProcessor_VersionInfo)).Count() == 1)
+      MainViewModel.Current.Config.HasVersionInfo = MainViewModel.Current.Files.Where(x => x.FileProcessor.GetType() == typeof(FileProcessor_VersionInfo)).Count() == 1;
+
+      if (MainViewModel.Current.Config.HasVersionInfo)
       {
          var x = (MainViewModel.Current.Files.Where(x => x.FileProcessor.GetType() == typeof(FileProcessor_VersionInfo)).FirstOrDefault());
 
@@ -85,11 +88,18 @@ internal class Program
 
       foreach (var file in MainViewModel.Current.Files)
       {
-         Console.WriteLine($"{file.FileProcessor.Name}  {file.FileProcessor.GetVersion(file.FilePath)} --> {MainViewModel.Current.NewVersion}");
+         var OldVersion = file.FileProcessor.GetVersion(file.FilePath);
 
          if (!MainViewModel.Current.Config.Simulation)
          {
+            if (! MainViewModel.Current.Config.HasVersionInfo)
+            {
+               MainViewModel.Current.NewVersion = new Version(OldVersion.ToString());
+               MainViewModel.Current.NewVersion.IncVersion();
+            };
+
             var LastMessage = file.FileProcessor.Update(file.FilePath, MainViewModel.Current.NewVersion);
+            Console.WriteLine($"{file.FileProcessor.Name}  {OldVersion} --> {MainViewModel.Current.NewVersion}");
          };
       };
 
@@ -122,7 +132,15 @@ internal class Program
 
    private static void ShowHelp()
    {
-      Console.WriteLine("  -?                         Shows help/usage information.");
+      var propertiesWithAttribute = typeof(Params).GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(ParamAttributes.HelpAttribute)));
+
+      foreach (var prop in propertiesWithAttribute)
+      {
+         UpdateVersionInfo.ParamAttributes.HelpAttribute attribute = (UpdateVersionInfo.ParamAttributes.HelpAttribute)prop.GetCustomAttribute(typeof(ParamAttributes.HelpAttribute));
+
+         Console.WriteLine($"   {attribute.Param,-8} {attribute.HelpText}");
+      }
+
       Console.WriteLine("");
    }
 

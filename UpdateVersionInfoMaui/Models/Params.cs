@@ -31,20 +31,21 @@ namespace UpdateVersionInfo;
 
 public class Params
 {
-   //"-?", "Shows help/usage information."
+   [ParamAttributes.Help(true,"-?", "Shows help/usage information.")]
    public bool ShowHelp { get; set; } = true;
 
-   //"-debug", "Shows debug information."
+   [ParamAttributes.Help(false, "-debug", "Shows debug information")]
    public bool Debug { get; set; } = false;
 
 
    public bool Simulation { get; set; } = false;
 
 
-   //"-i", "Displays current version info"
+   [ParamAttributes.Help(true, "-i", "Displays current version info")]
    public bool ScanAndDisplay { get; set; } = false;
 
-   //"-s", "Scan subfolders"
+   [ParamAttributes.Help(true, "-s", "Scan subfolders")]
    public bool SubFolders { get; set; } = true;
 
+   public bool HasVersionInfo { get; internal set; }
 }
