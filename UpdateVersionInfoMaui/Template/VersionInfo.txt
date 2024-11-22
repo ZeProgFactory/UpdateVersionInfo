@@ -8,7 +8,7 @@ using System;
 
 namespace ZPF
 {
-   public class VersionInfo : IVersionInfo
+   public class VersionInfo #UseIVersionInfo#
    {
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
 

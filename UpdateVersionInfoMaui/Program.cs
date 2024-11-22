@@ -8,6 +8,8 @@ internal class Program
 {
    static void Main(string[] args)
    {
+      MainViewModel.Current.Config.ShowHelp = args.Where(x => x.Trim().ToLower() == "-?").Count() == 1;
+
       if (args.Length == 0 || MainViewModel.Current.Config.ShowHelp)
       {
          ShowHeader();
@@ -19,27 +21,30 @@ internal class Program
       // - - - retrieve args - - - 
 
       MainViewModel.Current.Config.Debug = args.Where(x => x.Trim().ToLower() == "-debug").Count() == 1;
-      MainViewModel.Current.Config.ShowHelp = args.Where(x => x.Trim().ToLower() == "-?").Count() == 1;
       MainViewModel.Current.Config.ScanAndDisplay = args.Where(x => x.Trim().ToLower() == "-i").Count() == 1;
       MainViewModel.Current.Config.SubFolders = args.Where(x => x.Trim().ToLower() == "-s").Count() == 1;
+      MainViewModel.Current.Config.UseIVersionInfo = args.Where(x => x.Trim().ToLower() == "-ui").Count() == 1;
 
       // - - -  - - - 
 
-      if (Debugger.IsAttached)
-      {
-         MainViewModel.Current.WorkDir = System.IO.Directory.GetCurrentDirectory();
+      //if (Debugger.IsAttached)
+      //{
+      //   MainViewModel.Current.WorkDir = System.IO.Directory.GetCurrentDirectory();
 
-         //MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ZeScanner\ZeScanner.Maui9";
-         MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ECO-SI.iZiBio\izimobile\Izibio.Maui9";
-      }
-      else
+      //   //MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ZeScanner\ZeScanner.Maui9";
+      //   MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ECO-SI.iZiBio\izimobile\Izibio.Maui9";
+      //}
+      //else
       {
-         MainViewModel.Current.WorkDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+         //MainViewModel.Current.WorkDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+         MainViewModel.Current.WorkDir = System.IO.Directory.GetCurrentDirectory();
       };
 
       // - - - scan folder(s) - - - 
 
       // Enumerate all files in the directory ( and subdirectories )
+      if (MainViewModel.Current.Config.Debug) Console.WriteLine($"WorkDir {MainViewModel.Current.WorkDir}");
+
       var files = Directory.EnumerateFiles(MainViewModel.Current.WorkDir, "*", (MainViewModel.Current.Config.SubFolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly));
       MainViewModel.Current.GetWorkFiles(files);
 

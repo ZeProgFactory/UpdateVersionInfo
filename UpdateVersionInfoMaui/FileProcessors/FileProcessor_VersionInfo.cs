@@ -45,6 +45,15 @@ public class FileProcessor_VersionInfo : IFileProcessor
       file = file.Replace("#BuildDate#", DateTime.Now.ToString("dd.MM.yyyy"));
       file = file.Replace("#BuildTime#", DateTime.Now.ToString("HH:mm"));
 
+      if (MainViewModel.Current.Config.UseIVersionInfo)
+      {
+         file = file.Replace("#UseIVersionInfo#", ": IVersionInfo");
+      }
+      else
+      {
+         file = file.Replace("#UseIVersionInfo#", "");
+      };
+
       try
       {
          System.IO.File.WriteAllText(filePath, file);

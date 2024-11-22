@@ -47,4 +47,7 @@ public class Params
 
    [ParamAttributes.Help(true, "-s", "Scan subfolders")]
    public bool SubFolders { get; set; } = true;
+
+   [ParamAttributes.Help(true, "-ui", "Use IVersionInfo interface")]
+   public bool UseIVersionInfo { get; set; } = false;
 }
