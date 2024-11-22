@@ -8,11 +8,6 @@ internal class Program
 {
    static void Main(string[] args)
    {
-      MainViewModel.Current.Config.Debug = args.Where(x => x.Trim().ToLower() == "-debug").Count() == 1;
-      MainViewModel.Current.Config.ShowHelp = args.Where(x => x.Trim().ToLower() == "-?").Count() == 1;
-      MainViewModel.Current.Config.ScanAndDisplay = args.Where(x => x.Trim().ToLower() == "-i").Count() == 1;
-      MainViewModel.Current.Config.SubFolders = args.Where(x => x.Trim().ToLower() == "-s").Count() == 1;
-
       if (args.Length == 0 || MainViewModel.Current.Config.ShowHelp)
       {
          ShowHeader();
@@ -20,6 +15,13 @@ internal class Program
 
          return;
       };
+
+      // - - - retrieve args - - - 
+
+      MainViewModel.Current.Config.Debug = args.Where(x => x.Trim().ToLower() == "-debug").Count() == 1;
+      MainViewModel.Current.Config.ShowHelp = args.Where(x => x.Trim().ToLower() == "-?").Count() == 1;
+      MainViewModel.Current.Config.ScanAndDisplay = args.Where(x => x.Trim().ToLower() == "-i").Count() == 1;
+      MainViewModel.Current.Config.SubFolders = args.Where(x => x.Trim().ToLower() == "-s").Count() == 1;
 
       // - - -  - - - 
 
@@ -41,7 +43,7 @@ internal class Program
       var files = Directory.EnumerateFiles(MainViewModel.Current.WorkDir, "*", (MainViewModel.Current.Config.SubFolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly));
       MainViewModel.Current.GetWorkFiles(files);
 
-      // - - - read VersionInfo.cs - - - 
+      // - - - search & read VersionInfo.cs - - - 
 
       MainViewModel.Current.Config.HasVersionInfo = MainViewModel.Current.Files.Where(x => x.FileProcessor.GetType() == typeof(FileProcessor_VersionInfo)).Count() == 1;
 
@@ -92,7 +94,7 @@ internal class Program
 
          if (!MainViewModel.Current.Config.Simulation)
          {
-            if (! MainViewModel.Current.Config.HasVersionInfo)
+            if (!MainViewModel.Current.Config.HasVersionInfo)
             {
                MainViewModel.Current.NewVersion = new Version(OldVersion.ToString());
                MainViewModel.Current.NewVersion.IncVersion();
@@ -138,7 +140,10 @@ internal class Program
       {
          UpdateVersionInfo.ParamAttributes.HelpAttribute attribute = (UpdateVersionInfo.ParamAttributes.HelpAttribute)prop.GetCustomAttribute(typeof(ParamAttributes.HelpAttribute));
 
-         Console.WriteLine($"   {attribute.Param,-8} {attribute.HelpText}");
+         if (attribute.IsVisisible)
+         {
+            Console.WriteLine($"   {attribute.Param,-8} {attribute.HelpText}");
+         };
       }
 
       Console.WriteLine("");
