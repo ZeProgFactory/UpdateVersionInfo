@@ -9,6 +9,7 @@ namespace UpdateVersionInfo;
 public class WorkFile
 {
    public string FilePath { get; set; }
+   public string ShortenedFilePath { get; set; }
    public IFileProcessor FileProcessor { get; set; }
 
    // - - -  - - - 

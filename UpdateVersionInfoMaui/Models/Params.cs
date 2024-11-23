@@ -31,14 +31,14 @@ namespace UpdateVersionInfo;
 
 public class Params
 {
-   [ParamAttributes.Help(false, "-sim", "Apply no changes")]
-   public bool Simulation { get; set; } = false;
-
    public bool HasVersionInfo { get; internal set; }
 
 
    [ParamAttributes.Help(true,"-?", "Shows help/usage information.")]
    public bool ShowHelp { get; set; } = true;
+
+   [ParamAttributes.Help(true, "-sim", "Apply no changes")]
+   public bool Simulation { get; set; } = false;
 
    [ParamAttributes.Help(false, "-debug", "Shows debug information")]
    public bool Debug { get; set; } = false;
@@ -54,4 +54,6 @@ public class Params
 
    [ParamAttributes.Help(true, "-tso", "Update build TimeStamp Only")]
    public bool BuildTimeStampOnly { get; set; } = false;
+
+   public bool DisplayFilePath { get; internal set; } = true;
 }

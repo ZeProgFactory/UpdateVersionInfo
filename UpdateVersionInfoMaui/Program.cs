@@ -86,7 +86,8 @@ internal class Program
       // - - -  - - - 
 
       ShowHeader();
-      Console.WriteLine(MainViewModel.Current.WorkDir);
+      Console.WriteLine(MainViewModel.Current.WorkDir + @"\");
+      Console.WriteLine();
 
       MainViewModel.Current.NewVersion = new Version(MainViewModel.Current.PrevVersion.ToString());
       if (!MainViewModel.Current.Config.BuildTimeStampOnly)
@@ -100,6 +101,15 @@ internal class Program
       MainViewModel.Current.BuildTimeStamp = DateTime.Now;
       Environment.SetEnvironmentVariable("BuildDateTime", MainViewModel.Current.BuildTimeStamp.ToString("yyMMdd HHmm"));
       Environment.SetEnvironmentVariable("BuildDate", MainViewModel.Current.BuildTimeStamp.ToString("yyMMdd"));
+
+      // - - - shorten filepaths - - - 
+
+      foreach (var file in MainViewModel.Current.Files)
+      {
+         file.ShortenedFilePath = file.FilePath.Replace(MainViewModel.Current.WorkDir, "").Substring(1);
+      };
+
+      var MaxLength = MainViewModel.Current.Files.Max(x => x.ShortenedFilePath.Length);
 
       // - - - do it - - - 
 
@@ -122,7 +132,14 @@ internal class Program
             var LastMessage = file.FileProcessor.Update(file.FilePath, MainViewModel.Current.NewVersion);
          };
 
-         Console.WriteLine($"{file.FileProcessor.Name}  {OldVersion} --> {MainViewModel.Current.NewVersion}");
+         if (MainViewModel.Current.Config.DisplayFilePath)
+         {
+            Console.WriteLine($"{file.ShortenedFilePath.PadRight(MaxLength)}  {file.FileProcessor.Name}  {OldVersion} --> {MainViewModel.Current.NewVersion}");
+         }
+         else
+         {
+            Console.WriteLine($"{file.FileProcessor.Name}  {OldVersion} --> {MainViewModel.Current.NewVersion}");
+         };
       };
 
       // - - -  - - - 
