@@ -2,7 +2,7 @@
   "profiles": {
     "UpdateVersionInfoMaui": {
       "commandName": "Project",
-      "commandLineArgs": "-i -s",
+      "commandLineArgs": "-i -s -tso",
       "environmentVariables": {
         "dummy": "-i -s"
       }

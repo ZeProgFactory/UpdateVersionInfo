@@ -42,8 +42,8 @@ public class FileProcessor_VersionInfo : IFileProcessor
 
       file = file.Replace("#UpdateVersion#", MainViewModel.Current.UpdateVersionInfoVersion);
       file = file.Replace("#Version#", newVersion.ToString());
-      file = file.Replace("#BuildDate#", DateTime.Now.ToString("dd.MM.yyyy"));
-      file = file.Replace("#BuildTime#", DateTime.Now.ToString("HH:mm"));
+      file = file.Replace("#BuildDate#", MainViewModel.Current.BuildTimeStamp.ToString("dd.MM.yyyy"));
+      file = file.Replace("#BuildTime#", MainViewModel.Current.BuildTimeStamp.ToString("HH:mm"));
 
       if (MainViewModel.Current.Config.UseIVersionInfo)
       {

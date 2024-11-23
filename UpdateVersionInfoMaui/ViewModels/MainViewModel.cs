@@ -31,6 +31,7 @@ public class MainViewModel
       FileProcessors.Add(new FileProcessor_VersionInfo());
       FileProcessors.Add(new FileProcessor_Droid());
       //ToDo: FileProcessors.Add(new FileProcessor_iOS());
+      //ToDo: FileProcessors.Add(new FileProcessor_Mac());
       FileProcessors.Add(new FileProcessor_UAP());
    }
 
@@ -94,6 +95,7 @@ public class MainViewModel
    // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  
 
    public List<WorkFile> Files { get; internal set; } = new List<WorkFile>();
+   public DateTime BuildTimeStamp { get; internal set; }
 
    public void GetWorkFiles(IEnumerable<string> files)
    {

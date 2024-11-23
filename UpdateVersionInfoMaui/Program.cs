@@ -24,17 +24,18 @@ internal class Program
       MainViewModel.Current.Config.ScanAndDisplay = args.Where(x => x.Trim().ToLower() == "-i").Count() == 1;
       MainViewModel.Current.Config.SubFolders = args.Where(x => x.Trim().ToLower() == "-s").Count() == 1;
       MainViewModel.Current.Config.UseIVersionInfo = args.Where(x => x.Trim().ToLower() == "-ui").Count() == 1;
+      MainViewModel.Current.Config.BuildTimeStampOnly = args.Where(x => x.Trim().ToLower() == "-tso").Count() == 1;
 
       // - - -  - - - 
 
-      //if (Debugger.IsAttached)
-      //{
-      //   MainViewModel.Current.WorkDir = System.IO.Directory.GetCurrentDirectory();
+      if (Debugger.IsAttached)
+      {
+         MainViewModel.Current.WorkDir = System.IO.Directory.GetCurrentDirectory();
 
-      //   //MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ZeScanner\ZeScanner.Maui9";
-      //   MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ECO-SI.iZiBio\izimobile\Izibio.Maui9";
-      //}
-      //else
+         //MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ZeScanner\ZeScanner.Maui9";
+         MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ECO-SI.iZiBio\izimobile\Izibio.Maui9";
+      }
+      else
       {
          //MainViewModel.Current.WorkDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
          MainViewModel.Current.WorkDir = System.IO.Directory.GetCurrentDirectory();
@@ -86,10 +87,17 @@ internal class Program
       ShowHeader();
 
       MainViewModel.Current.NewVersion = new Version(MainViewModel.Current.PrevVersion.ToString());
-      MainViewModel.Current.NewVersion.IncVersion();
+      if (!MainViewModel.Current.Config.BuildTimeStampOnly)
+      {
+         MainViewModel.Current.NewVersion.IncVersion();
+      };
 
       Environment.SetEnvironmentVariable("PrevVersion", MainViewModel.Current.PrevVersion.ToString());
       Environment.SetEnvironmentVariable("NewVersion", MainViewModel.Current.NewVersion.ToString());
+
+      MainViewModel.Current.BuildTimeStamp = DateTime.Now;
+      Environment.SetEnvironmentVariable("BuildDateTime", MainViewModel.Current.BuildTimeStamp.ToString("yyMMdd HHmm"));
+      Environment.SetEnvironmentVariable("BuildDate", MainViewModel.Current.BuildTimeStamp.ToString("yyMMdd"));
 
       // - - - do it - - - 
 
@@ -102,7 +110,11 @@ internal class Program
             if (!MainViewModel.Current.Config.HasVersionInfo)
             {
                MainViewModel.Current.NewVersion = new Version(OldVersion.ToString());
-               MainViewModel.Current.NewVersion.IncVersion();
+
+               if (!MainViewModel.Current.Config.BuildTimeStampOnly)
+               {
+                  MainViewModel.Current.NewVersion.IncVersion();
+               };
             };
 
             var LastMessage = file.FileProcessor.Update(file.FilePath, MainViewModel.Current.NewVersion);

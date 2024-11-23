@@ -50,4 +50,7 @@ public class Params
 
    [ParamAttributes.Help(true, "-ui", "Use IVersionInfo interface")]
    public bool UseIVersionInfo { get; set; } = false;
+
+   [ParamAttributes.Help(true, "-tso", "Update build TimeStamp Only")]
+   public bool BuildTimeStampOnly { get; set; } = false;
 }
