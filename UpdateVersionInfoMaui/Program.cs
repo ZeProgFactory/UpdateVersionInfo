@@ -21,6 +21,7 @@ internal class Program
       // - - - retrieve args - - - 
 
       MainViewModel.Current.Config.Debug = args.Where(x => x.Trim().ToLower() == "-debug").Count() == 1;
+      MainViewModel.Current.Config.Simulation = args.Where(x => x.Trim().ToLower() == "-sim").Count() == 1;
       MainViewModel.Current.Config.ScanAndDisplay = args.Where(x => x.Trim().ToLower() == "-i").Count() == 1;
       MainViewModel.Current.Config.SubFolders = args.Where(x => x.Trim().ToLower() == "-s").Count() == 1;
       MainViewModel.Current.Config.UseIVersionInfo = args.Where(x => x.Trim().ToLower() == "-ui").Count() == 1;
@@ -85,6 +86,7 @@ internal class Program
       // - - -  - - - 
 
       ShowHeader();
+      Console.WriteLine(MainViewModel.Current.WorkDir);
 
       MainViewModel.Current.NewVersion = new Version(MainViewModel.Current.PrevVersion.ToString());
       if (!MainViewModel.Current.Config.BuildTimeStampOnly)
@@ -105,21 +107,22 @@ internal class Program
       {
          var OldVersion = file.FileProcessor.GetVersion(file.FilePath);
 
+         if (!MainViewModel.Current.Config.HasVersionInfo)
+         {
+            MainViewModel.Current.NewVersion = new Version(OldVersion.ToString());
+
+            if (!MainViewModel.Current.Config.BuildTimeStampOnly)
+            {
+               MainViewModel.Current.NewVersion.IncVersion();
+            };
+         };
+
          if (!MainViewModel.Current.Config.Simulation)
          {
-            if (!MainViewModel.Current.Config.HasVersionInfo)
-            {
-               MainViewModel.Current.NewVersion = new Version(OldVersion.ToString());
-
-               if (!MainViewModel.Current.Config.BuildTimeStampOnly)
-               {
-                  MainViewModel.Current.NewVersion.IncVersion();
-               };
-            };
-
             var LastMessage = file.FileProcessor.Update(file.FilePath, MainViewModel.Current.NewVersion);
-            Console.WriteLine($"{file.FileProcessor.Name}  {OldVersion} --> {MainViewModel.Current.NewVersion}");
          };
+
+         Console.WriteLine($"{file.FileProcessor.Name}  {OldVersion} --> {MainViewModel.Current.NewVersion}");
       };
 
       // - - -  - - - 

@@ -31,6 +31,7 @@ namespace UpdateVersionInfo;
 
 public class Params
 {
+   [ParamAttributes.Help(false, "-sim", "Apply no changes")]
    public bool Simulation { get; set; } = false;
 
    public bool HasVersionInfo { get; internal set; }
