@@ -5,7 +5,7 @@ Based on an idea of https://github.com/soltechinc/soltechxf/
 
 UpdateVersionInfo is basically a command line tool, that increments the revision number of a version.  
 
-It was created to update synchronously all the versions of the different projects in a Xamarin.Forms, now Maui, solution, but since there UpdateVersionInfo evolved pretty much. We added more project types. Now (nearly) all the platforms covered by Xamarin.Forms are covered (UWP, Android, iOS, WPF, Mac, Nuggets). Yes, me missed Tizen. We don’t use it, so we hadn’t any use for it. Remember, UpdateVersionInfo is open source, so feel free to make a pull request for the Tizen implementation or anything else.
+It was created to update synchronously all the versions of the different projects in a Xamarin.Forms, now Maui, solution, but since there UpdateVersionInfo evolved pretty much. We added more project types. Now (nearly) all the platforms covered by Xamarin.Forms are covered (UWP, Android, iOS, WPF, Mac, Nuggets). Yes, we missed Tizen. We don’t use it, so we hadn’t any use for it. Remember, UpdateVersionInfo is open source, so feel free to make a pull request for the Tizen implementation or anything else.
 
 ## new (Maui) project structure
 
