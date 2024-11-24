@@ -1,9 +1,11 @@
 ﻿
+using ZPF;
+
 namespace UpdateVersionInfo;
 
 public class MainViewModel
 {
-   public String UpdateVersionInfoVersion { get; } = "2.0.0 alpha (Maui)";
+   public String UpdateVersionInfoVersion { get; } = $"{VersionInfo.Current.sVersion} alpha (Maui) - {VersionInfo.Current.LongBuildOn}";
 
    // - - -  - - - 
 

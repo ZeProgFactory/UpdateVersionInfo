@@ -20,4 +20,11 @@
       <EmbeddedResource Include="Template\VersionInfo.txt" />
    </ItemGroup>
 
+   <Target Name="PreBuild" Condition="'$(Configuration)'=='Debug' AND '$(DevEnvDir.Substring(0,1))' == '/' " BeforeTargets="PreBuildEvent">
+      <Exec Command="$(ProjectDir)UpdateVersionInfoMaui -s -i" />
+   </Target>
+
+   <Target Name="PreBuild" Condition="'$(Configuration)'=='Debug' AND '$(DevEnvDir.Substring(0,1))' == 'C' " BeforeTargets="PreBuildEvent">
+      <Exec Command="$(ProjectDir)UpdateVersionInfoMaui -s -i" />
+   </Target>
 </Project>

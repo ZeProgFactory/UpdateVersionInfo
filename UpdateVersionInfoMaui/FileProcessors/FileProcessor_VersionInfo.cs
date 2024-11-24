@@ -17,7 +17,8 @@ public class FileProcessor_VersionInfo : IFileProcessor
    {
       bool IsOk = true;
 
-      IsOk = IsOk && (filePath.ToLower().EndsWith("versioninfo.cs"));
+      IsOk = IsOk && (filePath.ToLower().EndsWith(@"\versioninfo.cs")
+         || filePath.ToLower().EndsWith(@"/versioninfo.cs"));
 
       return IsOk;
    }
@@ -53,6 +54,8 @@ public class FileProcessor_VersionInfo : IFileProcessor
       {
          file = file.Replace("#UseIVersionInfo#", "");
       };
+
+
 
       try
       {

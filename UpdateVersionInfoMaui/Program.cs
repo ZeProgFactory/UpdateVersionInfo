@@ -26,6 +26,7 @@ internal class Program
       MainViewModel.Current.Config.SubFolders = args.Where(x => x.Trim().ToLower() == "-s").Count() == 1;
       MainViewModel.Current.Config.UseIVersionInfo = args.Where(x => x.Trim().ToLower() == "-ui").Count() == 1;
       MainViewModel.Current.Config.BuildTimeStampOnly = args.Where(x => x.Trim().ToLower() == "-tso").Count() == 1;
+      MainViewModel.Current.Config.GenerateVersionInfo = args.Where(x => x.Trim().ToLower() == "-gvi").Count() == 1;
 
       // - - -  - - - 
 
@@ -35,6 +36,7 @@ internal class Program
 
          //MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ZeScanner\ZeScanner.Maui9";
          MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ECO-SI.iZiBio\izimobile\Izibio.Maui9";
+         //MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\UpdateVersionInfo\UpdateVersionInfoMaui";
       }
       else
       {
@@ -69,10 +71,37 @@ internal class Program
             ShowHeader();
             Console.WriteLine("Error: Found more than 1 'VersionInfo.cs'.");
 
+            if(MainViewModel.Current.Config.Debug)
+            {
+               Console.WriteLine();
+
+               foreach (var file in MainViewModel.Current.Files)
+               {
+                  Console.WriteLine(file.FilePath);
+               };
+            };
+
             Environment.Exit(0);
          };
       };
 
+      // - - -  - - - 
+
+      if (MainViewModel.Current.Config.GenerateVersionInfo)
+      {
+         var x = new FileProcessor_VersionInfo();
+
+         var filePath = Path.Combine(MainViewModel.Current.WorkDir, "VersionInfo.cs");
+         MainViewModel.Current.BuildTimeStamp = DateTime.Now;
+
+         x.Update(filePath, new Version());
+
+         ShowHeader();
+         Console.WriteLine( $" {filePath}  generated.");
+
+         Environment.Exit(0);
+      };
+      
       // - - -  - - - 
 
       if (MainViewModel.Current.Files.Count() == 0)
