@@ -16,7 +16,6 @@ public class FileProcessor_iOS : IFileProcessor
       bool IsOk = true;
 
       IsOk = IsOk && (filePath.ToLower().EndsWith("info.plist"));
-      IsOk = IsOk && (filePath.ToLower().Contains(@"ios"));
       IsOk = IsOk && (!filePath.ToLower().Contains(@"\obj\"));
       IsOk = IsOk && (!filePath.ToLower().Contains(@"/obj/"));
       IsOk = IsOk && SubCheck(filePath);
@@ -65,32 +64,40 @@ public class FileProcessor_iOS : IFileProcessor
    {
       var version = "";
 
-      //try
-      //{
-      //   const string androidNS = "http://schemas.android.com/apk/res/android";
-      //   XName versionCodeAttributeName = XName.Get("version", androidNS);
-      //   XName versionNameAttributeName = XName.Get("versionName", androidNS);
-      //   XDocument doc = XDocument.Load(filePath);
+      XDocument doc = XDocument.Load(filePath);
+      if (doc.DocumentType.Name == "plist")
+      {
+         if (doc.ToString().Contains("<string>FMWK</string>"))
+         {
+            // Do nothing it's a lib
+         }
+         else if (doc.ToString().Contains("<key>CFBundleVersion</key>")
+            || doc.ToString().Contains("<key>CFBundleShortVersionString</key>")
+            )
+         {
+            /*
+            <key>CFBundleVersion</key>
+            <string>1.0.1.1</string>
+            <key>CFBundleShortVersionString</key>
+            <string>1.0.1</string>
+             */
 
-      //   var x = doc.Root.Attribute(versionNameAttributeName);
+            if (doc.ToString().Contains("<key>CFBundleVersion</key>"))
+            {
+               var lines = doc.ToString().Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+               var l = lines.Where(x => x.Contains("<key>CFBundleVersion</key>")).FirstOrDefault();
+               var ind = lines.IndexOf(l);
+               version = lines[ind + 1].Replace(" ", "").Replace("/", "").Replace("<string>", "");
 
-      //   if (x == null)
-      //   {
-      //      version = "versionName AttributeName not found";
-      //      return new Version();
-      //   }
-      //   else
-      //   {
-      //      version = (x == null ? "versionName AttributeName not found" : x.Value);
-      //   };
-      //}
-      //catch (Exception ex)
-      //{
-      //   Console.WriteLine($"FileProcessor_Droid.GetVersion {filePath} {ex.Message}");
+               return new Version(version);
+            };
 
-      //   version = ex.Message;
-      //   return new Version();
-      //};
+            if (doc.ToString().Contains("<key>CFBundleShortVersionString</key>"))
+            {
+               var lines = doc.ToString().Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+               var l = lines.Where(x => x.Contains("<key>CFBundleShortVersionString</key>")).FirstOrDefault();
+               var ind = lines.IndexOf(l);
+               version = lines[ind + 1].Replace(" ", "").Replace("/", "").Replace("<string>", "");
 
                return new Version(version);
             };
@@ -104,45 +111,63 @@ public class FileProcessor_iOS : IFileProcessor
 
    public string Update(string filePath, Version newVersion)
    {
-      //try
-      //{
-      //   const string androidNS = "http://schemas.android.com/apk/res/android";
-      //   XName versionCodeAttributeName = XName.Get("versionCode", androidNS);
-      //   XName versionNameAttributeName = XName.Get("versionName", androidNS);
-      //   XDocument doc = XDocument.Load(filePath);
+      try
+      {
+         XDocument doc = XDocument.Load(filePath);
+
+         if (doc.DocumentType.Name == "plist")
+         {
+            if (doc.ToString().Contains("<string>FMWK</string>"))
+            {
+               // Do nothing it's a lib
+               return "";
+            };
+
+            /*
+            <key>CFBundleVersion</key>
+            <string>1.0.1.1</string>
+            <key>CFBundleShortVersionString</key>
+            <string>1.0.1</string>
+             */
+
+            // https://developer.apple.com/documentation/bundleresources/information-property-list/cfbundleversion
+            // https://developer.apple.com/documentation/bundleresources/information-property-list/cfbundleshortversionstring
+
+            if (doc.ToString().Contains("<key>CFBundleVersion</key>")
+               || doc.ToString().Contains("<key>CFBundleShortVersionString</key>")
+               )
+            {
 
                var OldVersion = GetVersion(filePath);
                var text = doc.ToString();
 
-      //   //   var v = v1.Split(new char[] { '.' });
+               text = text.Replace($"<string>{OldVersion}</string>", $"<string>{newVersion.ToString()}</string>");
+               text = text.Replace($"<string>{OldVersion.Major}.{OldVersion.Minor}.{OldVersion.Build}</string>", $"<string>{newVersion.Major}.{newVersion.Minor}.{newVersion.Build}</string>");
 
-      //   //   string v2 = "";
+               System.IO.File.WriteAllText(filePath, text);
+               return "ok";
+            }
+            else
+            {
+               var rootElement = doc.XPathSelectElement("plist/dict");
 
-      //   //   if (string.IsNullOrEmpty(MainViewModel.Current.sAutoVersionV2))
-      //   //   {
-      //   //      v2 = v[0] + "." + v[1] + "." + (v.Count() < 3 ? "0" : v[2]) + "." + (int.Parse((v.Count() < 4 ? "0" : v[3])) + 1).ToString();
-      //   //   }
-      //   //   else
-      //   //   {
-      //   //      v2 = MainViewModel.Current.sAutoVersionV2;
-      //   //   };
+               if (rootElement != null)
+               {
+                  rootElement.Add(new XElement("key", "CFBundleVersion"));
+                  rootElement.Add(new XElement("string", newVersion.ToString()));
 
-      //   //   doc.Root.SetAttributeValue(versionCodeAttributeName, b);
-      //   //   doc.Root.SetAttributeValue(versionNameAttributeName, v2);
-      //   //}
-      //   //else
-      //   {
-      //      doc.Root.SetAttributeValue(versionCodeAttributeName, newVersion.Build);
-      //      doc.Root.SetAttributeValue(versionNameAttributeName, newVersion.ToString());
-      //   };
+                  rootElement.Add(new XElement("key", "CFBundleShortVersionString"));
+                  rootElement.Add(new XElement("string", $"{newVersion.Major}.{newVersion.Minor}.{newVersion.Build}"));
+               }
+            }
+         }
 
-      //   doc.Save(filePath);
-      //}
-      //catch (Exception ex)
-      //{
-      //   Console.WriteLine($"FileProcessor_Droid.GetVersion {filePath} {ex.Message}");
-      //   return "ko";
-      //};
+         doc.Save(filePath);
+      }
+      catch (Exception ex)
+      {
+         return $"{filePath} {ex.Message}";
+      };
 
       return "ok";
    }
