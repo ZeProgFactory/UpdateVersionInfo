@@ -27,6 +27,7 @@ internal class Program
       MainViewModel.Current.Config.UseIVersionInfo = args.Where(x => x.Trim().ToLower() == "-ui").Count() == 1;
       MainViewModel.Current.Config.BuildTimeStampOnly = args.Where(x => x.Trim().ToLower() == "-tso").Count() == 1;
       MainViewModel.Current.Config.GenerateVersionInfo = args.Where(x => x.Trim().ToLower() == "-gvi").Count() == 1;
+      MainViewModel.Current.Config.NewRelease = args.Where(x => x.Trim().ToLower() == "-nr").Count() == 1;
 
       // - - -  - - - 
 

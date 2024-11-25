@@ -172,12 +172,28 @@ namespace UpdateVersionInfo
 
          if (vl.Length == 3)
          {
-            Build++;
+            if( MainViewModel.Current.Config.NewRelease)
+            {
+               Minor++;
+            }
+            else
+            {
+               Build++;
+            };
+
             _Version = $"{Major}.{Minor}.{Build}";
          }
          else
          {
-            Revision++;
+            if (MainViewModel.Current.Config.NewRelease)
+            {
+               Build++;
+            }
+            else
+            {
+               Revision++;
+            };
+
             _Version = $"{Major}.{Minor}.{Build}.{Revision}";
          };
       }

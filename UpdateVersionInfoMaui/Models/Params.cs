@@ -54,6 +54,10 @@ public class Params
    public bool SubFolders { get; set; } = true;
 
 
+   [ParamAttributes.Help(true, "-nr", "New release")]
+   public bool NewRelease { get; set; } = false;
+
+
    [ParamAttributes.Help(true, "-ui", "Use IVersionInfo interface")]
    public bool UseIVersionInfo { get; set; } = false;
 
