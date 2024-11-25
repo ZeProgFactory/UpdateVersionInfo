@@ -120,7 +120,7 @@ public class FileProcessor_Droid : IFileProcessor
       }
       catch (Exception ex)
       {
-         Console.WriteLine($"FileProcessor_Droid.GetVersion {filePath} {ex.Message}");
+         Console.WriteLine($"FileProcessor_Droid.Update {filePath} {ex.Message}");
          return "ko";
       };
 
