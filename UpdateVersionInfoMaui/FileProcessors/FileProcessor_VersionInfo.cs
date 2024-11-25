@@ -31,7 +31,14 @@ public class FileProcessor_VersionInfo : IFileProcessor
 
       if (lines.Length > 3)
       {
-         return new Version(lines[1].Trim().Substring(4));
+         if (lines[1].Contains("https:"))
+         {
+            return new Version(lines[2].Trim().Substring(4));
+         }
+         else
+         {
+            return new Version(lines[1].Trim().Substring(4));
+         };
       };
 
       return new Version();

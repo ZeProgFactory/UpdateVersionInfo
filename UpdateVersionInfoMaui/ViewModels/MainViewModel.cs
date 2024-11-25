@@ -32,7 +32,7 @@ public class MainViewModel
    {
       FileProcessors.Add(new FileProcessor_VersionInfo());
       FileProcessors.Add(new FileProcessor_Droid());
-      //ToDo: FileProcessors.Add(new FileProcessor_iOS());
+      FileProcessors.Add(new FileProcessor_iOS());
       //ToDo: FileProcessors.Add(new FileProcessor_Mac());
       FileProcessors.Add(new FileProcessor_UAP());
    }
