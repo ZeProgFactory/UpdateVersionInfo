@@ -18,6 +18,40 @@ internal class Program
          return;
       };
 
+      // - - - check args - - - 
+
+      bool IsParam(string param)
+      {
+         var propertiesWithAttribute = typeof(Params).GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(ParamAttributes.HelpAttribute)));
+
+         foreach (var prop in propertiesWithAttribute)
+         {
+            UpdateVersionInfo.ParamAttributes.HelpAttribute attribute = (UpdateVersionInfo.ParamAttributes.HelpAttribute)prop.GetCustomAttribute(typeof(ParamAttributes.HelpAttribute));
+
+            if (attribute.Param == param)
+            {
+               return true;
+            };
+         };
+
+         return false;
+      }
+
+      foreach (var arg in args)
+      {
+         if (!IsParam(arg))
+         {
+            ShowHeader();
+
+            Console.WriteLine($"Error: Unknown parameter '{arg}'.");
+            Console.WriteLine();
+
+            ShowHelp();
+
+            return;
+         };
+      }
+
       // - - - retrieve args - - - 
 
       MainViewModel.Current.Config.Debug = args.Where(x => x.Trim().ToLower() == "-debug").Count() == 1;
