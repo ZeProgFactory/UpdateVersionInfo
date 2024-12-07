@@ -35,6 +35,7 @@ public class MainViewModel
       FileProcessors.Add(new FileProcessor_iOS());
       //ToDo: FileProcessors.Add(new FileProcessor_Mac());
       FileProcessors.Add(new FileProcessor_UAP());
+      FileProcessors.Add(new FileProcessor_Nuget());
    }
 
    // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -

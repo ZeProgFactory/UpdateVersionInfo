@@ -70,8 +70,9 @@ internal class Program
          MainViewModel.Current.WorkDir = System.IO.Directory.GetCurrentDirectory();
 
          //MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ZeScanner\ZeScanner.Maui9";
-         MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ECO-SI.iZiBio\izimobile\Izibio.Maui9";
+         //MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ECO-SI.iZiBio\izimobile\Izibio.Maui9";
          //MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\UpdateVersionInfo\UpdateVersionInfoMaui";
+         MainViewModel.Current.WorkDir = @"D:\GitWare\Nugets\LastWords";
       }
       else
       {
