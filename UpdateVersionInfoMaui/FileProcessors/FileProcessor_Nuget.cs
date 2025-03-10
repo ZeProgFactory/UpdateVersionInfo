@@ -32,7 +32,7 @@ public class FileProcessor_Nuget : IFileProcessor
       {
          var text = File.ReadAllText(filePath);
 
-         return text.Contains("<IsPackable>True</IsPackable>");
+         return text.Contains("<IsPackable>True</IsPackable>") || text.Contains("<Version>");
       }
       catch (System.Xml.XmlException)
       {

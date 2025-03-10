@@ -3,6 +3,7 @@
     "UpdateVersionInfoMaui": {
       "commandName": "Project",
       "commandLineArgs": "-i -s  ",
+      "workingDirectory": "D:\\GitWare\\Nugets\\ZPF_Maui_Tools\\ZPF_Maui_Tools",
       "environmentVariables": {
         "dummy": "-i -s"
       }
