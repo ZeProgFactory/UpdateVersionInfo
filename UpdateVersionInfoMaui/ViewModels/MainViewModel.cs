@@ -31,6 +31,7 @@ public class MainViewModel
    public MainViewModel()
    {
       FileProcessors.Add(new FileProcessor_VersionInfo());
+      FileProcessors.Add(new FileProcessor_LastUpdate());
       FileProcessors.Add(new FileProcessor_Droid());
       FileProcessors.Add(new FileProcessor_iOS());
       //ToDo: FileProcessors.Add(new FileProcessor_Mac());
