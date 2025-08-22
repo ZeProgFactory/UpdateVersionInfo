@@ -17,6 +17,10 @@
    </ItemGroup>
 
    <ItemGroup>
+     <Compile Include="..\..\..\Nugets\AutoUpdate\AutoUpdate\Models\ReleaseDetails.cs" Link="Models\ReleaseDetails.cs" />
+   </ItemGroup>
+
+   <ItemGroup>
       <EmbeddedResource Include="Template\VersionInfo.txt" />
    </ItemGroup>
 

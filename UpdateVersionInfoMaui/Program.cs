@@ -16,7 +16,7 @@ internal class Program
          ShowHelp();
 
          return;
-      };
+      }
 
       // - - - check args - - - 
 
@@ -31,8 +31,8 @@ internal class Program
             if (attribute.Param == param)
             {
                return true;
-            };
-         };
+            }
+         }
 
          return false;
       }
@@ -49,7 +49,7 @@ internal class Program
             ShowHelp();
 
             return;
-         };
+         }
       }
 
       // - - - retrieve args - - - 
@@ -73,13 +73,15 @@ internal class Program
          //MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ECO-SI.iZiBio\izimobile\Izibio.Maui9";
          //MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\UpdateVersionInfo\UpdateVersionInfoMaui";
          //MainViewModel.Current.WorkDir = @"D:\GitWare\Nugets\LastWords";
-         MainViewModel.Current.WorkDir = @"D:\GitWare\Nugets\ZPF_Maui_Tools\ZPF_Maui_Tools";
+         //MainViewModel.Current.WorkDir = @"D:\GitWare\Nugets\ZPF_Maui_Tools\ZPF_Maui_Tools";
+         MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\Shelly";
       }
       else
       {
          //MainViewModel.Current.WorkDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
          MainViewModel.Current.WorkDir = System.IO.Directory.GetCurrentDirectory();
-      };
+      }
+      ;
 
       // - - - scan folder(s) - - - 
 
@@ -108,19 +110,23 @@ internal class Program
             ShowHeader();
             Console.WriteLine("Error: Found more than 1 'VersionInfo.cs'.");
 
-            if(MainViewModel.Current.Config.Debug)
+            if (MainViewModel.Current.Config.Debug)
             {
                Console.WriteLine();
 
                foreach (var file in MainViewModel.Current.Files)
                {
                   Console.WriteLine(file.FilePath);
-               };
-            };
+               }
+               ;
+            }
+            ;
 
             Environment.Exit(0);
-         };
-      };
+         }
+         ;
+      }
+      ;
 
       // - - -  - - - 
 
@@ -134,11 +140,12 @@ internal class Program
          x.Update(filePath, new Version());
 
          ShowHeader();
-         Console.WriteLine( $" {filePath}  generated.");
+         Console.WriteLine($" {filePath}  generated.");
 
          Environment.Exit(0);
-      };
-      
+      }
+      ;
+
       // - - -  - - - 
 
       if (MainViewModel.Current.Files.Count() == 0)
@@ -147,7 +154,8 @@ internal class Program
          Console.WriteLine("No files found to update.");
 
          Environment.Exit(0);
-      };
+      }
+      ;
 
       // - - -  - - - 
 
@@ -159,7 +167,8 @@ internal class Program
       if (!MainViewModel.Current.Config.BuildTimeStampOnly)
       {
          MainViewModel.Current.NewVersion.IncVersion();
-      };
+      }
+      ;
 
       Environment.SetEnvironmentVariable("PrevVersion", MainViewModel.Current.PrevVersion.ToString());
       Environment.SetEnvironmentVariable("NewVersion", MainViewModel.Current.NewVersion.ToString());
@@ -173,7 +182,8 @@ internal class Program
       foreach (var file in MainViewModel.Current.Files)
       {
          file.ShortenedFilePath = file.FilePath.Replace(MainViewModel.Current.WorkDir, "").Substring(1);
-      };
+      }
+      ;
 
       var MaxLength = MainViewModel.Current.Files.Max(x => x.ShortenedFilePath.Length);
 
@@ -190,13 +200,16 @@ internal class Program
             if (!MainViewModel.Current.Config.BuildTimeStampOnly)
             {
                MainViewModel.Current.NewVersion.IncVersion();
-            };
-         };
+            }
+            ;
+         }
+         ;
 
          if (!MainViewModel.Current.Config.Simulation)
          {
             var LastMessage = file.FileProcessor.Update(file.FilePath, MainViewModel.Current.NewVersion);
-         };
+         }
+         ;
 
          if (MainViewModel.Current.Config.DisplayFilePath)
          {
@@ -205,8 +218,10 @@ internal class Program
          else
          {
             Console.WriteLine($"{file.FileProcessor.Name}  {OldVersion} --> {MainViewModel.Current.NewVersion}");
-         };
-      };
+         }
+         ;
+      }
+      ;
 
       // - - -  - - - 
    }
@@ -246,7 +261,8 @@ internal class Program
          if (attribute.IsVisisible)
          {
             Console.WriteLine($"   {attribute.Param,-8} {attribute.HelpText}");
-         };
+         }
+         ;
       }
 
       Console.WriteLine("");
