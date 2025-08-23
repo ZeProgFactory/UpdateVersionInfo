@@ -15,7 +15,7 @@ namespace UpdateVersionInfo;
   -m, --minor=VALUE          A numeric minor number greater than zero.
   -b, --build=VALUE          A numeric build number greater than zero.
   -r, --revision=VALUE       A numeric revision number greater than zero.
-      --vi=VALUE             The path to a 'VersionInfo.cs' file to update
+      --vi=VALUE             The path to a 'ReleaseVersion.cs' file to update
                              with version information.
   -p, --path=VALUE           scan | The path to a C# file to update with
                              version information.

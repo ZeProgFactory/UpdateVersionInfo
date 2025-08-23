@@ -38,8 +38,8 @@ namespace ZPF
       /// <summary>
       /// Represents the version number as string
       /// </summary>
-      public string sVersion { get => "#Version#"; }
-
+      public string sVersion { get; internal set; } = "#Version#";
+ 
       /// <summary>
       /// Represents the version number
       /// </summary>
@@ -49,14 +49,33 @@ namespace ZPF
       /// <summary>
       /// Represents the build date part of build timestamp as string
       /// </summary>
-      public string BuildOn { get => "#BuildDate#"; }
+      public string BuildOn { get; internal set; } = "#BuildDate#";
 
       /// <summary>
       /// Represents the build date & time part of build timestamp as string
       /// </summary>
-      public string LongBuildOn { get => "#BuildDate# #BuildTime#"; }
+      public string LongBuildOn { get; internal set; } = "#BuildDate# #BuildTime#"; 
 
       public int RevisionNumber { get => Version.Revision; }
+
+
+      // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
+
+      override public string ToString()
+      {
+         return $"{sVersion} ({LongBuildOn})";
+      }
+
+      public void SetVersion(Version version)
+      {
+         sVersion = version.ToString();
+      }
+
+      public void SetBuildOn(DateTime now)
+      {
+         BuildOn = now.ToString("dd.MM.yyyy");
+         LongBuildOn = now.ToString("dd.MM.yyyy HH:mm");
+      }
 
       // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  -
    }

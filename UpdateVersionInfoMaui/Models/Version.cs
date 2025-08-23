@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace UpdateVersionInfo
 {
+   /*
    public class Version
    {
       public Version() { }
@@ -19,7 +20,7 @@ namespace UpdateVersionInfo
          if (vl == 3 || vl == 4)
          {
             _Version = version;
-         };
+         }
       }
 
       // - - -  - - - 
@@ -41,7 +42,7 @@ namespace UpdateVersionInfo
             catch
             {
                return 0;
-            };
+            }
          }
 
          set
@@ -55,7 +56,7 @@ namespace UpdateVersionInfo
             else
             {
                _Version = $"{value}.{Minor}.{Build}.{Revision}";
-            };
+            }
          }
       }
 
@@ -74,7 +75,7 @@ namespace UpdateVersionInfo
             catch
             {
                return 0;
-            };
+            }
          }
 
          set
@@ -88,7 +89,7 @@ namespace UpdateVersionInfo
             else
             {
                _Version = $"{Major}.{value}.{Build}.{Revision}";
-            };
+            }
          }
       }
 
@@ -107,7 +108,7 @@ namespace UpdateVersionInfo
             catch
             {
                return 0;
-            };
+            }
          }
 
          set
@@ -121,7 +122,8 @@ namespace UpdateVersionInfo
             else
             {
                _Version = $"{Major}.{Minor}.{value}.{Revision}";
-            };
+            }
+            ;
          }
       }
 
@@ -140,7 +142,7 @@ namespace UpdateVersionInfo
             catch
             {
                return 0;
-            };
+            }
          }
 
          set
@@ -154,7 +156,7 @@ namespace UpdateVersionInfo
             else
             {
                _Version = $"{Major}.{Minor}.{Build}.{value}";
-            };
+            }
          }
       }
 
@@ -172,14 +174,14 @@ namespace UpdateVersionInfo
 
          if (vl.Length == 3)
          {
-            if( MainViewModel.Current.Config.NewRelease)
+            if (MainViewModel.Current.Config.NewRelease)
             {
                Minor++;
             }
             else
             {
                Build++;
-            };
+            }
 
             _Version = $"{Major}.{Minor}.{Build}";
          }
@@ -192,10 +194,10 @@ namespace UpdateVersionInfo
             else
             {
                Revision++;
-            };
+            }
 
             _Version = $"{Major}.{Minor}.{Build}.{Revision}";
-         };
+         }
       }
 
       // - - -  - - - 
@@ -205,4 +207,5 @@ namespace UpdateVersionInfo
          return _Version;
       }
    }
+   */
 }

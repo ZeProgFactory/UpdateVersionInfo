@@ -81,7 +81,6 @@ internal class Program
          //MainViewModel.Current.WorkDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
          MainViewModel.Current.WorkDir = System.IO.Directory.GetCurrentDirectory();
       }
-      ;
 
       // - - - scan folder(s) - - - 
 
@@ -91,7 +90,7 @@ internal class Program
       var files = Directory.EnumerateFiles(MainViewModel.Current.WorkDir, "*", (MainViewModel.Current.Config.SubFolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly));
       MainViewModel.Current.GetWorkFiles(files);
 
-      // - - - search & read VersionInfo.cs - - - 
+      // - - - search & read ReleaseVersion.cs - - - 
 
       MainViewModel.Current.Config.HasVersionInfo = MainViewModel.Current.Files.Where(x => x.FileProcessor.GetType() == typeof(FileProcessor_VersionInfo)).Count() == 1;
 
@@ -118,15 +117,11 @@ internal class Program
                {
                   Console.WriteLine(file.FilePath);
                }
-               ;
             }
-            ;
 
             Environment.Exit(0);
          }
-         ;
       }
-      ;
 
       // - - -  - - - 
 
@@ -144,7 +139,6 @@ internal class Program
 
          Environment.Exit(0);
       }
-      ;
 
       // - - -  - - - 
 
@@ -155,7 +149,6 @@ internal class Program
 
          Environment.Exit(0);
       }
-      ;
 
       // - - -  - - - 
 
@@ -166,9 +159,8 @@ internal class Program
       MainViewModel.Current.NewVersion = new Version(MainViewModel.Current.PrevVersion.ToString());
       if (!MainViewModel.Current.Config.BuildTimeStampOnly)
       {
-         MainViewModel.Current.NewVersion.IncVersion();
+         MainViewModel.Current.IncNewVersion();
       }
-      ;
 
       Environment.SetEnvironmentVariable("PrevVersion", MainViewModel.Current.PrevVersion.ToString());
       Environment.SetEnvironmentVariable("NewVersion", MainViewModel.Current.NewVersion.ToString());
@@ -183,7 +175,6 @@ internal class Program
       {
          file.ShortenedFilePath = file.FilePath.Replace(MainViewModel.Current.WorkDir, "").Substring(1);
       }
-      ;
 
       var MaxLength = MainViewModel.Current.Files.Max(x => x.ShortenedFilePath.Length);
 
@@ -199,17 +190,14 @@ internal class Program
 
             if (!MainViewModel.Current.Config.BuildTimeStampOnly)
             {
-               MainViewModel.Current.NewVersion.IncVersion();
+               MainViewModel.Current.IncNewVersion();
             }
-            ;
          }
-         ;
 
          if (!MainViewModel.Current.Config.Simulation)
          {
             var LastMessage = file.FileProcessor.Update(file.FilePath, MainViewModel.Current.NewVersion);
          }
-         ;
 
          if (MainViewModel.Current.Config.DisplayFilePath)
          {
@@ -219,9 +207,7 @@ internal class Program
          {
             Console.WriteLine($"{file.FileProcessor.Name}  {OldVersion} --> {MainViewModel.Current.NewVersion}");
          }
-         ;
       }
-      ;
 
       // - - -  - - - 
    }
@@ -237,7 +223,7 @@ internal class Program
   -m, --minor=VALUE          A numeric minor number greater than zero.
   -b, --build=VALUE          A numeric build number greater than zero.
   -r, --revision=VALUE       A numeric revision number greater than zero.
-      --vi=VALUE             The path to a 'VersionInfo.cs' file to update
+      --vi=VALUE             The path to a 'ReleaseVersion.cs' file to update
                              with version information.
   -p, --path=VALUE           scan | The path to a C# file to update with
                              version information.
@@ -262,7 +248,6 @@ internal class Program
          {
             Console.WriteLine($"   {attribute.Param,-8} {attribute.HelpText}");
          }
-         ;
       }
 
       Console.WriteLine("");

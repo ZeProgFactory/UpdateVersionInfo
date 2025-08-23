@@ -1,4 +1,5 @@
 ﻿
+using System;
 using ZPF;
 
 namespace UpdateVersionInfo;
@@ -19,7 +20,8 @@ public class MainViewModel
          if (_Current == null)
          {
             _Current = new MainViewModel();
-         };
+         }
+         ;
 
          return _Current;
       }
@@ -120,6 +122,41 @@ public class MainViewModel
             }
          }
       }
+   }
+
+   // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -
+
+   internal void IncNewVersion()
+   {
+      var vl = _Version.Split(new char[] { '.' });
+
+      if (vl.Length == 3)
+      {
+         if (MainViewModel.Current.Config.NewRelease)
+         {
+            Minor++;
+         }
+         else
+         {
+            Build++;
+         }
+
+         _Version = $"{Major}.{Minor}.{Build}";
+      }
+      else
+      {
+         if (MainViewModel.Current.Config.NewRelease)
+         {
+            Build++;
+         }
+         else
+         {
+            Revision++;
+         }
+
+         _Version = $"{Major}.{Minor}.{Build}.{Revision}";
+      }
+
    }
 
    // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -

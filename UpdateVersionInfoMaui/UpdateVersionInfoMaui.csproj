@@ -11,12 +11,6 @@
    </PropertyGroup>
 
    <ItemGroup>
-     <Compile Remove="NewFolder\**" />
-     <EmbeddedResource Remove="NewFolder\**" />
-     <None Remove="NewFolder\**" />
-   </ItemGroup>
-
-   <ItemGroup>
      <Compile Include="..\..\..\Nugets\AutoUpdate\AutoUpdate\Models\ReleaseDetails.cs" Link="Models\ReleaseDetails.cs" />
    </ItemGroup>
 
@@ -24,11 +18,11 @@
       <EmbeddedResource Include="Template\VersionInfo.txt" />
    </ItemGroup>
 
-   <Target Name="PreBuild" Condition="'$(Configuration)'=='Debug' AND '$(DevEnvDir.Substring(0,1))' == '/' " BeforeTargets="PreBuildEvent">
+   <!--<Target Name="PreBuild" Condition="'$(Configuration)'=='Debug' AND '$(DevEnvDir.Substring(0,1))' == '/' " BeforeTargets="PreBuildEvent">
       <Exec Command="$(ProjectDir)UpdateVersionInfoMaui -s -i" />
    </Target>
 
    <Target Name="PreBuild" Condition="'$(Configuration)'=='Debug' AND '$(DevEnvDir.Substring(0,1))' == 'C' " BeforeTargets="PreBuildEvent">
       <Exec Command="$(ProjectDir)UpdateVersionInfoMaui -s -i" />
-   </Target>
+   </Target>-->
 </Project>
