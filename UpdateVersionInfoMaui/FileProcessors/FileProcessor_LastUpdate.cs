@@ -13,7 +13,7 @@ namespace UpdateVersionInfo;
 
 public class FileProcessor_LastUpdate : IFileProcessor
 {
-   public string Name { get; set; } = "CLog";
+   public string Name { get; set; } = "LUpd ";
 
    public bool Check(string filePath)
    {

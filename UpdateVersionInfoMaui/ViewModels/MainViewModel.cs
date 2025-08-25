@@ -128,35 +128,37 @@ public class MainViewModel
 
    internal void IncNewVersion()
    {
-      var vl = _Version.Split(new char[] { '.' });
+      //var vl = _Version.Split(new char[] { '.' });
 
-      if (vl.Length == 3)
+      if (NewVersion.Revision == -1)
       {
-         if (MainViewModel.Current.Config.NewRelease)
-         {
-            Minor++;
-         }
-         else
-         {
-            Build++;
-         }
+         NewVersion = new Version(NewVersion.Major, NewVersion.Minor, NewVersion.Build + 1);
+         //if (MainViewModel.Current.Config.NewRelease)
+         //{
+         //   Minor++;
+         //}
+         //else
+         //{
+         //   Build++;
+         //}
 
-         _Version = $"{Major}.{Minor}.{Build}";
+         //_Version = $"{Major}.{Minor}.{Build}";
       }
       else
       {
-         if (MainViewModel.Current.Config.NewRelease)
-         {
-            Build++;
-         }
-         else
-         {
-            Revision++;
-         }
+         NewVersion = new Version(NewVersion.Major, NewVersion.Minor, NewVersion.Build, NewVersion.Revision + 1);
 
-         _Version = $"{Major}.{Minor}.{Build}.{Revision}";
+         //if (MainViewModel.Current.Config.NewRelease)
+         //{
+         //   Build++;
+         //}
+         //else
+         //{
+         //   Revision++;
+         //}
+
+         //_Version = $"{Major}.{Minor}.{Build}.{Revision}";
       }
-
    }
 
    // - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -
