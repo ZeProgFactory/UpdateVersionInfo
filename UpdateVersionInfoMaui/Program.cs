@@ -146,7 +146,7 @@ internal class Program
          ShowHeader();
          Console.WriteLine("No files found to update.");
 
-         Environment.Exit(0);
+         Environment.Exit(1);
       }
 
       // - - -  - - - 
