@@ -40,7 +40,7 @@ public class FileProcessor_Nuget : IFileProcessor
       catch (Exception ex)
       {
          Console.WriteLine($"FileProcessor_Nuget.Check {filePath} {ex.Message}");
-      };
+      }
 
       return false;
    }
@@ -58,7 +58,7 @@ public class FileProcessor_Nuget : IFileProcessor
             if (n != null)
             {
                return new Version(n.Value);
-            };
+            }
          }
 
          {
@@ -66,7 +66,7 @@ public class FileProcessor_Nuget : IFileProcessor
             if (n != null)
             {
                return new Version(n.Value);
-            };
+            }
          }
 
          {
@@ -74,7 +74,7 @@ public class FileProcessor_Nuget : IFileProcessor
             if (n != null)
             {
                return new Version(n.Value);
-            };
+            }
          }
 
       }
@@ -92,6 +92,11 @@ public class FileProcessor_Nuget : IFileProcessor
       {
          var rootElement = doc.XPathSelectElement("Project/PropertyGroup");
 
+         if (rootElement == null)
+         {
+            return "";
+         }
+
          {
             var n = doc.XPathSelectElement("Project/PropertyGroup/AssemblyVersion");
 
@@ -102,7 +107,7 @@ public class FileProcessor_Nuget : IFileProcessor
             else
             {
                n.Value = newVersion.ToString();
-            };
+            }
          }
 
          {
@@ -115,7 +120,7 @@ public class FileProcessor_Nuget : IFileProcessor
             else
             {
                n.Value = newVersion.ToString();
-            };
+            }
          }
 
          {
@@ -128,7 +133,7 @@ public class FileProcessor_Nuget : IFileProcessor
             else
             {
                n.Value = newVersion.ToString();
-            };
+            }
          }
 
          doc.Save(filePath);
