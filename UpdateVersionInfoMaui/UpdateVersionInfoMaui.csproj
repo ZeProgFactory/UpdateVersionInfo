@@ -11,7 +11,7 @@
    </PropertyGroup>
 
    <ItemGroup>
-     <Compile Include="..\..\..\Nugets\AutoUpdate\AutoUpdate\Models\ReleaseDetails.cs" Link="Models\ReleaseDetails.cs" />
+     <Compile Include="..\..\..\Nugets\AutoUpdate\ZPF.AutoUpdate\Models\ReleaseDetails.cs" Link="Models\ReleaseDetails.cs" />
    </ItemGroup>
 
    <ItemGroup>

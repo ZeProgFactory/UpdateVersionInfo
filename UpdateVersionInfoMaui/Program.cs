@@ -70,11 +70,10 @@ internal class Program
          MainViewModel.Current.WorkDir = System.IO.Directory.GetCurrentDirectory();
 
          //MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ZeScanner\ZeScanner.Maui9";
-         //MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\ECO-SI.iZiBio\izimobile\Izibio.Maui9";
          //MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\UpdateVersionInfo\UpdateVersionInfoMaui";
          //MainViewModel.Current.WorkDir = @"D:\GitWare\Nugets\LastWords";
          //MainViewModel.Current.WorkDir = @"D:\GitWare\Nugets\ZPF_Maui_Tools\ZPF_Maui_Tools";
-         MainViewModel.Current.WorkDir = @"D:\GitWare\Apps\Shelly";
+         MainViewModel.Current.WorkDir = @"D:\GitWare\MadSoft\Sika\";
       }
       else
       {
@@ -147,7 +146,7 @@ internal class Program
          ShowHeader();
          Console.WriteLine("No files found to update.");
 
-         Environment.Exit(0);
+         Environment.Exit(1);
       }
 
       // - - -  - - - 
@@ -194,18 +193,23 @@ internal class Program
             }
          }
 
+         var LastMessage = "ok";
+
          if (!MainViewModel.Current.Config.Simulation)
          {
-            var LastMessage = file.FileProcessor.Update(file.FilePath, MainViewModel.Current.NewVersion);
+            LastMessage = file.FileProcessor.Update(file.FilePath, MainViewModel.Current.NewVersion);
          }
 
-         if (MainViewModel.Current.Config.DisplayFilePath)
+         if (LastMessage.ToLower() == "ok")
          {
-            Console.WriteLine($"{file.ShortenedFilePath.PadRight(MaxLength)}  {file.FileProcessor.Name}  {OldVersion} --> {MainViewModel.Current.NewVersion}");
-         }
-         else
-         {
-            Console.WriteLine($"{file.FileProcessor.Name}  {OldVersion} --> {MainViewModel.Current.NewVersion}");
+            if (MainViewModel.Current.Config.DisplayFilePath)
+            {
+               Console.WriteLine($"{file.ShortenedFilePath.PadRight(MaxLength)}  {file.FileProcessor.Name}  {OldVersion} --> {MainViewModel.Current.NewVersion}");
+            }
+            else
+            {
+               Console.WriteLine($"{file.FileProcessor.Name}  {OldVersion} --> {MainViewModel.Current.NewVersion}");
+            }
          }
       }
 

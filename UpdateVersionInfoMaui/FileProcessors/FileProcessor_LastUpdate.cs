@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ZPF;
+using ZPF.AutoUpdate;
 
 namespace UpdateVersionInfo;
 
