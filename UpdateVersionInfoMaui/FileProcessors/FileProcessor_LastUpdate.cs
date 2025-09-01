@@ -19,8 +19,8 @@ public class FileProcessor_LastUpdate : IFileProcessor
    {
       bool IsOk = true;
 
-      IsOk = IsOk && (filePath.ToLower().EndsWith(@"\lastupdate.json")
-         || filePath.ToLower().EndsWith(@"/lastupdate.json"));
+      IsOk = IsOk && (filePath.ToLower().Contains(@"\lastupdate.") && filePath.ToLower().EndsWith(@".json"))
+         || (filePath.ToLower().Contains(@"/lastupdate.") && filePath.ToLower().EndsWith(@".json"));
 
       return IsOk;
    }
