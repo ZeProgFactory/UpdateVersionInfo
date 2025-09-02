@@ -2,7 +2,7 @@
   "profiles": {
     "UpdateVersionInfoMaui": {
       "commandName": "Project",
-      "commandLineArgs": "-i -s  ",
+      "commandLineArgs": "-r",
       "workingDirectory": "D:\\GitWare\\Apps\\Shelly",
       "environmentVariables": {
         "dummy": "-i -s"

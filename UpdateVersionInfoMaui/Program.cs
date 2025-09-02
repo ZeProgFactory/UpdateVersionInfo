@@ -18,6 +18,13 @@ internal class Program
          return;
       }
 
+      if (args.Length == 1 && args[0].ToLower().EndsWith(".scs") && System.IO.File.Exists(args[0]) )
+      {
+         ScriptpHelper.Run( args[0] );
+
+         return;
+      }
+
       // - - - check args - - - 
 
       bool IsParam(string param)

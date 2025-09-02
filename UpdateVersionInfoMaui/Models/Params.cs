@@ -70,5 +70,4 @@ public class Params
 
    [ParamAttributes.Help(true, "-gvi", "Generate VersionInfo.cs")]
    public bool GenerateVersionInfo { get; set; } = false;
-
 }
