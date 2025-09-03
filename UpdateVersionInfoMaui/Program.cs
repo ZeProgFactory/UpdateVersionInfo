@@ -18,19 +18,6 @@ internal class Program
          return;
       }
 
-      if (args.Length == 1 /*&& args[0].ToLower().EndsWith(".script")*/ && System.IO.File.Exists(args[0]))
-      {
-         ShowHeader();
-         Console.WriteLine(args[0]);
-         Console.WriteLine();
-
-         ScriptHelper.Run(args[0]);
-
-         Console.WriteLine();
-
-         return;
-      }
-
       // - - - check args - - - 
 
       bool IsParam(string param)

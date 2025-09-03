@@ -18,10 +18,6 @@
       <EmbeddedResource Include="Template\VersionInfo.txt" />
    </ItemGroup>
 
-   <ItemGroup>
-     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.14.0" />
-   </ItemGroup>
-
    <Target Name="PreBuild" Condition="'$(Configuration)'=='Debug' AND '$(DevEnvDir.Substring(0,1))' == '/' " BeforeTargets="PreBuildEvent">
       <Exec Command="$(ProjectDir)UpdateVersionInfoMaui -s -i" />
    </Target>
