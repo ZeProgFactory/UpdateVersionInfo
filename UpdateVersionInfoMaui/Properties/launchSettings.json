@@ -2,8 +2,8 @@
   "profiles": {
     "UpdateVersionInfoMaui": {
       "commandName": "Project",
-      "commandLineArgs": "-r",
-      "workingDirectory": "D:\\GitWare\\Apps\\Shelly",
+      "commandLineArgs": "\"D:\\GitWare\\Apps\\ZeCalculator\\ZeCalculator.Maui9\\LastUpdate.Win.script\"",
+      "workingDirectory": "D:\\GitWare\\Apps\\ZeCalculator\\ZeCalculator.Maui9",
       "environmentVariables": {
         "dummy": "-i -s"
       }
